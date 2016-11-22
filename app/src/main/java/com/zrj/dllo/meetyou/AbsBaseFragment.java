@@ -1,4 +1,4 @@
-package com.zrj.dllo.meetyou.controller.base;
+package com.zrj.dllo.meetyou;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,32 +6,52 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 /**
  * 这是鞠福娟创建的哟~on 16/11/21.
- * Activity的基类
  */
 
-public abstract class AbsBaseActivity extends AppCompatActivity{
+public abstract class AbsBaseFragment extends Fragment{
+    protected Context context;
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //绑定布局
-        setContentView(getLayout());
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context=context;
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(getLayout(),container,false);
+
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         //初始化组件
         initView();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         //初始化数据
         initDatas();
     }
 
     /**
      * 绑定布局
-     * @return 将布局返回
+     * @return 布局的资源id
      */
     protected abstract int getLayout();
+
     /**
      * 初始化组件
      */
@@ -47,9 +67,10 @@ public abstract class AbsBaseActivity extends AppCompatActivity{
      * @param resId 资源id
      * @param <T> 任何继承自view的组件
      * @return 组件
+     * getView()用来获得
      */
     protected <T extends View>T bindView(int resId){
-        return (T) findViewById(resId);
+        return (T) getView().findViewById(resId);
     }
 
     /**
@@ -86,7 +107,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity{
      */
     protected void showToastLong(CharSequence text){
         Message message=handler.obtainMessage();
-        message.what=Toast.LENGTH_LONG;
+        message.what= Toast.LENGTH_LONG;
         message.obj=text;
         handler.sendMessage(message);
     }
@@ -110,10 +131,10 @@ public abstract class AbsBaseActivity extends AppCompatActivity{
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case Toast.LENGTH_LONG:
-                    Toast.makeText(AbsBaseActivity.this,(String)msg.obj, Toast.LENGTH_LONG).show();
+                    Toast.makeText(context,(String)msg.obj, Toast.LENGTH_LONG).show();
                     break;
                 case Toast.LENGTH_SHORT:
-                    Toast.makeText(AbsBaseActivity.this,(String)msg.obj, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,(String)msg.obj, Toast.LENGTH_SHORT).show();
                     break;
                 default:
                     break;
@@ -127,20 +148,5 @@ public abstract class AbsBaseActivity extends AppCompatActivity{
      */
     protected void addAnimator(){
 
-    }
-
-    /**
-     * 设置通用状态栏
-     */
-    protected void setStateBar(){
-
-    }
-
-
-    @Override
-    public void finish() {
-        super.finish();
-        //在这里添加结束动画
-        //overridePendingTransition();
     }
 }

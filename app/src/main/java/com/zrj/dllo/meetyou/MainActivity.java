@@ -1,4 +1,4 @@
-package com.zrj.dllo.meetyou.controller.activity;
+package com.zrj.dllo.meetyou;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

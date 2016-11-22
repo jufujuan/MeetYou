@@ -8,6 +8,7 @@ import android.os.Message;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -20,9 +21,12 @@ import com.zrj.dllo.meetyou.R;
 
 public abstract class AbsBaseActivity extends AppCompatActivity {
 
+<<<<<<< HEAD
     //    public int theme = R.style.AppTheme;
     public int theme = R.style.AppTheme;
 
+=======
+>>>>>>> develop
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +92,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity {
         Intent intent = new Intent(from, to);
         startActivity(intent);
         //跳转动画
+        addAnimator();
     }
 
     /**
@@ -98,8 +103,10 @@ public abstract class AbsBaseActivity extends AppCompatActivity {
         intent.putExtras(bundle);
         startActivity(intent);
         //跳转动画
+        addAnimator();
     }
 
+<<<<<<< HEAD
     /**
      * 显示长时间的Toast提示
      *
@@ -147,8 +154,9 @@ public abstract class AbsBaseActivity extends AppCompatActivity {
     /**
      * 添加动画效果
      */
-    protected void addAnimator() {
 
+    protected void addAnimator() {
+        overridePendingTransition(R.anim.ac_zoom_enter, R.anim.ac_zoom_exit);
     }
 
     /**
@@ -163,7 +171,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity {
     public void finish() {
         super.finish();
         //在这里添加结束动画
-        //overridePendingTransition();
+        addAnimator();
     }
 
     @Override

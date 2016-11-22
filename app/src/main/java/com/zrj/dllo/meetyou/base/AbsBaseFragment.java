@@ -1,5 +1,6 @@
 package com.zrj.dllo.meetyou.base;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,20 +17,23 @@ import android.widget.Toast;
  * 这是鞠福娟创建的哟~on 16/11/21.
  */
 
-public abstract class AbsBaseFragment extends Fragment{
+public abstract class AbsBaseFragment extends Fragment {
 
     protected Context context;
+    private Toast mToast;
+
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.context=context;
+        this.context = context;
+        mToast = new Toast(context);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(getLayout(),container,false);
+        return inflater.inflate(getLayout(), container, false);
 
     }
 
@@ -49,6 +53,7 @@ public abstract class AbsBaseFragment extends Fragment{
 
     /**
      * 绑定布局
+     *
      * @return 布局的资源id
      */
     protected abstract int getLayout();
@@ -65,77 +70,93 @@ public abstract class AbsBaseFragment extends Fragment{
 
     /**
      * findviewbyid的简化版
+     *
      * @param resId 资源id
-     * @param <T> 任何继承自view的组件
+     * @param <T>   任何继承自view的组件
      * @return 组件
      * getView()用来获得
      */
-    protected <T extends View>T bindView(int resId){
+    protected <T extends View> T bindView(int resId) {
         return (T) getView().findViewById(resId);
     }
 
     /**
      * findviewbyid的简化版(重载)
-     * @param resId 资源id
+     *
+     * @param resId    资源id
      * @param itemView 将这个view传过来
-     * @param <T> 任何继承自view的组件
+     * @param <T>      任何继承自view的组件
      * @return
      */
-    protected <T extends View> T bindView(int resId,View itemView){
+    protected <T extends View> T bindView(int resId, View itemView) {
         return (T) itemView.findViewById(resId);
     }
+
     /**
      * Activity跳转(不带返回值)
      */
-    protected void goTo(Context from,Class<?> to){
-        Intent intent=new Intent(from,to);
+    protected void goTo(Context from, Class<?> to) {
+        Intent intent = new Intent(from, to);
         startActivity(intent);
         //跳转动画
     }
+
     /**
      * Activity跳转(带返回值)
      */
-    protected void goTo(Context from,Class<?> to,Bundle bundle){
-        Intent intent=new Intent(from,to);
+    protected void goTo(Context from, Class<?> to, Bundle bundle) {
+        Intent intent = new Intent(from, to);
         intent.putExtras(bundle);
         startActivity(intent);
         //跳转动画
     }
 
     /**
-     *  显示长时间的Toast提示
+     * 显示长时间的Toast提示
+     *
      * @param text
      */
-    protected void showToastLong(CharSequence text){
-        Message message=handler.obtainMessage();
-        message.what= Toast.LENGTH_LONG;
-        message.obj=text;
-        handler.sendMessage(message);
+    protected void showToastLong(final CharSequence text) {
+        mToast.setDuration(Toast.LENGTH_LONG);
+        ((Activity) context).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mToast.setText(text);
+                mToast.show();
+            }
+        });
+
+
+//        Message message=handler.obtainMessage();
+//        message.what= Toast.LENGTH_LONG;
+//        message.obj=text;
+//        handler.sendMessage(message);
     }
 
     /**
      * 显示短时间的Toast提示
+     *
      * @param text
      */
-    protected void showToastShort(CharSequence text){
-        Message message=handler.obtainMessage();
-        message.what=Toast.LENGTH_SHORT;
-        message.obj=text;
+    protected void showToastShort(CharSequence text) {
+        Message message = handler.obtainMessage();
+        message.what = Toast.LENGTH_SHORT;
+        message.obj = text;
         handler.sendMessage(message);
     }
 
     /**
      * 用来在主界面显示toast
      */
-    Handler handler=new Handler(){
+    Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case Toast.LENGTH_LONG:
-                    Toast.makeText(context,(String)msg.obj, Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, (String) msg.obj, Toast.LENGTH_LONG).show();
                     break;
                 case Toast.LENGTH_SHORT:
-                    Toast.makeText(context,(String)msg.obj, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, (String) msg.obj, Toast.LENGTH_SHORT).show();
                     break;
                 default:
                     break;
@@ -147,7 +168,7 @@ public abstract class AbsBaseFragment extends Fragment{
     /**
      * 添加动画效果
      */
-    protected void addAnimator(){
+    protected void addAnimator() {
 
     }
 }

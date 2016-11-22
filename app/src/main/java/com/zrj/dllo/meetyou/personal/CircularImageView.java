@@ -90,9 +90,7 @@ public class CircularImageView extends ImageView
 
     }
 
-    public void setBorderWidth(int borderWidth)
-
-    {
+    public void setBorderWidth(int borderWidth) {
 
         this.borderWidth = borderWidth;
 
@@ -243,8 +241,6 @@ public class CircularImageView extends ImageView
         return (result + 2);
 
     }
-
-
 
 
     /**

@@ -25,6 +25,8 @@ public class PersonalFragment extends AbsBaseFragment implements View.OnClickLis
         Resources res = getResources();
         Bitmap bmp = BitmapFactory.decodeResource(res, R.mipmap.sidebar_pic);
 
+        //TODO Handler目前这种写法 可能会导致短期的内存泄露
+        //后期需要修改
         BitmapBlurUtil.addTask(bmp, new Handler() {
             @Override
             public void handleMessage(Message msg) {

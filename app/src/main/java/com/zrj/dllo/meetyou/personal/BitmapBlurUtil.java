@@ -21,11 +21,13 @@ public class BitmapBlurUtil {
     private static ExecutorService getExecutor() {
 
         if (executor == null) {
+            synchronized (BitmapBlurUtil.class) {
+                if (executor == null) {
+                    int cpuNums = Runtime.getRuntime().availableProcessors();
 
-            int cpuNums = Runtime.getRuntime().availableProcessors();
-
-            executor = Executors.newFixedThreadPool(cpuNums * POOL_SIZE);
-
+                    executor = Executors.newFixedThreadPool(cpuNums * POOL_SIZE);
+                }
+            }
         }
 
         return executor;

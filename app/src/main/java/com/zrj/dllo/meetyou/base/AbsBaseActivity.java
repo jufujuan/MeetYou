@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -18,12 +19,10 @@ import com.zrj.dllo.meetyou.R;
  */
 
 public abstract class AbsBaseActivity extends AppCompatActivity {
-    private Toast mToast;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mToast = new Toast(this);
         //绑定布局
         setContentView(getLayout());
         //初始化组件
@@ -93,58 +92,6 @@ public abstract class AbsBaseActivity extends AppCompatActivity {
         addAnimator();
     }
 
-    /**
-     * 显示长时间的Toast提示
-     *
-     * @param text
-     */
-    protected void showToastLong(final CharSequence text) {
-        mToast.setDuration(Toast.LENGTH_LONG);
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mToast.setText(text);
-                mToast.show();
-            }
-        });
-//        Message message=handler.obtainMessage();
-//        message.what=Toast.LENGTH_LONG;
-//        message.obj=text;
-//        handler.sendMessage(message);
-    }
-
-    /**
-     * 显示短时间的Toast提示
-     *
-     * @param text
-     */
-    protected void showToastShort(CharSequence text) {
-
-        Message message = handler.obtainMessage();
-        message.what = Toast.LENGTH_SHORT;
-        message.obj = text;
-        handler.sendMessage(message);
-    }
-
-    /**
-     * 用来在主界面显示toast
-     */
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case Toast.LENGTH_LONG:
-                    Toast.makeText(AbsBaseActivity.this, (String) msg.obj, Toast.LENGTH_LONG).show();
-                    break;
-                case Toast.LENGTH_SHORT:
-                    Toast.makeText(AbsBaseActivity.this, (String) msg.obj, Toast.LENGTH_SHORT).show();
-                    break;
-                default:
-                    break;
-            }
-            super.handleMessage(msg);
-        }
-    };
 
     /**
      * 添加动画效果

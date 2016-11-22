@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import com.zrj.dllo.meetyou.R;
+
 /**
  * 这是鞠福娟创建的哟~on 16/11/21.
  * Activity的基类
@@ -128,7 +130,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity{
      * 添加动画效果
      */
     protected void addAnimator(){
-        overridePendingTransition(R.anim.ac_zoom_enter,R.anim.ac_zoom_exit);
+        overridePendingTransition(R.anim.ac_zoom_enter, R.anim.ac_zoom_exit);
     }
 
     /**

@@ -115,4 +115,16 @@ public abstract class AbsBaseActivity extends AppCompatActivity {
         //在这里添加结束动画
         addAnimator();
     }
+
+    /**
+     * view设置点击事件
+     * @param clickListener 点击事件监听
+     * @param views 要设置监听的view
+     */
+    protected void setClickListener(View.OnClickListener clickListener, View... views) {
+        for (View view :
+                views) {
+            view.setOnClickListener(clickListener);
+        }
+    }
 }

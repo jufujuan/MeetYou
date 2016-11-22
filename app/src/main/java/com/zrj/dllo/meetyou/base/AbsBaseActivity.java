@@ -1,4 +1,4 @@
-package com.zrj.dllo.meetyou;
+package com.zrj.dllo.meetyou.base;
 
 import android.content.Context;
 import android.content.Intent;

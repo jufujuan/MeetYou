@@ -1,4 +1,4 @@
-package com.zrj.dllo.meetyou;
+package com.zrj.dllo.meetyou.base;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +17,7 @@ import android.widget.Toast;
  */
 
 public abstract class AbsBaseFragment extends Fragment{
+
     protected Context context;
 
     @Override

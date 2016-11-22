@@ -24,12 +24,10 @@ public class BitmapBlurUtil {
             synchronized (BitmapBlurUtil.class) {
                 if (executor == null) {
                     int cpuNums = Runtime.getRuntime().availableProcessors();
-
                     executor = Executors.newFixedThreadPool(cpuNums * POOL_SIZE);
                 }
             }
         }
-
         return executor;
 
     }

@@ -15,7 +15,7 @@ import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.AbsBaseFragment;
 
 public class PersonalFragment extends AbsBaseFragment implements View.OnClickListener {
-    ImageView pull_img;
+  private ImageView pull_img;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -54,6 +54,7 @@ public class PersonalFragment extends AbsBaseFragment implements View.OnClickLis
     @Override
     protected void initView() {
         pull_img = bindView(R.id.pull_img);
+        ImageView nightImage = 
     }
 
     /**

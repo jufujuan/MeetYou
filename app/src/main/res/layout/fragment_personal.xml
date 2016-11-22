@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.zrj.dllo.meetyou.personal.PullScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/scroll_view"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:scrollbars="none"
-    tools:context="com.zrj.dllo.meetyou.personal.PersonalFragment">
+                                              xmlns:tools="http://schemas.android.com/tools"
+                                              android:id="@+id/scroll_view"
+                                              android:layout_width="match_parent"
+                                              android:layout_height="match_parent"
+                                              android:scrollbars="none"
+                                              tools:context="com.zrj.dllo.meetyou.personal.PersonalFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,23 +19,23 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
-               >
+                >
 
                 <ImageView
                     android:id="@+id/pull_img"
                     android:layout_width="match_parent"
                     android:layout_height="180dp"
                     android:scaleType="fitXY"
-                    android:src="@mipmap/sidebar_pic" />
+                    android:src="@mipmap/sidebar_pic"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="180dp"
-                    android:background="#60000000" />
+                    android:background="#60000000"/>
             </RelativeLayout>
 
             <ImageView
-
+                android:id="@+id/personal_night_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -46,14 +46,14 @@
                 />
 
             <com.zrj.dllo.meetyou.personal.CircularImageView xmlns:app="http://schemas.android.com/apk/android"
-                android:id="@+id/profile_image"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="65dp"
-                android:src="@mipmap/sidebar_pic" />
+                                                             android:id="@+id/profile_image"
+                                                             android:layout_width="75dp"
+                                                             android:layout_height="75dp"
+                                                             android:layout_alignParentTop="true"
+                                                             android:layout_centerHorizontal="true"
+                                                             android:layout_centerInParent="true"
+                                                             android:layout_marginTop="65dp"
+                                                             android:src="@mipmap/sidebar_pic"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -62,7 +62,7 @@
                 android:layout_marginTop="140dp"
                 android:text="点击登录"
                 android:textColor="#ffffff"
-                android:textSize="15dp" />
+                android:textSize="15dp"/>
         </RelativeLayout>
 
         <LinearLayout
@@ -75,19 +75,19 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@mipmap/icon_menu_useron" />
+                android:src="@mipmap/icon_menu_useron"/>
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@mipmap/icon_menu_homeon" />
+                android:src="@mipmap/icon_menu_homeon"/>
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@mipmap/icon_movieline_on" />
+                android:src="@mipmap/icon_movieline_on"/>
 
         </LinearLayout>
 
@@ -101,19 +101,19 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="          我的收藏" />
+                android:text="          我的收藏"/>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="          清除缓存" />
+                android:text="          清除缓存"/>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="          好友列表" />
+                android:text="          好友列表"/>
 
 
         </LinearLayout>
@@ -123,7 +123,7 @@
             android:layout_width="match_parent"
             android:layout_height="5dp"
             android:layout_marginTop="5dp"
-            android:background="#e2e1e1" />
+            android:background="#e2e1e1"/>
 
 
         <LinearLayout
@@ -136,7 +136,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1.5"
-                android:src="@mipmap/order_icon" />
+                android:src="@mipmap/order_icon"/>
 
             <TextView
                 android:layout_width="0dp"
@@ -145,14 +145,14 @@
                 android:layout_weight="7"
                 android:text="账户设置"
                 android:textColor="#000000"
-                android:textSize="20dp" />
+                android:textSize="20dp"/>
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1.5"
-                android:src="@mipmap/icon_leftarrrowg" />
+                android:src="@mipmap/icon_leftarrrowg"/>
 
         </LinearLayout>
 
@@ -166,7 +166,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1.5"
-                android:src="@mipmap/icon_login" />
+                android:src="@mipmap/icon_login"/>
 
             <TextView
                 android:id="@+id/textView"
@@ -176,21 +176,21 @@
                 android:layout_weight="7"
                 android:text="登录方式"
                 android:textColor="#000000"
-                android:textSize="20dp" />
+                android:textSize="20dp"/>
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1.5"
-                android:src="@mipmap/icon_leftarrrowg" />
+                android:src="@mipmap/icon_leftarrrowg"/>
 
         </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:background="#e2e1e1" />
+            android:background="#e2e1e1"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -203,7 +203,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1.5"
-                android:src="@mipmap/icon_advice" />
+                android:src="@mipmap/icon_advice"/>
 
             <TextView
                 android:layout_width="0dp"
@@ -212,14 +212,14 @@
                 android:layout_weight="7"
                 android:text="意见反馈"
                 android:textColor="#000000"
-                android:textSize="20dp" />
+                android:textSize="20dp"/>
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1.5"
-                android:src="@mipmap/icon_leftarrrowg" />
+                android:src="@mipmap/icon_leftarrrowg"/>
 
         </LinearLayout>
 
@@ -234,7 +234,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1.5"
-                android:src="@mipmap/icon_shop" />
+                android:src="@mipmap/icon_shop"/>
 
             <TextView
                 android:layout_width="0dp"
@@ -243,14 +243,14 @@
                 android:layout_weight="7"
                 android:text="评分"
                 android:textColor="#000000"
-                android:textSize="20dp" />
+                android:textSize="20dp"/>
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1.5"
-                android:src="@mipmap/icon_leftarrrowg" />
+                android:src="@mipmap/icon_leftarrrowg"/>
 
         </LinearLayout>
 
@@ -265,7 +265,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1.5"
-                android:src="@mipmap/icon_wallet" />
+                android:src="@mipmap/icon_wallet"/>
 
             <TextView
                 android:layout_width="0dp"
@@ -274,14 +274,14 @@
                 android:layout_weight="7"
                 android:text="联系客服"
                 android:textColor="#000000"
-                android:textSize="20dp" />
+                android:textSize="20dp"/>
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1.5"
-                android:src="@mipmap/icon_leftarrrowg" />
+                android:src="@mipmap/icon_leftarrrowg"/>
 
         </LinearLayout>
 
@@ -297,7 +297,8 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="10dp"
-                android:background="#ff4521">
+                android:background="#ff4521"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -306,7 +307,7 @@
                     android:layout_centerVertical="true"
                     android:text="退出登录"
                     android:textColor="#ffffff"
-                    android:textSize="25dp" />
+                    android:textSize="25dp"/>
             </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>

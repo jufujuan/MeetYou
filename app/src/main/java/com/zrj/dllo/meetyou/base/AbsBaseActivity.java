@@ -69,6 +69,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity{
         Intent intent=new Intent(from,to);
         startActivity(intent);
         //跳转动画
+        addAnimator();
     }
     /**
      * Activity跳转(带返回值)
@@ -78,6 +79,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity{
         intent.putExtras(bundle);
         startActivity(intent);
         //跳转动画
+        addAnimator();
     }
 
     /**
@@ -126,7 +128,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity{
      * 添加动画效果
      */
     protected void addAnimator(){
-
+        overridePendingTransition(R.anim.ac_zoom_enter,R.anim.ac_zoom_exit);
     }
 
     /**
@@ -141,6 +143,6 @@ public abstract class AbsBaseActivity extends AppCompatActivity{
     public void finish() {
         super.finish();
         //在这里添加结束动画
-        //overridePendingTransition();
+        addAnimator();
     }
 }

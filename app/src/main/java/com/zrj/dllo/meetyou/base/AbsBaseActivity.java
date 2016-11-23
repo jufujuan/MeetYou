@@ -9,10 +9,18 @@ import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.zrj.dllo.meetyou.R;
+import com.zrj.dllo.meetyou.Utils.LogUtils;
+import com.zrj.dllo.meetyou.personal.EventBusBean;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * 这是鞠福娟创建的哟~on 16/11/21.
@@ -21,21 +29,31 @@ import com.zrj.dllo.meetyou.R;
 
 public abstract class AbsBaseActivity extends AppCompatActivity {
 
-<<<<<<< HEAD
-    //    public int theme = R.style.AppTheme;
     public int theme = R.style.AppTheme;
 
-=======
->>>>>>> develop
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null) {
 
+//        EventBus.getDefault().register(this);
+
+//        View view = LayoutInflater.from(this).inflate(R.layout.fragment_personal, null);
+//        ImageView imageView = bindView(R.id.personal_night_iv,view);
+
+//        imageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                LogUtils.d("夜间");
+//                theme = (theme == R.style.AppTheme) ?
+//                        R.style.NightAppTheme : R.style.AppTheme;
+//                AbsBaseActivity.this.recreate();
+//            }
+//        });
+
+        if (savedInstanceState != null) {
             theme = savedInstanceState.getInt("theme");
             setTheme(theme);
         }
-
 
         //绑定布局
         setContentView(getLayout());
@@ -106,7 +124,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity {
         addAnimator();
     }
 
-<<<<<<< HEAD
+
     /**
      * 显示长时间的Toast提示
      *
@@ -185,5 +203,16 @@ public abstract class AbsBaseActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         theme = savedInstanceState.getInt("theme");
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void getTextEvent(EventBusBean event) {
+        LogUtils.d("你好");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

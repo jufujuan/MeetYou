@@ -1,5 +1,6 @@
 package com.zrj.dllo.meetyou.personal;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,15 +13,21 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.zrj.dllo.meetyou.R;
+import com.zrj.dllo.meetyou.Utils.LogUtils;
+import com.zrj.dllo.meetyou.base.AbsBaseActivity;
 import com.zrj.dllo.meetyou.base.AbsBaseFragment;
+import com.zrj.dllo.meetyou.login.LoginActivity;
+
+import org.greenrobot.eventbus.EventBus;
 
 public class PersonalFragment extends AbsBaseFragment implements View.OnClickListener {
-  private ImageView pull_img;
+    private ImageView pull_img;
+    private ImageView mNightImage;
+    private ImageView mImageViewLogin;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
 
         Resources res = getResources();
         Bitmap bmp = BitmapFactory.decodeResource(res, R.mipmap.sidebar_pic);
@@ -54,7 +61,11 @@ public class PersonalFragment extends AbsBaseFragment implements View.OnClickLis
     @Override
     protected void initView() {
         pull_img = bindView(R.id.pull_img);
-        ImageView nightImage = 
+        mNightImage = bindView(R.id.personal_night_iv);
+        mNightImage.setOnClickListener(this);
+        mImageViewLogin = bindView(R.id.personal_login_image);
+        mImageViewLogin.setOnClickListener(this);
+
     }
 
     /**
@@ -72,6 +83,19 @@ public class PersonalFragment extends AbsBaseFragment implements View.OnClickLis
      */
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.personal_night_iv:
+                EventBusBean busBean = new EventBusBean();
+                EventBus.getDefault().postSticky(busBean);
+                break;
+            case R.id.personal_login_image:
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                break;
+        }
+
+
+
 
     }
 }

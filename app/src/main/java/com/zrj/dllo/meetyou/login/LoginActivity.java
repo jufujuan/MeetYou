@@ -10,7 +10,7 @@ import android.widget.ImageView;
 
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.AbsBaseActivity;
-import com.zrj.dllo.meetyou.personal.BitmapBlurUtil;
+import com.zrj.dllo.meetyou.Utils.BitmapBlurUtils;
 
 public class LoginActivity extends AbsBaseActivity{
 
@@ -50,7 +50,7 @@ public class LoginActivity extends AbsBaseActivity{
 
         //TODO Handler目前这种写法 可能会导致短期的内存泄露
         //后期需要修改
-        BitmapBlurUtil.addTask(bmp, new Handler() {
+        BitmapBlurUtils.addTask(bmp, new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);

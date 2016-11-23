@@ -7,22 +7,13 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
 import com.zrj.dllo.meetyou.R;
-import com.zrj.dllo.meetyou.Utils.LogUtils;
-import com.zrj.dllo.meetyou.personal.EventBusBean;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * 这是鞠福娟创建的哟~on 16/11/21.
@@ -38,20 +29,20 @@ public abstract class AbsBaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+        //夜间模式广播接收器
         mBroadCast = new NightOrderBroadCast();
         IntentFilter filter = new IntentFilter();
         filter.addAction("night");
         registerReceiver(mBroadCast, filter);
         Log.d("Sysout", "R.style.AppTheme:" + R.style.AppTheme);
         Log.d("Sysout", "R.style.NightAppTheme:" + R.style.NightAppTheme);
-
+        //判断夜间模式初始状态
         if (savedInstanceState != null) {
             Log.d("Sysout", "theme:-in" + theme);
-
             theme = savedInstanceState.getInt("theme");
             setTheme(theme);
         }
-//        setTheme(R.style.NightAppTheme);
 
         //绑定布局
         setContentView(getLayout());
@@ -196,12 +187,12 @@ public abstract class AbsBaseActivity extends AppCompatActivity {
         addAnimator();
     }
 
-//    @Override
-//    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-//        super.onSaveInstanceState(outState, outPersistentState);
-//
-//    }
 
+    /**
+     * 夜间模式存储
+     *
+     * @param outState
+     */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -209,17 +200,13 @@ public abstract class AbsBaseActivity extends AppCompatActivity {
         outState.putInt("theme", theme);
     }
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-       // theme = savedInstanceState.getInt("theme");
-        Log.d("Sysout", "theme:-onRestore" + theme);
-    }
-
-   final class NightOrderBroadCast extends BroadcastReceiver {
+    /**
+     * 夜间模式广播
+     */
+    final class NightOrderBroadCast extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            LogUtils.d("夜间");
+
             Log.d("Sysout", "theme:before" + theme);
 
 
@@ -227,6 +214,20 @@ public abstract class AbsBaseActivity extends AppCompatActivity {
                     R.style.NightAppTheme : R.style.AppTheme);
             Log.d("Sysout", "theme:" + theme);
             recreate();
+        }
+    }
+
+
+    /**
+     * view设置点击事件
+     *
+     * @param clickListener 点击事件监听
+     * @param views         要设置监听的view
+     */
+    protected void setClickListener(View.OnClickListener clickListener, View... views) {
+        for (View view :
+                views) {
+            view.setOnClickListener(clickListener);
         }
     }
 

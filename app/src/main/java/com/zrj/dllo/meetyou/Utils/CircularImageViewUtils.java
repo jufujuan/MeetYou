@@ -1,4 +1,4 @@
-package com.zrj.dllo.meetyou.personal;
+package com.zrj.dllo.meetyou.Utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -18,9 +18,10 @@ import android.widget.ImageView;
 
 /**
  * Created by ${ZhaoXuancheng} on 16/11/21.
+ * 画圆工具类
  */
 
-public class CircularImageView extends ImageView
+public class CircularImageViewUtils extends ImageView
 
 {
 
@@ -38,7 +39,7 @@ public class CircularImageView extends ImageView
 
     private BitmapShader shader;
 
-    public CircularImageView(Context context)
+    public CircularImageViewUtils(Context context)
 
     {
 
@@ -48,7 +49,7 @@ public class CircularImageView extends ImageView
 
     }
 
-    public CircularImageView(Context context, AttributeSet attrs)
+    public CircularImageViewUtils(Context context, AttributeSet attrs)
 
     {
 
@@ -58,7 +59,7 @@ public class CircularImageView extends ImageView
 
     }
 
-    public CircularImageView(Context context, AttributeSet attrs, int defStyle)
+    public CircularImageViewUtils(Context context, AttributeSet attrs, int defStyle)
 
     {
 

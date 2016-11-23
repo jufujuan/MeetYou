@@ -1,4 +1,4 @@
-package com.zrj.dllo.meetyou.personal;
+package com.zrj.dllo.meetyou.Utils;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -13,7 +13,7 @@ import java.util.concurrent.Executors;
  * Created by ${ZhaoXuancheng} on 16/11/21.
  */
 
-public class BitmapBlurUtil {
+public class BitmapBlurUtils {
     private static ExecutorService executor;
 
     private static int POOL_SIZE = 2;// 单个CPU线程池大小
@@ -21,7 +21,7 @@ public class BitmapBlurUtil {
     private static ExecutorService getExecutor() {
 
         if (executor == null) {
-            synchronized (BitmapBlurUtil.class) {
+            synchronized (BitmapBlurUtils.class) {
                 if (executor == null) {
                     int cpuNums = Runtime.getRuntime().availableProcessors();
                     executor = Executors.newFixedThreadPool(cpuNums * POOL_SIZE);

@@ -11,14 +11,15 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
-
 import com.zrj.dllo.meetyou.R;
+import com.zrj.dllo.meetyou.Utils.BitmapBlurUtils;
 import com.zrj.dllo.meetyou.Utils.LogUtils;
-import com.zrj.dllo.meetyou.base.AbsBaseActivity;
 import com.zrj.dllo.meetyou.base.AbsBaseFragment;
 import com.zrj.dllo.meetyou.login.LoginActivity;
 
-import org.greenrobot.eventbus.EventBus;
+/**
+ * Created by ${ZhaoXuancheng} on 16/11/21.
+ */
 
 public class PersonalFragment extends AbsBaseFragment implements View.OnClickListener {
     private ImageView pull_img;
@@ -34,7 +35,7 @@ public class PersonalFragment extends AbsBaseFragment implements View.OnClickLis
 
         //TODO Handler目前这种写法 可能会导致短期的内存泄露
         //后期需要修改
-        BitmapBlurUtil.addTask(bmp, new Handler() {
+        BitmapBlurUtils.addTask(bmp, new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);

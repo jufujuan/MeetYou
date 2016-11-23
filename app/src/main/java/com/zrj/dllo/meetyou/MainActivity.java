@@ -40,8 +40,6 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
 
         Log.d("MainActivity", "initView");
 
-
-
         mainAtyMeetBtn = bindView(R.id.aty_main_meet_btn);
         mainAtyMsgBtn = bindView(R.id.aty_main_msg_btn);
         mainAtyWeatherBtn = bindView(R.id.aty_main_weather_btn);
@@ -75,9 +73,6 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
                 PersonalFragment fragment = new PersonalFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_fl, fragment).commit();
                 btnChange(mainAtyMyBtn, mainAtyMyTv);
-
-
-
                 break;
         }
     }

@@ -1,6 +1,4 @@
 <resources>
-
-
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -11,7 +9,7 @@
         <item name="mainBackground">@android:color/white</item>
     </style>
 
-    <style name="NightAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="NightAppTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/nightColorPrimary</item>
         <item name="colorPrimaryDark">@color/nightColorPrimaryDark</item>
@@ -20,6 +18,5 @@
         <item name="mainBackground">@color/nightColorPrimaryDark</item>
     </style>
     <attr name="mainBackground" format="color|reference"></attr>
-
 
 </resources>

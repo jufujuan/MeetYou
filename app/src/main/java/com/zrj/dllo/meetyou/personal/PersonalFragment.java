@@ -85,17 +85,16 @@ public class PersonalFragment extends AbsBaseFragment implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.personal_night_iv:
-                EventBusBean busBean = new EventBusBean();
-                EventBus.getDefault().postSticky(busBean);
+                LogUtils.d("点击");
+//                EventBusBean busBean = new EventBusBean();
+//                EventBus.getDefault().postSticky(busBean);
+                Intent intent1 = new Intent("night");
+                context.sendBroadcast(intent1);
                 break;
             case R.id.personal_login_image:
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 break;
         }
-
-
-
-
     }
 }

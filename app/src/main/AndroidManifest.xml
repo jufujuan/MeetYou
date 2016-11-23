@@ -16,7 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".personal.PersonalFragment"/>
+        <receiver android:name=".base.AbsBaseActivity$NightOrderBroadCast"/>
+
+
+        <activity android:name=".base.AbsBaseActivity"/>
         <activity android:name=".login.LoginActivity">
         </activity>
     </application>

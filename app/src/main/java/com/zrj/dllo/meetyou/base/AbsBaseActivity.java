@@ -1,17 +1,19 @@
 package com.zrj.dllo.meetyou.base;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.zrj.dllo.meetyou.R;
@@ -30,30 +32,26 @@ import org.greenrobot.eventbus.ThreadMode;
 public abstract class AbsBaseActivity extends AppCompatActivity {
 
     public int theme = R.style.AppTheme;
+    private NightOrderBroadCast mBroadCast;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        EventBus.getDefault().register(this);
-
-//        View view = LayoutInflater.from(this).inflate(R.layout.fragment_personal, null);
-//        ImageView imageView = bindView(R.id.personal_night_iv,view);
-
-//        imageView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                LogUtils.d("夜间");
-//                theme = (theme == R.style.AppTheme) ?
-//                        R.style.NightAppTheme : R.style.AppTheme;
-//                AbsBaseActivity.this.recreate();
-//            }
-//        });
+        mBroadCast = new NightOrderBroadCast();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("night");
+        registerReceiver(mBroadCast, filter);
+        Log.d("Sysout", "R.style.AppTheme:" + R.style.AppTheme);
+        Log.d("Sysout", "R.style.NightAppTheme:" + R.style.NightAppTheme);
 
         if (savedInstanceState != null) {
+            Log.d("Sysout", "theme:-in" + theme);
+
             theme = savedInstanceState.getInt("theme");
             setTheme(theme);
         }
+//        setTheme(R.style.NightAppTheme);
 
         //绑定布局
         setContentView(getLayout());
@@ -149,6 +147,12 @@ public abstract class AbsBaseActivity extends AppCompatActivity {
         handler.sendMessage(message);
     }
 
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(mBroadCast);
+        super.onDestroy();
+    }
+
     /**
      * 用来在主界面显示toast
      */
@@ -192,27 +196,38 @@ public abstract class AbsBaseActivity extends AppCompatActivity {
         addAnimator();
     }
 
+//    @Override
+//    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+//        super.onSaveInstanceState(outState, outPersistentState);
+//
+//    }
+
     @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d("Sysout", "theme:-saveInstance" + theme);
         outState.putInt("theme", theme);
     }
-
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        theme = savedInstanceState.getInt("theme");
+       // theme = savedInstanceState.getInt("theme");
+        Log.d("Sysout", "theme:-onRestore" + theme);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void getTextEvent(EventBusBean event) {
-        LogUtils.d("你好");
+   final class NightOrderBroadCast extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            LogUtils.d("夜间");
+            Log.d("Sysout", "theme:before" + theme);
+
+
+            theme = ((theme == R.style.AppTheme) ?
+                    R.style.NightAppTheme : R.style.AppTheme);
+            Log.d("Sysout", "theme:" + theme);
+            recreate();
+        }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
 }

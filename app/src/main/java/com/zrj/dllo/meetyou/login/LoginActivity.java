@@ -58,6 +58,11 @@ public class LoginActivity extends AbsBaseActivity{
                 mImageViewBackground.setImageDrawable(drawable);
             }
         });
-
     }
+
+
+
+
+
+
 }

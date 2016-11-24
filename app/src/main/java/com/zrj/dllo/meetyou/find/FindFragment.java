@@ -22,7 +22,6 @@ public class FindFragment extends AbsBaseFragment{
     public static FindFragment newInstance() {
 
         Bundle args = new Bundle();
-
         FindFragment fragment = new FindFragment();
         fragment.setArguments(args);
         return fragment;

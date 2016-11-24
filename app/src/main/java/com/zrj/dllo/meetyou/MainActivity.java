@@ -4,14 +4,26 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.zrj.dllo.meetyou.R;
+
 import com.zrj.dllo.meetyou.base.AbsBaseActivity;
+
 import com.zrj.dllo.meetyou.find.FindFragment;
 
+import com.zrj.dllo.meetyou.personal.PersonalFragment;
+
+
+
+/**
+ * 绑定布局
+ *
+ * @return 将布局返回
+ */
 public class MainActivity extends AbsBaseActivity implements View.OnClickListener {
 
     private Button mainAtyMeetBtn, mainAtyMsgBtn, mainAtyWeatherBtn, mainAtyMyBtn;
@@ -24,8 +36,21 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
         return R.layout.activity_main;
     }
 
+
+    @Override
+    protected void onDestroy() {
+        Log.d("MainActivity", "destory");
+        super.onDestroy();
+
+    }
+
     @Override
     protected void initView() {
+
+        Log.d("MainActivity", "initView");
+
+
+
         mainAtyMeetBtn = bindView(R.id.aty_main_meet_btn);
         mainAtyMsgBtn = bindView(R.id.aty_main_msg_btn);
         mainAtyWeatherBtn = bindView(R.id.aty_main_weather_btn);
@@ -51,7 +76,7 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
                 btnChange(mainAtyMeetBtn, mainAtyMeetTv);
                 //切换Fragment
                 FragmentTransaction transaction=mFragmentManager.beginTransaction();
-                transaction.replace(R.id.ac_main_frameLayout, FindFragment.newInstance());
+                transaction.replace(R.id.main_fl, FindFragment.newInstance());
                 transaction.commit();
                 break;
             case R.id.aty_main_msg_btn:
@@ -61,16 +86,23 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
                 btnChange(mainAtyWeatherBtn, mainAtyWeatherTv);
                 break;
             case R.id.aty_main_my_btn:
+                PersonalFragment fragment = new PersonalFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_fl, fragment).commit();
                 btnChange(mainAtyMyBtn, mainAtyMyTv);
+
+
+
                 break;
         }
     }
 
     /**
      * 改变btn的状态
-     * @param btn 点击的btn
+     *
+     * @param btn      点击的btn
      * @param textView 点击的textView
      */
+
     public void btnChange(Button btn, TextView textView) {
         mainAtyMeetTv.setVisibility(View.GONE);
         mainAtyMsgTv.setVisibility(View.GONE);

@@ -8,11 +8,19 @@
     tools:context="com.zrj.dllo.meetyou.MainActivity">
 
     <FrameLayout
-        android:id="@+id/ac_main_frameLayout"
+        android:id="@+id/main_fl"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        >
+
     </FrameLayout>
+
+    <LinearLayout
+        android:background="@color/colorDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
 
     <RelativeLayout
         android:layout_width="match_parent"

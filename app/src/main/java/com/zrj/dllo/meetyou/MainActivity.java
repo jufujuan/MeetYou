@@ -1,5 +1,9 @@
 package com.zrj.dllo.meetyou;
 
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 
 import android.util.Log;
 import android.view.View;
@@ -8,7 +12,11 @@ import android.widget.TextView;
 
 
 import com.zrj.dllo.meetyou.base.AbsBaseActivity;
+
+import com.zrj.dllo.meetyou.find.FindFragment;
+
 import com.zrj.dllo.meetyou.personal.PersonalFragment;
+
 
 
 /**
@@ -20,6 +28,7 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
 
     private Button mainAtyMeetBtn, mainAtyMsgBtn, mainAtyWeatherBtn, mainAtyMyBtn;
     private TextView mainAtyMeetTv, mainAtyMsgTv, mainAtyWeatherTv, mainAtyMyTv;
+    private FragmentManager mFragmentManager;
 
 
     @Override
@@ -55,6 +64,10 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
     @Override
     protected void initDatas() {
         btnChange(mainAtyMeetBtn, mainAtyMeetTv);
+        mFragmentManager=getSupportFragmentManager();
+        FragmentTransaction mTransaction=mFragmentManager.beginTransaction();
+        mTransaction.replace(R.id.main_fl, FindFragment.newInstance());
+        mTransaction.commit();
     }
 
     @Override
@@ -62,6 +75,10 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
         switch (v.getId()) {
             case R.id.aty_main_meet_btn:
                 btnChange(mainAtyMeetBtn, mainAtyMeetTv);
+                //切换Fragment
+                FragmentTransaction transaction=mFragmentManager.beginTransaction();
+                transaction.replace(R.id.main_fl, FindFragment.newInstance());
+                transaction.commit();
                 break;
             case R.id.aty_main_msg_btn:
                 btnChange(mainAtyMsgBtn, mainAtyMsgTv);

@@ -1,4 +1,4 @@
-package com.zrj.dllo.meetyou.find;
+package com.zrj.dllo.meetyou.find.mainfind;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
@@ -245,8 +245,6 @@ public class SweepImageView extends ImageView {
         });
         rAnim.start();
     }
-
-
 
     public void setBitmapWidth(int bitmapWidth) {
         this.bitmapWidth = bitmapWidth;

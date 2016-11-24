@@ -1,4 +1,4 @@
-package com.zrj.dllo.meetyou.find;
+package com.zrj.dllo.meetyou.find.mainfind;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;

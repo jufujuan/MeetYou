@@ -233,14 +233,36 @@ public class SweepImageView extends ImageView {
     public void addSweepRestartAnim() {
         ObjectAnimator rAnim = ObjectAnimator.ofFloat(this,
                 "sweepR",
-                DensityUtil.dip2Pix(context,0.7f*bitmapWidth/4),
-                DensityUtil.dip2Pix(context,bitmapWidth/2));
+                DensityUtil.dip2Pix(context, 0.7f * bitmapWidth / 4),
+                DensityUtil.dip2Pix(context, bitmapWidth / 2));
         rAnim.setDuration(6000);
         rAnim.setInterpolator(new LinearInterpolator());
         rAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 invalidate();
+            }
+        });
+        rAnim.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                sweepR = 0;
+                invalidate();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
             }
         });
         rAnim.start();

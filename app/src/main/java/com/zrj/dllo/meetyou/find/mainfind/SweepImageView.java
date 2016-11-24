@@ -116,7 +116,7 @@ public class SweepImageView extends ImageView {
                 canvas.save();
                 drawArc(canvas, sweepColor, 80, new int[]{Color.WHITE, sweepColor}, sweepWidth);
                 canvas.save();
-                drawCircleSweep(canvas, sweepR, sweepWidth, sweepAlpha, sweepColor);
+                drawCircleSweep(canvas, sweepR-3, sweepWidth, sweepAlpha, sweepColor);
                 canvas.restore();
                 canvas.restore();
                 break;
@@ -191,7 +191,7 @@ public class SweepImageView extends ImageView {
         bigPaint.setColor(color);
         SweepGradient bigShader = new SweepGradient(mWidth / 2, mHeight / 2, colors, null);
         bigPaint.setShader(bigShader);
-        canvas.drawCircle(mWidth / 2, mHeight / 2, mWidth / 2, bigPaint);
+        canvas.drawCircle(mWidth / 2, mHeight / 2, mWidth / 2-3, bigPaint);
     }
 
     /**

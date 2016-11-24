@@ -83,7 +83,7 @@ public class CircleImageView extends ImageView {
     }
     /***************各种画图*******************/
     /**
-     * 绘制圆形图片(背景和头像)
+     * 绘制圆形图片
      *
      * @param canvas 画布
      * @param r      圆的半径

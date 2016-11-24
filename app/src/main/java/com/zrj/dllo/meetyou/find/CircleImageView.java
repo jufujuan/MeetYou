@@ -16,6 +16,8 @@ import android.util.AttributeSet;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
+import com.zrj.dllo.meetyou.Utils.DensityUtil;
+
 /**
  * 这是 鞠福娟 创建的哟~
  * on 16/11/23.
@@ -31,6 +33,8 @@ public class CircleImageView extends ImageView {
     private final static int MODE_SWEEP = 1;//点击重新搜索扫描
     private int mMode;
 
+    private Context context;
+
     /*********** 构造方法*************/
     /**
      * 构造方法
@@ -43,6 +47,7 @@ public class CircleImageView extends ImageView {
 
     public CircleImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context=context;
         init();
     }
 
@@ -126,7 +131,8 @@ public class CircleImageView extends ImageView {
     @Override
     public void setImageBitmap(Bitmap bm) {
         super.setImageBitmap(bm);
-        this.bgBitmap = bm;
+        Bitmap u=Bitmap.createScaledBitmap(bm, DensityUtil.dip2Pix(context,150),DensityUtil.dip2Pix(context,150),true);
+        this.bgBitmap = u;
         invalidate();
     }
 

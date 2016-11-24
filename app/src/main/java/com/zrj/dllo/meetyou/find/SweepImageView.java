@@ -31,6 +31,7 @@ public class SweepImageView extends ImageView {
     private final static int MODE_SWEEP = 1;//点击重新搜索扫描
     private int mMode;
 
+
     /*********** 构造方法*************/
     /**
      * 构造方法
@@ -80,7 +81,7 @@ public class SweepImageView extends ImageView {
         switch (mMode) {
             case MODE_NORMAL:
                 canvas.save();
-                drawArc(canvas, Color.RED, 80, new int[]{Color.WHITE, Color.RED},3);
+                drawArc(canvas, Color.RED, 80, new int[]{Color.WHITE, Color.RED},5);
                 canvas.restore();
                 break;
         }
@@ -111,6 +112,7 @@ public class SweepImageView extends ImageView {
      * @param color  扇形半径
      * @param alpha  扇形的透明度
      * @param colors 扇形渐变色的转变
+     * @param width  边缘线的颜色
      */
     private void drawArc(Canvas canvas, int color, int alpha, int[] colors,int width) {
         //关键代码(画布是可以转的)

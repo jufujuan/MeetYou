@@ -67,6 +67,9 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
     protected void initDatas() {
         btnChange(mainAtyMeetBtn, mainAtyMeetTv);
         mFragmentManager=getSupportFragmentManager();
+        FragmentTransaction mTransaction=mFragmentManager.beginTransaction();
+        mTransaction.replace(R.id.main_fl, FindFragment.newInstance());
+        mTransaction.commit();
     }
 
     @Override

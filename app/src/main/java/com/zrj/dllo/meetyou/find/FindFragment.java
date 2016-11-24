@@ -43,8 +43,8 @@ public class FindFragment extends AbsBaseFragment{
     protected void initDatas() {
         Bitmap bgBitmap= BitmapFactory.decodeResource(context.getResources(),R.mipmap.find_bg_img);
         Bitmap userBitmap=BitmapFactory.decodeResource(context.getResources(),R.mipmap.find_user_img2);
-        Bitmap u=Bitmap.createScaledBitmap(userBitmap, DensityUtil.dip2Pix(context,100),DensityUtil.dip2Pix(context,100),true);
+
         mSweepImageView.setImageBitmap(bgBitmap);
-        mCircleImageView.setImageBitmap(u);
+        mCircleImageView.setImageBitmap(userBitmap);
     }
 }

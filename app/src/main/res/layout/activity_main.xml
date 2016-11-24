@@ -8,10 +8,10 @@
     tools:context="com.zrj.dllo.meetyou.MainActivity">
 
     <FrameLayout
+        android:id="@+id/ac_main_frameLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#123465">
+        android:layout_weight="1">
     </FrameLayout>
 
     <RelativeLayout

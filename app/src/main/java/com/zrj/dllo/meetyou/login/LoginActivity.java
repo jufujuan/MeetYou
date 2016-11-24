@@ -1,21 +1,23 @@
 package com.zrj.dllo.meetyou.login;
 
+
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.widget.ImageView;
 
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.AbsBaseActivity;
 import com.zrj.dllo.meetyou.Utils.BitmapBlurUtils;
 
-public class LoginActivity extends AbsBaseActivity{
-
-
+public class LoginActivity extends AbsBaseActivity {
     private ImageView mImageViewBackground;
+    private FragmentManager mFragmentManager;
 
     /**
      * 绑定布局
@@ -33,10 +35,10 @@ public class LoginActivity extends AbsBaseActivity{
     @Override
     protected void initView() {
         mImageViewBackground = bindView(R.id.login_background_img1);
-
-
-
-
+        mFragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+        transaction.replace(R.id.login_fl, LoginFragment.newInstance());
+        transaction.commit();
     }
 
     /**
@@ -59,10 +61,4 @@ public class LoginActivity extends AbsBaseActivity{
             }
         });
     }
-
-
-
-
-
-
 }

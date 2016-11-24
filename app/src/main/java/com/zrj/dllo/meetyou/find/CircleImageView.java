@@ -1,7 +1,6 @@
 package com.zrj.dllo.meetyou.find;
 
 import android.animation.ObjectAnimator;
-import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -9,11 +8,11 @@ import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.RectF;
 import android.graphics.Shader;
-import android.graphics.SweepGradient;
 import android.util.AttributeSet;
-import android.view.animation.LinearInterpolator;
+import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 
 import com.zrj.dllo.meetyou.Utils.DensityUtil;
@@ -29,11 +28,15 @@ public class CircleImageView extends ImageView {
 
     private int mWidth, mHeight;//该view的宽高
 
+
     private final static int MODE_NORMAL = 0;//默认状态
     private final static int MODE_SWEEP = 1;//点击重新搜索扫描
     private int mMode;
+    private Canvas canvas;
 
     private Context context;
+    private int bitmapWidth = 150;//传入进来的图片(正方形)的宽(单位dp)默认150dp
+   // private int bitmapHeight = 150;//传入进来的图片的高(单位dp)默认150dp
 
     /*********** 构造方法*************/
     /**
@@ -47,7 +50,7 @@ public class CircleImageView extends ImageView {
 
     public CircleImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.context=context;
+        this.context = context;
         init();
     }
 
@@ -68,12 +71,13 @@ public class CircleImageView extends ImageView {
      */
     @Override
     protected void onDraw(Canvas canvas) {
+        this.canvas=canvas;
         mHeight = getHeight();
         mWidth = getWidth();
         switch (mMode) {
             case MODE_NORMAL:
-                drawCircleImg(canvas, mWidth / 2, bgBitmap);
-                drawCircleBoder(canvas, Color.WHITE, 5, mWidth / 2);
+                drawCircleImg(canvas, mWidth/2, bgBitmap);
+                drawCircleBoder(canvas, Color.WHITE, 5, mWidth/2);
                 break;
         }
     }
@@ -91,17 +95,7 @@ public class CircleImageView extends ImageView {
         mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         BitmapShader shader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
         mPaint.setShader(shader);
-//        if (isUser) {
-//            Bitmap out = Bitmap.createBitmap((int) r * 2, (int) r * 2, Bitmap.Config.ARGB_8888);
-//            Canvas outCanvas = new Canvas(out);
-//            outCanvas.drawCircle(r, r, r, mPaint);
-//            Paint userPaint = new Paint();
-//            userPaint.setAntiAlias(true);
-//            canvas.drawBitmap(out, mWidth / 2 - r, mHeight / 2 - r, userPaint);
-//        } else {
-            canvas.drawCircle(mWidth / 2, mHeight / 2, r, mPaint);
-        //}
-
+        canvas.drawCircle(mWidth / 2, mHeight / 2, r, mPaint);
     }
 
     /**
@@ -131,9 +125,12 @@ public class CircleImageView extends ImageView {
     @Override
     public void setImageBitmap(Bitmap bm) {
         super.setImageBitmap(bm);
-        Bitmap u=Bitmap.createScaledBitmap(bm, DensityUtil.dip2Pix(context,150),DensityUtil.dip2Pix(context,150),true);
-        this.bgBitmap = u;
+        Bitmap bitmap=Bitmap.createScaledBitmap(bm, DensityUtil.dip2Pix(context, bitmapWidth), DensityUtil.dip2Pix(context, bitmapWidth), true);
+        //将图片进行缩放
+        this.bgBitmap = bitmap;
         invalidate();
     }
 
 }
+
+

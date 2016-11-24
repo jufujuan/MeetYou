@@ -1,5 +1,6 @@
 package com.zrj.dllo.meetyou.find;
 
+import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
@@ -16,6 +17,9 @@ import android.util.AttributeSet;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
+import com.zrj.dllo.meetyou.Utils.DensityUtil;
+import com.zrj.dllo.meetyou.Utils.LogUtils;
+
 /**
  * 这是 鞠福娟 创建的哟~
  * on 16/11/23.
@@ -31,6 +35,14 @@ public class SweepImageView extends ImageView {
     private final static int MODE_SWEEP = 1;//点击重新搜索扫描
     private int mMode;
 
+    private Context context;
+    private int bitmapWidth = 300;//传入进来的图片的宽(单位dp)默认300dp
+    private int bitmapHeight = 300;//传入进来的图片的高(单位dp)默认300dp
+    private long sweepDuration = 5000;//动画一次执行的时间(默认5s)
+    private int sweepColor = Color.RED;//扫描的颜色
+    private int sweepWidth = 5;//扫描的边缘线的宽度
+    private int sweepAlpha = 100;//扫描线的透明度
+    private float sweepR;
 
     /*********** 构造方法*************/
     /**
@@ -44,6 +56,7 @@ public class SweepImageView extends ImageView {
 
     public SweepImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
         init();
     }
 
@@ -54,12 +67,14 @@ public class SweepImageView extends ImageView {
     private void init() {
         //设置初始的状态
         mMode = MODE_NORMAL;
-        addSweepAnim(5000, new LinearInterpolator());
+        addSweepAnim(sweepDuration, new LinearInterpolator());
+        sweepR = 0;
     }
 
     /***************
      * 提供给属性动画的方法
      ******************/
+
     public float getAngle() {
         return angle;
     }
@@ -67,6 +82,23 @@ public class SweepImageView extends ImageView {
     public void setAngle(float angle) {
         this.angle = angle;
     }
+
+    public float getSweepR() {
+        return sweepR;
+    }
+
+    public void setSweepR(float sweepR) {
+        this.sweepR = sweepR;
+    }
+
+    public int getSweepAlpha() {
+        return sweepAlpha;
+    }
+
+    public void setSweepAlpha(int sweepAlpha) {
+        this.sweepAlpha = sweepAlpha;
+    }
+
     /************** 绘制到界面上*****************/
     /**
      * 绘图方法
@@ -77,11 +109,15 @@ public class SweepImageView extends ImageView {
     protected void onDraw(Canvas canvas) {
         mHeight = getHeight();
         mWidth = getWidth();
+
         drawCircleImg(canvas, mWidth / 2, bgBitmap);
         switch (mMode) {
             case MODE_NORMAL:
                 canvas.save();
-                drawArc(canvas, Color.RED, 80, new int[]{Color.WHITE, Color.RED},5);
+                drawArc(canvas, sweepColor, 80, new int[]{Color.WHITE, sweepColor}, sweepWidth);
+                canvas.save();
+                drawCircleSweep(canvas, sweepR, sweepWidth, sweepAlpha, sweepColor);
+                canvas.restore();
                 canvas.restore();
                 break;
         }
@@ -101,8 +137,23 @@ public class SweepImageView extends ImageView {
         BitmapShader shader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
         mPaint.setShader(shader);
         canvas.drawCircle(mWidth / 2, mHeight / 2, r, mPaint);
+    }
 
-
+    /**
+     * 绘制扫面圆圈(点击后实现)
+     *
+     * @param canvas 画布
+     * @param r      圆的半径
+     * @param width  需要画圆的宽度
+     */
+    private void drawCircleSweep(Canvas canvas, float r, int width, int alpha, int color) {
+        Paint mPaint = new Paint();
+        mPaint.setAntiAlias(true);
+        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setStrokeWidth(width);
+        mPaint.setAlpha(alpha);
+        mPaint.setColor(color);
+        canvas.drawCircle(mWidth / 2, mHeight / 2, r, mPaint);
     }
 
     /**
@@ -114,7 +165,7 @@ public class SweepImageView extends ImageView {
      * @param colors 扇形渐变色的转变
      * @param width  边缘线的颜色
      */
-    private void drawArc(Canvas canvas, int color, int alpha, int[] colors,int width) {
+    private void drawArc(Canvas canvas, int color, int alpha, int[] colors, int width) {
         //关键代码(画布是可以转的)
         canvas.rotate(angle, mWidth / 2, mHeight / 2);
         Paint mPaint = new Paint();
@@ -125,22 +176,22 @@ public class SweepImageView extends ImageView {
         mPaint.setAlpha(alpha);
         mPaint.setShader(gradient);
         canvas.drawArc(arcRectF, 0, 360, false, mPaint);
-
+        //绘制线
         Paint lPaint = new Paint();
         lPaint.setColor(color);
         lPaint.setAntiAlias(true);
         lPaint.setStyle(Paint.Style.STROKE);
         lPaint.setStrokeWidth(width);
         canvas.drawLine(mWidth / 2, mHeight / 2, mWidth, mHeight / 2, lPaint);
-
-        Paint bigPaint=new Paint();
+        //绘制外边缘线
+        Paint bigPaint = new Paint();
         bigPaint.setAntiAlias(true);
         bigPaint.setStyle(Paint.Style.STROKE);
         bigPaint.setStrokeWidth(width);
         bigPaint.setColor(color);
-        SweepGradient bigShader=new SweepGradient(mWidth/2,mHeight/2,colors,null);
+        SweepGradient bigShader = new SweepGradient(mWidth / 2, mHeight / 2, colors, null);
         bigPaint.setShader(bigShader);
-        canvas.drawCircle(mWidth/2,mHeight/2,mWidth/2,bigPaint);
+        canvas.drawCircle(mWidth / 2, mHeight / 2, mWidth / 2, bigPaint);
     }
 
     /**
@@ -164,6 +215,7 @@ public class SweepImageView extends ImageView {
         objectAnimator.start();
     }
 
+
     /****************对外的方法**********************/
     /**
      * 设置背景图片
@@ -173,8 +225,46 @@ public class SweepImageView extends ImageView {
     @Override
     public void setImageBitmap(Bitmap bm) {
         super.setImageBitmap(bm);
-        this.bgBitmap = bm;
+        Bitmap u = Bitmap.createScaledBitmap(bm, DensityUtil.dip2Pix(context, bitmapWidth), DensityUtil.dip2Pix(context, bitmapHeight), true);
+        this.bgBitmap = u;
         invalidate();
     }
 
+    public void addSweepRestartAnim() {
+        ObjectAnimator rAnim = ObjectAnimator.ofFloat(this,
+                "sweepR",
+                DensityUtil.dip2Pix(context,0.7f*bitmapWidth/4),
+                DensityUtil.dip2Pix(context,bitmapWidth/2));
+        rAnim.setDuration(6000);
+        rAnim.setInterpolator(new LinearInterpolator());
+        rAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                invalidate();
+            }
+        });
+        rAnim.start();
+    }
+
+
+
+    public void setBitmapWidth(int bitmapWidth) {
+        this.bitmapWidth = bitmapWidth;
+    }
+
+    public void setBitmapHeight(int bitmapHeight) {
+        this.bitmapHeight = bitmapHeight;
+    }
+
+    public void setSweepDuration(long sweepDuration) {
+        this.sweepDuration = sweepDuration;
+    }
+
+    public void setSweepColor(int sweepColor) {
+        this.sweepColor = sweepColor;
+    }
+
+    public void setSweepWidth(int sweepWidth) {
+        this.sweepWidth = sweepWidth;
+    }
 }

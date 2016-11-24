@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.zrj.dllo.meetyou.R;
+import com.zrj.dllo.meetyou.personal.PersonalFragment;
 
 /**
  * 这是鞠福娟创建的哟~on 16/11/21.
@@ -22,12 +24,14 @@ import com.zrj.dllo.meetyou.R;
 
 public abstract class AbsBaseActivity extends AppCompatActivity {
 
+
     public int theme = R.style.AppTheme;
     private NightOrderBroadCast mBroadCast;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
 
         //夜间模式广播接收器
@@ -206,13 +210,8 @@ public abstract class AbsBaseActivity extends AppCompatActivity {
     final class NightOrderBroadCast extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-
-            Log.d("Sysout", "theme:before" + theme);
-
-
             theme = ((theme == R.style.AppTheme) ?
                     R.style.NightAppTheme : R.style.AppTheme);
-            Log.d("Sysout", "theme:" + theme);
             recreate();
         }
     }
@@ -230,5 +229,4 @@ public abstract class AbsBaseActivity extends AppCompatActivity {
             view.setOnClickListener(clickListener);
         }
     }
-
 }

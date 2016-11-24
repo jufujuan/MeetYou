@@ -2,6 +2,7 @@ package com.zrj.dllo.meetyou.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 
 /**
  * 这是 鞠福娟 创建的哟~
@@ -19,6 +20,8 @@ public class MeetYouApp extends Application{
     public void onCreate() {
         super.onCreate();
         sContext=this;
+        SharedPreferences sharedPreferences = getSharedPreferences("night", 0);
+        sharedPreferences.edit().putBoolean("isFragment", true).commit();
     }
 
     /**

@@ -9,6 +9,7 @@
         <item name="mainBackground">@android:color/white</item>
     </style>
 
+    <!--夜间模式主题-->
     <style name="NightAppTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/nightColorPrimary</item>

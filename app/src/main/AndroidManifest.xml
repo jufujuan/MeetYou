@@ -18,7 +18,6 @@
         </activity>
         <receiver android:name=".base.AbsBaseActivity$NightOrderBroadCast"/>
 
-
         <activity android:name=".base.AbsBaseActivity"/>
         <activity android:name=".login.LoginActivity">
         </activity>

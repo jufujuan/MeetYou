@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.zrj.dllo.meetyou.MainActivity">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/activity_main"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="com.zrj.dllo.meetyou.MainActivity">
 
     <FrameLayout
         android:id="@+id/main_fl"
@@ -17,14 +17,15 @@
     </FrameLayout>
 
     <LinearLayout
-        android:background="@color/colorDivider"
         android:layout_width="match_parent"
-        android:layout_height="1dp"/>
+        android:layout_height="1dp"
+        android:background="@color/colorDivider"/>
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -32,41 +33,49 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
+
                 <Button
                     android:id="@+id/aty_main_meet_btn"
-                    android:background="@drawable/btn_meet"
-                    style="@style/MainAtyBtn"/>
+                    style="@style/MainAtyBtn"
+                    android:background="@drawable/btn_meet"/>
+
                 <TextView
                     android:id="@+id/aty_main_meet_tv"
-                    android:text="@string/aty_main_meet_tv_text"
-                    style="@style/MainAtyTv"/>
+                    style="@style/MainAtyTv"
+                    android:text="@string/aty_main_meet_tv_text"/>
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
+
                 <Button
                     android:id="@+id/aty_main_msg_btn"
-                    android:background="@drawable/btn_msg"
-                    style="@style/MainAtyBtn"/>
+                    style="@style/MainAtyBtn"
+                    android:background="@drawable/btn_msg"/>
+
                 <TextView
                     android:id="@+id/aty_main_msg_tv"
-                    android:text="@string/aty_main_msg_tv_text"
-                    style="@style/MainAtyTv"/>
+                    style="@style/MainAtyTv"
+                    android:text="@string/aty_main_msg_tv_text"/>
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
+
                 <Button
                     android:id="@+id/aty_main_weather_btn"
-                    android:background="@drawable/btn_weather"
-                    style="@style/MainAtyBtn"/>
+                    style="@style/MainAtyBtn"
+                    android:background="@drawable/btn_weather"/>
+
                 <TextView
                     android:id="@+id/aty_main_weather_tv"
 
-                    android:text="@string/aty_main_weather_tv_text"
-                    style="@style/MainAtyTv"/>
+                    style="@style/MainAtyTv"
+                    android:text="@string/aty_main_weather_tv_text"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -75,17 +84,17 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true">
+
             <Button
                 android:id="@+id/aty_main_my_btn"
-                android:background="@drawable/btn_my"
-                style="@style/MainAtyBtn"/>
+                style="@style/MainAtyBtn"
+                android:background="@drawable/btn_my"/>
+
             <TextView
                 android:id="@+id/aty_main_my_tv"
-                android:text="@string/aty_main_my_tv_text"
-                style="@style/MainAtyTv"/>
-
+                style="@style/MainAtyTv"
+                android:text="@string/aty_main_my_tv_text"/>
         </LinearLayout>
-
     </RelativeLayout>
 
 </LinearLayout>

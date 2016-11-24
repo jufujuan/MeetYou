@@ -30,6 +30,7 @@
                     android:src="@mipmap/sidebar_pic"/>
 
                 <RelativeLayout
+
                     android:layout_width="match_parent"
                     android:layout_height="180dp"
                     android:background="#60000000"/>
@@ -122,9 +123,9 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="5dp"
+            android:layout_height="2dp"
             android:layout_marginTop="5dp"
-            android:background="#e2e1e1"
+            android:background="#9b9b9b"
             />
 
 
@@ -176,7 +177,6 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="7"
                 android:text="登录方式"
-
                 android:textSize="20dp"/>
 
             <ImageView
@@ -191,7 +191,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-
             android:orientation="horizontal">
 
             <ImageView
@@ -215,15 +214,14 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1.5"
                 android:src="@mipmap/switch_off"/>
-
         </LinearLayout>
 
 
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="#e2e1e1"/>
+            android:layout_height="2dp"
+            android:background="#9b9b9b"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -244,7 +242,6 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="7"
                 android:text="意见反馈"
-
                 android:textSize="20dp"/>
 
             <ImageView

@@ -12,7 +12,7 @@
     <!--主页面button点击后文字的颜色-->
     <color name="colorBtnSelected">#FD4633</color>
     <!--分割线颜色-->
-    <color name="colorDivider">#787676</color>
+    <color name="colorDivider">#5c5c5c</color>
 
 
 </resources>

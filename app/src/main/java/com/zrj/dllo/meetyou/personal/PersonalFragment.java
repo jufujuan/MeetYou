@@ -1,6 +1,7 @@
 package com.zrj.dllo.meetyou.personal;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -66,7 +67,6 @@ public class PersonalFragment extends AbsBaseFragment implements View.OnClickLis
         mNightImage.setOnClickListener(this);
         mImageViewLogin = bindView(R.id.personal_login_image);
         mImageViewLogin.setOnClickListener(this);
-
     }
 
     /**
@@ -86,9 +86,9 @@ public class PersonalFragment extends AbsBaseFragment implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.personal_night_iv:
-                LogUtils.d("点击");
-//                EventBusBean busBean = new EventBusBean();
-//                EventBus.getDefault().postSticky(busBean);
+                SharedPreferences sharedPreferences = context.getSharedPreferences("night", 0);
+                sharedPreferences.edit().putBoolean("isFragment",false).commit();
+
                 Intent intent1 = new Intent("night");
                 context.sendBroadcast(intent1);
                 break;

@@ -1,5 +1,6 @@
 package com.zrj.dllo.meetyou.find.mainfind;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.BDNotifyListener;//假如用到位置提醒功能，需要import该类
 import com.baidu.location.Poi;
+import com.zrj.dllo.meetyou.find.listfind.ListFindActivity;
 
 import java.util.List;
 
@@ -109,8 +111,11 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
 
     @Override
     public void onClick(View view) {
+        initLocation();
         showClickAnim();
         mLocationClient.start();
+
+        startActivity(new Intent(context, ListFindActivity.class));
     }
 
     private void initLocation(){

@@ -11,14 +11,35 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.AbsBaseActivity;
 import com.zrj.dllo.meetyou.Utils.BitmapBlurUtils;
 
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
+
 public class LoginActivity extends AbsBaseActivity {
+
     private ImageView mImageViewBackground;
     private FragmentManager mFragmentManager;
+    private LoginFragment loginFragment;
+    private RegisterFragment registerFragment;
+
+    private SaveListener<BmobUser> loginListener = new SaveListener<BmobUser>() {
+        @Override
+        public void done(BmobUser bmobUser, BmobException e) {
+            if (e == null) {
+                Toast.makeText(LoginActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+                finish();
+            } else {
+                Log.d("444", e.getMessage());
+                Toast.makeText(LoginActivity.this, "注册失败", Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 
     /**
      * 绑定布局
@@ -35,14 +56,11 @@ public class LoginActivity extends AbsBaseActivity {
      */
     @Override
     protected void initView() {
+        registerFragment = new RegisterFragment();
         mImageViewBackground = bindView(R.id.login_background_img1);
-//        mFragmentManager = getSupportFragmentManager();
-//        FragmentTransaction transaction = mFragmentManager.beginTransaction();
-//        transaction.replace(R.id.login_fl, LoginFragment.newInstance());
-//        transaction.commit();
-//
 
-        LoginFragment loginFragment = LoginFragment.newInstance();
+        mFragmentManager = getSupportFragmentManager();
+        loginFragment = new LoginFragment();
 
         LoginModel loginModel = new LoginModel();
         LoginPresenter loginPresenter = new LoginPresenter(loginFragment, loginModel);
@@ -50,10 +68,7 @@ public class LoginActivity extends AbsBaseActivity {
         loginFragment.setPresenter(loginPresenter);
 
         loginModel.setPresenter(loginPresenter);
-        getSupportFragmentManager().beginTransaction().replace(R.id.login_fl,loginFragment).commit();
-
-
-
+        mFragmentManager.beginTransaction().replace(R.id.login_fl, loginFragment).commit();
     }
 
     /**
@@ -75,5 +90,24 @@ public class LoginActivity extends AbsBaseActivity {
                 mImageViewBackground.setImageDrawable(drawable);
             }
         });
+    }
+
+    public void onLoginClick() {
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+        transaction.replace(R.id.login_fl, registerFragment);
+        transaction.commit();
+    }
+
+    public void onRegisterClick() {
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+        transaction.replace(R.id.login_fl, loginFragment);
+        transaction.commit();
+    }
+
+    public void regist(String userName,String pass){
+        BmobUser bmobUser = new BmobUser();
+        bmobUser.setUsername(userName);
+        bmobUser.setPassword(pass);
+        bmobUser.signUp(loginListener);
     }
 }

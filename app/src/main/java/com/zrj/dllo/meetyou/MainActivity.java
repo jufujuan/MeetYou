@@ -1,15 +1,8 @@
 package com.zrj.dllo.meetyou;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import android.util.Log;
 import android.view.View;
@@ -17,11 +10,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
-import com.zrj.dllo.meetyou.Utils.LogUtils;
 import com.zrj.dllo.meetyou.base.AbsBaseActivity;
 
-import com.zrj.dllo.meetyou.find.FindFragment;
+import com.zrj.dllo.meetyou.find.mainfind.FindFragment;
 
+import com.zrj.dllo.meetyou.find.mainfind.FindModel;
+import com.zrj.dllo.meetyou.find.mainfind.FindPresenter;
 import com.zrj.dllo.meetyou.personal.PersonalFragment;
 
 
@@ -76,9 +70,7 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
 
         if (is) {
             btnChange(mainAtyMeetBtn, mainAtyMeetTv);
-            FragmentTransaction mTransaction = mFragmentManager.beginTransaction();
-            mTransaction.replace(R.id.main_fl, FindFragment.newInstance());
-            mTransaction.commit();
+            Change2Meet();
         }else {
             mFragment = new PersonalFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.main_fl, mFragment).commit();
@@ -93,9 +85,7 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
             case R.id.aty_main_meet_btn:
                 btnChange(mainAtyMeetBtn, mainAtyMeetTv);
                 //切换Fragment
-                FragmentTransaction transaction =  mFragmentManager.beginTransaction();
-                transaction.replace(R.id.main_fl, FindFragment.newInstance());
-                transaction.commit();
+                Change2Meet();
                 break;
             case R.id.aty_main_msg_btn:
                 btnChange(mainAtyMsgBtn, mainAtyMsgTv);
@@ -109,6 +99,22 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
                 btnChange(mainAtyMyBtn, mainAtyMyTv);
                 break;
         }
+    }
+
+    /**
+     * 切换到觅友界面
+     */
+    private void Change2Meet() {
+        FindFragment findFragment=FindFragment.newInstance();
+        FindPresenter findPresenter=new FindPresenter();
+        FindModel findModel=new FindModel();
+
+        findFragment.setPersenter(findPresenter);
+        findModel.setPresenter(findPresenter);
+
+        FragmentTransaction transaction =  mFragmentManager.beginTransaction();
+        transaction.replace(R.id.main_fl, findFragment);
+        transaction.commit();
     }
 
     /**

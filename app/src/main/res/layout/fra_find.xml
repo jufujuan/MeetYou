@@ -1,27 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--觅友界面-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/fra_find_framelayout"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:gravity="center_horizontal"
               android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+    </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <com.zrj.dllo.meetyou.find.SweepImageView
+        <com.zrj.dllo.meetyou.find.mainfind.SweepImageView
             android:layout_gravity="center"
             android:id="@+id/fra_find_sweepImageView"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:scaleType="fitXY"/>
-        <com.zrj.dllo.meetyou.find.CircleImageView
+        <com.zrj.dllo.meetyou.find.mainfind.CircleImageView
             android:id="@+id/fra_find_circleImageView"
             android:layout_gravity="center"
             android:scaleType="fitXY"
             android:layout_width="150dp"
             android:layout_height="150dp"/>
     </FrameLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
+        <TextView
+            android:id="@+id/fra_find_seek_tv"
+            android:text="@string/fra_find_seek_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 
 </LinearLayout>

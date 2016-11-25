@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.zrj.dllo.meetyou.R;
@@ -35,10 +36,24 @@ public class LoginActivity extends AbsBaseActivity {
     @Override
     protected void initView() {
         mImageViewBackground = bindView(R.id.login_background_img1);
-        mFragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = mFragmentManager.beginTransaction();
-        transaction.replace(R.id.login_fl, LoginFragment.newInstance());
-        transaction.commit();
+//        mFragmentManager = getSupportFragmentManager();
+//        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+//        transaction.replace(R.id.login_fl, LoginFragment.newInstance());
+//        transaction.commit();
+//
+
+        LoginFragment loginFragment = LoginFragment.newInstance();
+
+        LoginModel loginModel = new LoginModel();
+        LoginPresenter loginPresenter = new LoginPresenter(loginFragment, loginModel);
+        Log.d("LoginActivity", "loginPresenter:" + loginPresenter);
+        loginFragment.setPresenter(loginPresenter);
+
+        loginModel.setPresenter(loginPresenter);
+        getSupportFragmentManager().beginTransaction().replace(R.id.login_fl,loginFragment).commit();
+
+
+
     }
 
     /**

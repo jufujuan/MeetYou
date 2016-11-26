@@ -54,10 +54,11 @@ public class LoginFragment extends AbsBaseFragment implements View.OnClickListen
     }
 
     private LoginActivity mLoginActivity;
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mLoginActivity = (LoginActivity)getActivity();
+        mLoginActivity = (LoginActivity) getActivity();
     }
 
     /**
@@ -69,14 +70,13 @@ public class LoginFragment extends AbsBaseFragment implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login_register:
-                mLoginActivity.onLoginClick();
+                mLoginActivity.onRegisterIntent();
                 break;
 
             case R.id.login_login_tv:
                 String userName = mEditTextUserName.getText().toString();
                 String userPassword = mEditTextPassword.getText().toString();
-//                Log.d("LoginFragment", userName + userPassword);
-//                Log.d("LoginFragment", "mPresenter:" + mPresenter);
+                mLoginActivity.loginOnClick(userName, userPassword);
 //                mPresenter.login(userName, userPassword);
                 break;
         }

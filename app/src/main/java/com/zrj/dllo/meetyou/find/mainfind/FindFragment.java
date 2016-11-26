@@ -10,6 +10,7 @@ import android.view.animation.ScaleAnimation;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.zrj.dllo.meetyou.MainActivity;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.Utils.DensityUtil;
 import com.zrj.dllo.meetyou.app.MeetYouApp;
@@ -114,10 +115,7 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
         initLocation();
         showClickAnim();
         mLocationClient.start();
-
-        goTo(context, ListFindActivity.class);
-        //startActivity(new Intent(context,ListFindActivity.class));
-
+        goTo(context, MainActivity.class,Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
     }
 
     private void initLocation(){

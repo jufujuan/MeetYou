@@ -100,6 +100,15 @@ public abstract class AbsBaseFragment extends Fragment {
         startActivity(intent);
         //跳转动画
     }
+    /**
+     * Activity跳转(带着flags的)
+     */
+    protected void goTo(Context from, Class<?> to,int flags) {
+        Intent intent = new Intent(from, to);
+        intent.setFlags(flags);
+        startActivity(intent);
+        //跳转动画
+    }
 
     /**
      * Activity跳转(带返回值)

@@ -4,6 +4,7 @@
               android:layout_height="wrap_content"
               android:orientation="vertical">
 
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/fra_list_find_recyclerview"
         android:layout_width="match_parent"

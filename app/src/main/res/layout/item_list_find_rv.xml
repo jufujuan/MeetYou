@@ -30,6 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="20dp">
         <ImageView
+            android:id="@+id/item_list_find_dislike"
             android:layout_margin="5dp"
             android:src="@mipmap/icon_dislike"
             android:layout_width="15dp"
@@ -42,6 +43,7 @@
             android:id="@+id/view"/>
 
         <ImageView
+            android:id="@+id/item_list_find_like"
             android:layout_margin="5dp"
             android:layout_width="15dp"
             android:src="@mipmap/icon_like"

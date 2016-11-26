@@ -27,17 +27,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
+
+        </activity>
+        <activity android:name=".find.listfind.ListFindActivity"
+            android:parentActivityName=".MainActivity"/>
+        <receiver android:name=".base.AbsBaseActivity$NightOrderBroadCast"/>
+
+        <activity android:name=".base.AbsBaseActivity"/>
+        <activity android:name=".login.LoginActivity">
+        </activity>
+        <activity android:name=".SweepActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity>
-        <activity android:name=".find.listfind.ListFindActivity"/>
-        <receiver android:name=".base.AbsBaseActivity$NightOrderBroadCast"/>
-
-        <activity android:name=".base.AbsBaseActivity"/>
-        <activity android:name=".login.LoginActivity">
         </activity>
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
         </service>

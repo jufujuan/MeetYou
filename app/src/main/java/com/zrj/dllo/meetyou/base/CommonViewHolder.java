@@ -120,6 +120,30 @@ public class CommonViewHolder extends RecyclerView.ViewHolder {
         Glide.with(context).load(imgUrl).into(imageView);
         return this;
     }
+    /**
+     * 设置网络图片
+     *
+     * @param id     ImageView的资源id
+     * @param imgUrl 图片的网址
+     * @return this
+     */
+    public CommonViewHolder setImage(int id, String imgUrl, Context context, View.OnClickListener onClickListener) {
+        ImageView imageView = getView(id);
+        Glide.with(context).load(imgUrl).into(imageView);
+        imageView.setOnClickListener(onClickListener);
+        return this;
+    }
+    /**
+     * 设置ImageView(带点击监听)
+     *
+     * @param id     ImageView的资源id
+     * @return this
+     */
+    public CommonViewHolder setImage(int id, View.OnClickListener listener) {
+        ImageView imageView = getView(id);
+        imageView.setOnClickListener(listener);
+        return this;
+    }
 
     /**
      * item的点击事件

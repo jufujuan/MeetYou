@@ -33,6 +33,14 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+
+
+
+
+
+
+
         <receiver android:name=".base.AbsBaseActivity$NightOrderBroadCast"/>
 
         <activity android:name=".base.AbsBaseActivity"/>

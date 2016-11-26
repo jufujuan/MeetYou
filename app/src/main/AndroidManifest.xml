@@ -34,13 +34,6 @@
             </intent-filter>
         </activity>
 
-
-
-
-
-
-
-
         <receiver android:name=".base.AbsBaseActivity$NightOrderBroadCast"/>
 
         <activity android:name=".base.AbsBaseActivity"/>

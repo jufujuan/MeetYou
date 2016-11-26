@@ -12,7 +12,9 @@ import android.os.Message;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zrj.dllo.meetyou.R;
@@ -25,7 +27,7 @@ import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 
-public class LoginActivity extends AbsBaseActivity {
+public class LoginActivity extends AbsBaseActivity implements View.OnClickListener {
 
     private ImageView mImageViewBackground;
     private FragmentManager mFragmentManager;
@@ -59,7 +61,6 @@ public class LoginActivity extends AbsBaseActivity {
                 editor.putString("userName", mEventBusBean.getUsername());
                 editor.commit();
                 Log.d("MainActivity", "登录成功");
-
                 finish();
             } else {
                 Toast.makeText(LoginActivity.this, "用户名或密码不正确", Toast.LENGTH_SHORT).show();
@@ -97,6 +98,8 @@ public class LoginActivity extends AbsBaseActivity {
 
         loginModel.setPresenter(loginPresenter);
         mFragmentManager.beginTransaction().replace(R.id.login_fl, loginFragment).commit();
+        TextView textViewEsc = bindView(R.id.login_esc_tv);
+        textViewEsc.setOnClickListener(this);
     }
 
     /**
@@ -152,5 +155,14 @@ public class LoginActivity extends AbsBaseActivity {
 
         mEventBusBean = new EventBusBean();
         mEventBusBean.setUsername(userName);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.login_esc_tv:
+                finish();
+                break;
+        }
     }
 }

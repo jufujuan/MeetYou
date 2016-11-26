@@ -14,6 +14,7 @@
         />
 
     <TextView
+        android:id="@+id/login_esc_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"

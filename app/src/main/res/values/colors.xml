@@ -9,10 +9,12 @@
     <color name="nightColorAccent">#123456</color>
 
 
-    <!--主页面button点击后文字的颜色-->
-    <color name="colorBtnSelected">#FD4633</color>
+    <!--App主色调-->
+    <color name="colorMain">#FD4633</color>
     <!--分割线颜色-->
-    <color name="colorDivider">#5c5c5c</color>
+    <color name="colorDivider">#5C5C5C</color>
+    <!--纯白色-->
+    <color name="colorWhite">#FFFFFF</color>
 
 
 </resources>

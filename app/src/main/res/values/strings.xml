@@ -7,5 +7,6 @@
     <string name="aty_main_my_tv_text">我的</string>
     <!--觅友界面-->
     <string name="fra_find_seek_text">正在寻找附近的人...</string>
+    <string name="item_list_find_text">性别女,爱好男</string>
 
 </resources>

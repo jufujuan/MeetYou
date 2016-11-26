@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_list_find_cardview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="@dimen/fra_list_find_card_black_distion"
+    >
+
+
+    <ImageView
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:scaleType="centerCrop"
+        android:id="@+id/item_list_find_img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+    <LinearLayout
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:layout_gravity="bottom"
+        android:gravity="center_vertical"
+        android:id="@+id/item_list_find_bg"
+        android:orientation="horizontal"
+        android:background="#605C5C5C"
+        android:layout_width="match_parent"
+        android:layout_height="20dp">
+        <ImageView
+            android:layout_margin="5dp"
+            android:src="@mipmap/icon_dislike"
+            android:layout_width="15dp"
+            android:layout_height="15dp"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/view"/>
+
+        <ImageView
+            android:layout_margin="5dp"
+            android:layout_width="15dp"
+            android:src="@mipmap/icon_like"
+            android:layout_height="15dp"/>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

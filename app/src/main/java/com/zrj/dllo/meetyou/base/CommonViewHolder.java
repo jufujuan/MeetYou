@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 /**
  * Created by REN - the most cool programmer all over the world
  * on 16/11/26.
@@ -52,7 +54,6 @@ public class CommonViewHolder extends RecyclerView.ViewHolder {
     }
 
 
-
     /**
      * 用于recyclerView
      *
@@ -71,6 +72,7 @@ public class CommonViewHolder extends RecyclerView.ViewHolder {
 
     /**
      * 返回行布局
+     *
      * @return
      */
     public View getItemView() {
@@ -82,7 +84,8 @@ public class CommonViewHolder extends RecyclerView.ViewHolder {
 
     /**
      * 设置文字
-     * @param id view的id
+     *
+     * @param id   view的id
      * @param text 要设置的文字
      * @return this
      */
@@ -94,7 +97,8 @@ public class CommonViewHolder extends RecyclerView.ViewHolder {
 
     /**
      * 设置本地图片
-     * @param id view的id
+     *
+     * @param id    view的id
      * @param imgId 图片的id
      * @return this
      */
@@ -105,7 +109,21 @@ public class CommonViewHolder extends RecyclerView.ViewHolder {
     }
 
     /**
+     * 设置网络图片
+     *
+     * @param id     ImageView的资源id
+     * @param imgUrl 图片的网址
+     * @return this
+     */
+    public CommonViewHolder setImage(int id, String imgUrl,Context context) {
+        ImageView imageView = getView(id);
+        Glide.with(context).load(imgUrl).into(imageView);
+        return this;
+    }
+
+    /**
      * item的点击事件
+     *
      * @param listener 点击监听
      * @return this
      */
@@ -116,7 +134,8 @@ public class CommonViewHolder extends RecyclerView.ViewHolder {
 
     /**
      * 设置view的点击事件
-     * @param id view的id
+     *
+     * @param id       view的id
      * @param listener 点击监听
      * @return this
      */

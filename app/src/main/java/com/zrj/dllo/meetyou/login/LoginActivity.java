@@ -1,6 +1,8 @@
 package com.zrj.dllo.meetyou.login;
 
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -52,6 +54,10 @@ public class LoginActivity extends AbsBaseActivity {
 
                 EventBus.getDefault().post(mEventBusBean);
                 Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                SharedPreferences preferences = getSharedPreferences("userMessage", Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("userName", mEventBusBean.getUsername());
+                editor.commit();
                 Log.d("MainActivity", "登录成功");
 
                 finish();
@@ -60,12 +66,8 @@ public class LoginActivity extends AbsBaseActivity {
                 Log.d("MainActivity", e.getMessage());
                 Log.d("MainActivity", "登录失败");
             }
-
-
         }
     };
-    private String mS;
-
 
     /**
      * 绑定布局
@@ -148,7 +150,6 @@ public class LoginActivity extends AbsBaseActivity {
         loginUserBean.setPassword(passWord);
         loginUserBean.login(loginListener);
 
-        mS = userName;
         mEventBusBean = new EventBusBean();
         mEventBusBean.setUsername(userName);
     }

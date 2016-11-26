@@ -42,7 +42,6 @@ public class LoginFragment extends AbsBaseFragment implements View.OnClickListen
         mEditTextPassword = bindView(R.id.login_password_edittext);
         TextView textViewLogin = bindView(R.id.login_login_tv);
         textViewLogin.setOnClickListener(this);
-
     }
 
     /**
@@ -50,7 +49,6 @@ public class LoginFragment extends AbsBaseFragment implements View.OnClickListen
      */
     @Override
     protected void initDatas() {
-
     }
 
     private LoginActivity mLoginActivity;

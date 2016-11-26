@@ -11,7 +11,7 @@
         android:layout_marginLeft="15dp"
         android:background="@null"
         android:drawableLeft="@mipmap/icon_mobile"
-        android:hint=" 手机号"
+        android:hint=" 账号或昵称"
         android:textColor="@color/colorDivider"
         android:textCursorDrawable="@drawable/edittext_one"
         android:textSize="20dp"

@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
+import com.zrj.dllo.meetyou.msg.MsgFragment;
 import com.zrj.dllo.meetyou.base.AbsBaseActivity;
 
 import com.zrj.dllo.meetyou.find.mainfind.FindFragment;
@@ -89,6 +90,8 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
                 break;
             case R.id.aty_main_msg_btn:
                 btnChange(mainAtyMsgBtn, mainAtyMsgTv);
+                // 切换到消息页面
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_fl, new MsgFragment()).commit();
                 break;
             case R.id.aty_main_weather_btn:
                 btnChange(mainAtyWeatherBtn, mainAtyWeatherTv);

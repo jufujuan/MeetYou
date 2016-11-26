@@ -171,4 +171,16 @@ public abstract class AbsBaseFragment extends Fragment {
     protected void addAnimator() {
 
     }
+
+    /**
+     * view添加点击事件
+     * @param clickListener 点击事件的监听
+     * @param views 要添加的view
+     */
+    protected void setClickListener(View.OnClickListener clickListener, View... views) {
+        for (View view :
+                views) {
+            view.setOnClickListener(clickListener);
+        }
+    }
 }

@@ -8,4 +8,11 @@ import cn.bmob.v3.BmobUser;
  */
 
 public class LoginUserBean extends BmobUser{
+
+
+
+
+
+
+
 }

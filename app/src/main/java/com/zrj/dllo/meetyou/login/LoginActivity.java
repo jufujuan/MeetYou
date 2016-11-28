@@ -2,6 +2,7 @@ package com.zrj.dllo.meetyou.login;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -17,9 +18,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.zrj.dllo.meetyou.MainActivity;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.AbsBaseActivity;
 import com.zrj.dllo.meetyou.Utils.BitmapBlurUtils;
+import com.zrj.dllo.meetyou.eventbus.EventBusBean;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -34,13 +37,20 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
     private LoginFragment loginFragment;
     private RegisterFragment registerFragment;
     private EventBusBean mEventBusBean;
+    private String mUserName;
+    private String mPassword;
+
+
     //注册
     private SaveListener<BmobUser> registerListener = new SaveListener<BmobUser>() {
         @Override
         public void done(BmobUser bmobUser, BmobException e) {
             if (e == null) {
                 Toast.makeText(LoginActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
-                finish();
+                loginOnClick(mUserName, mPassword);
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+
             } else {
                 Log.d("444", e.getMessage());
                 Toast.makeText(LoginActivity.this, "注册失败", Toast.LENGTH_SHORT).show();
@@ -54,14 +64,17 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
         public void done(LoginUserBean loginUserBean, BmobException e) {
             if (e == null) {
 
+
                 EventBus.getDefault().post(mEventBusBean);
                 Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                 SharedPreferences preferences = getSharedPreferences("userMessage", Activity.MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("userName", mEventBusBean.getUsername());
                 editor.commit();
+                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                startActivity(intent);
                 Log.d("MainActivity", "登录成功");
-                finish();
+//                finish();
             } else {
                 Toast.makeText(LoginActivity.this, "用户名或密码不正确", Toast.LENGTH_SHORT).show();
                 Log.d("MainActivity", e.getMessage());
@@ -143,6 +156,9 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
         bmobUser.setUsername(userName);
         bmobUser.setPassword(passWord);
         bmobUser.signUp(registerListener);
+        mUserName = userName;
+        mPassword = passWord;
+
     }
 
     //登录操作

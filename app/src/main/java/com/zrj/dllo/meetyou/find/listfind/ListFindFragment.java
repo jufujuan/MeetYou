@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.Utils.LogUtils;
 import com.zrj.dllo.meetyou.base.AbsBaseFragment;
+import com.zrj.dllo.meetyou.find.ttfind.ListTTActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +80,7 @@ public class ListFindFragment extends AbsBaseFragment implements View.OnClickLis
                 break;
             case R.id.item_list_find_img:
                 Toast.makeText(context, "点击了图片", Toast.LENGTH_SHORT).show();
+                goTo(context, ListTTActivity.class);
                 break;
         }
     }

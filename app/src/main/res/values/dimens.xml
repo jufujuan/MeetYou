@@ -7,4 +7,6 @@
     <!--觅友详情-->
     <dimen name="fra_list_find_card_black_distion">8dp</dimen>
 
+    <dimen name="navigation_drawer_width">240dp</dimen>
+
 </resources>

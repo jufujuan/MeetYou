@@ -27,7 +27,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity android:name=".find.listfind.ListFindActivity"
             android:parentActivityName=".MainActivity"/>
@@ -37,12 +41,11 @@
         <activity android:name=".login.LoginActivity">
         </activity>
         <activity android:name=".SweepActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
+        <activity android:name=".find.ttfind.ListTTActivity"/>
+
+
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
         </service>
         <meta-data

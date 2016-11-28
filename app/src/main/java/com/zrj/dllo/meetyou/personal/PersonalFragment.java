@@ -21,7 +21,8 @@ import android.widget.Toast;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.tools.BitmapBlurUtils;
 import com.zrj.dllo.meetyou.base.AbsBaseFragment;
-import com.zrj.dllo.meetyou.login.EventBusBean;
+import com.zrj.dllo.meetyou.editor.EditorActivity;
+import com.zrj.dllo.meetyou.eventbus.EventBusBean;
 import com.zrj.dllo.meetyou.login.LoginActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -43,6 +44,7 @@ public class PersonalFragment extends AbsBaseFragment implements View.OnClickLis
     private Bitmap mBmp1;
     private Resources mRes1;
     private ImageView mPullImgUnLogin;
+    private TextView mTextViewEdtor;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -125,6 +127,8 @@ public class PersonalFragment extends AbsBaseFragment implements View.OnClickLis
         mRelativeLayoutEscLogin = bindView(R.id.personal_esc_login_rl);
         mRelativeLayoutEscLogin.setOnClickListener(this);
         mPullImgUnLogin = bindView(R.id.pull_img_un_login);
+        mTextViewEdtor = bindView(R.id.personal_editor_tv);
+        mTextViewEdtor.setOnClickListener(this);
     }
 
     /**
@@ -157,14 +161,23 @@ public class PersonalFragment extends AbsBaseFragment implements View.OnClickLis
                 startActivity(intent);
                 break;
             case R.id.personal_esc_login_rl:
-                mLinearLayoutUnLogin.setVisibility(View.VISIBLE);
+
                 SharedPreferences preferences = context.getSharedPreferences("userMessage", Activity.MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.clear();
-//                editor.putString("userName",);
+                Intent intent3 = new Intent(getActivity(),LoginActivity.class);
+                startActivity(intent3);
                 editor.commit();
                 Toast.makeText(context, "已退出登录", Toast.LENGTH_SHORT).show();
+                
+
                 break;
+            case R.id.personal_editor_tv:
+                Intent intent2 = new Intent(getActivity(), EditorActivity.class);
+                startActivity(intent2);
+                break;
+
+
         }
     }
 

@@ -1,4 +1,4 @@
-package com.zrj.dllo.meetyou.login;
+package com.zrj.dllo.meetyou.eventbus;
 
 /**
  * Created by ${ZhaoXuancheng} on 16/11/26.

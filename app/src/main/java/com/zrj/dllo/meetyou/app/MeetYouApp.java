@@ -25,7 +25,6 @@ public class MeetYouApp extends Application {
         SharedPreferences sharedPreferences = getSharedPreferences("night", 0);
         sharedPreferences.edit().putBoolean("isFragment", true).commit();
         Bmob.initialize(this, "aa000b85c4f21c464fdb127df4e5744b");
-
     }
 
     /**

@@ -101,22 +101,25 @@
             android:orientation="horizontal">
 
             <TextView
+                android:gravity="center"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="          我的收藏"/>
+                android:text="我的收藏"/>
 
             <TextView
+                android:gravity="center"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="          清除缓存"/>
+                android:text="清除缓存"/>
 
             <TextView
+                android:gravity="center"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="          好友列表"/>
+                android:text="好友列表"/>
 
 
         </LinearLayout>
@@ -456,22 +459,25 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:gravity="center"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="          我的收藏"/>
+                    android:text="我的收藏"/>
 
                 <TextView
+                    android:gravity="center"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="          清除缓存"/>
+                    android:text="清除缓存"/>
 
                 <TextView
+                    android:gravity="center"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="          好友列表"/>
+                    android:text="好友列表"/>
 
 
             </LinearLayout>
@@ -700,8 +706,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:background="#e2e1e1"
+                android:layout_height="60dp"
                 >
 
                 <RelativeLayout

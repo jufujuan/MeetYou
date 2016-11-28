@@ -9,6 +9,7 @@ import cn.bmob.v3.BmobUser;
  */
 
 public class LoginUserBean extends BmobUser{
+
     private String userImgUrl;//用户头像
     private String likeCount;//喜欢的人数
     private String locationDate;//最近更新位置日期
@@ -86,4 +87,5 @@ public class LoginUserBean extends BmobUser{
     public void setRadius(String radius) {
         this.radius = radius;
     }
+
 }

@@ -2,7 +2,7 @@ package com.zrj.dllo.meetyou.login;
 
 import android.text.TextUtils;
 
-import com.zrj.dllo.meetyou.Utils.LogUtils;
+import com.zrj.dllo.meetyou.tools.LogUtils;
 
 /**
  * Created by ${ZhaoXuancheng} on 16/11/24.

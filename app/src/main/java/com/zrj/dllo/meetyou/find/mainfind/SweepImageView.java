@@ -17,8 +17,7 @@ import android.util.AttributeSet;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
-import com.zrj.dllo.meetyou.Utils.DensityUtil;
-import com.zrj.dllo.meetyou.Utils.LogUtils;
+import com.zrj.dllo.meetyou.tools.DensityUtil;
 
 /**
  * 这是 鞠福娟 创建的哟~

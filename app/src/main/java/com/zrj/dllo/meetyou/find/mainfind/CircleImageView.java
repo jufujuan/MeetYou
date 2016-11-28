@@ -1,7 +1,5 @@
 package com.zrj.dllo.meetyou.find.mainfind;
 
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
@@ -10,12 +8,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Shader;
 import android.util.AttributeSet;
-import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 
-import com.zrj.dllo.meetyou.Utils.DensityUtil;
+import com.zrj.dllo.meetyou.tools.DensityUtil;
 
 /**
  * 这是 鞠福娟 创建的哟~

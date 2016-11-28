@@ -6,19 +6,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.ScaleAnimation;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.Utils.DensityUtil;
-import com.zrj.dllo.meetyou.app.MeetYouApp;
+import com.zrj.dllo.meetyou.MeetYouApp;
 import com.zrj.dllo.meetyou.base.AbsBaseFragment;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.baidu.location.BDNotifyListener;//假如用到位置提醒功能，需要import该类
 import com.baidu.location.Poi;
 
 import java.util.List;

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class ContactRecyclerAdapter extends RecyclerView.Adapter<CommonViewHolder> {
 
-    private ArrayList<ContactBean> mContactBeen;
+    private ArrayList<ContactBean> mContactBeen = new ArrayList<>();
 
     public void setContactBeen(ArrayList<ContactBean> contactBeen) {
         mContactBeen = contactBeen;

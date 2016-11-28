@@ -4,7 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
 
-import com.zrj.dllo.meetyou.app.MeetYouApp;
+import com.zrj.dllo.meetyou.MeetYouApp;
 
 /**
  * 这是 鞠福娟 创建的哟~

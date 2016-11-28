@@ -19,6 +19,7 @@ public class LoginUserBean extends BmobUser{
     private double radius;//半径
 
     public LoginUserBean() {
+        setTableName("_User");
     }
 
     public LoginUserBean(String username, String userImgUrl, int likeCount, String locationDate, double latitude, double lontitude, String adress, double radius) {

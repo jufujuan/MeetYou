@@ -114,9 +114,7 @@ public class SweepImageView extends ImageView {
             case MODE_NORMAL:
                 canvas.save();
                 drawArc(canvas, sweepColor, 80, new int[]{Color.WHITE, sweepColor}, sweepWidth);
-                canvas.save();
                 drawCircleSweep(canvas, sweepR-3, sweepWidth, sweepAlpha, sweepColor);
-                canvas.restore();
                 canvas.restore();
                 break;
         }

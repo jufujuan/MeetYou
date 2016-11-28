@@ -1,18 +1,13 @@
 package com.zrj.dllo.meetyou.login;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
-import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zrj.dllo.meetyou.R;
-import com.zrj.dllo.meetyou.Utils.LogUtils;
-import com.zrj.dllo.meetyou.Utils.ToastUtils;
 import com.zrj.dllo.meetyou.base.AbsBaseFragment;
 
 /**
@@ -25,14 +20,6 @@ public class LoginFragment extends AbsBaseFragment implements View.OnClickListen
     private LoginContract.Presenter mPresenter;
     private EditText mEditTextPassword;
     private EditText mEditTextUserName;
-
-    public static LoginFragment newInstance() {
-
-        Bundle args = new Bundle();
-        LoginFragment fragment = new LoginFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     /**
      * 绑定布局
@@ -55,7 +42,6 @@ public class LoginFragment extends AbsBaseFragment implements View.OnClickListen
         mEditTextPassword = bindView(R.id.login_password_edittext);
         TextView textViewLogin = bindView(R.id.login_login_tv);
         textViewLogin.setOnClickListener(this);
-
     }
 
     /**
@@ -63,7 +49,14 @@ public class LoginFragment extends AbsBaseFragment implements View.OnClickListen
      */
     @Override
     protected void initDatas() {
+    }
 
+    private LoginActivity mLoginActivity;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mLoginActivity = (LoginActivity) getActivity();
     }
 
     /**
@@ -75,18 +68,14 @@ public class LoginFragment extends AbsBaseFragment implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login_register:
-                FragmentManager manager = getFragmentManager();
-                FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.login_fl, RegisterFragment.newInstance());
-                transaction.commit();
+                mLoginActivity.onRegisterIntent();
                 break;
 
             case R.id.login_login_tv:
                 String userName = mEditTextUserName.getText().toString();
                 String userPassword = mEditTextPassword.getText().toString();
-                Log.d("LoginFragment", userName + userPassword);
-                Log.d("LoginFragment", "mPresenter:" + mPresenter);
-                mPresenter.login(userName, userPassword);
+                mLoginActivity.loginOnClick(userName, userPassword);
+//                mPresenter.login(userName, userPassword);
                 break;
         }
     }

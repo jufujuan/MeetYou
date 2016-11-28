@@ -1,6 +1,8 @@
 package com.zrj.dllo.meetyou.login;
 
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,14 +13,61 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.AbsBaseActivity;
 import com.zrj.dllo.meetyou.Utils.BitmapBlurUtils;
 
+import org.greenrobot.eventbus.EventBus;
+
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
+
 public class LoginActivity extends AbsBaseActivity {
+
     private ImageView mImageViewBackground;
     private FragmentManager mFragmentManager;
+    private LoginFragment loginFragment;
+    private RegisterFragment registerFragment;
+    private EventBusBean mEventBusBean;
+    //注册
+    private SaveListener<BmobUser> registerListener = new SaveListener<BmobUser>() {
+        @Override
+        public void done(BmobUser bmobUser, BmobException e) {
+            if (e == null) {
+                Toast.makeText(LoginActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+                finish();
+            } else {
+                Log.d("444", e.getMessage());
+                Toast.makeText(LoginActivity.this, "注册失败", Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
+
+    //登录
+    private SaveListener<LoginUserBean> loginListener = new SaveListener<LoginUserBean>() {
+        @Override
+        public void done(LoginUserBean loginUserBean, BmobException e) {
+            if (e == null) {
+
+                EventBus.getDefault().post(mEventBusBean);
+                Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                SharedPreferences preferences = getSharedPreferences("userMessage", Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("userName", mEventBusBean.getUsername());
+                editor.commit();
+                Log.d("MainActivity", "登录成功");
+
+                finish();
+            } else {
+                Toast.makeText(LoginActivity.this, "用户名或密码不正确", Toast.LENGTH_SHORT).show();
+                Log.d("MainActivity", e.getMessage());
+                Log.d("MainActivity", "登录失败");
+            }
+        }
+    };
 
     /**
      * 绑定布局
@@ -35,14 +84,11 @@ public class LoginActivity extends AbsBaseActivity {
      */
     @Override
     protected void initView() {
+        registerFragment = new RegisterFragment();
         mImageViewBackground = bindView(R.id.login_background_img1);
-//        mFragmentManager = getSupportFragmentManager();
-//        FragmentTransaction transaction = mFragmentManager.beginTransaction();
-//        transaction.replace(R.id.login_fl, LoginFragment.newInstance());
-//        transaction.commit();
-//
 
-        LoginFragment loginFragment = LoginFragment.newInstance();
+        mFragmentManager = getSupportFragmentManager();
+        loginFragment = new LoginFragment();
 
         LoginModel loginModel = new LoginModel();
         LoginPresenter loginPresenter = new LoginPresenter(loginFragment, loginModel);
@@ -50,10 +96,7 @@ public class LoginActivity extends AbsBaseActivity {
         loginFragment.setPresenter(loginPresenter);
 
         loginModel.setPresenter(loginPresenter);
-        getSupportFragmentManager().beginTransaction().replace(R.id.login_fl,loginFragment).commit();
-
-
-
+        mFragmentManager.beginTransaction().replace(R.id.login_fl, loginFragment).commit();
     }
 
     /**
@@ -75,5 +118,39 @@ public class LoginActivity extends AbsBaseActivity {
                 mImageViewBackground.setImageDrawable(drawable);
             }
         });
+    }
+
+    //登录跳转至注册
+    public void onRegisterIntent() {
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+        transaction.replace(R.id.login_fl, registerFragment);
+        transaction.commit();
+    }
+
+    //注册跳转至登录
+    public void onLoginIntent() {
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+        transaction.replace(R.id.login_fl, loginFragment);
+        transaction.commit();
+    }
+
+    //注册操作
+    public void registerOnClick(String userName, String passWord) {
+        BmobUser bmobUser = new BmobUser();
+        bmobUser.setUsername(userName);
+        bmobUser.setPassword(passWord);
+        bmobUser.signUp(registerListener);
+    }
+
+    //登录操作
+    public void loginOnClick(String userName, String passWord) {
+
+        LoginUserBean loginUserBean = new LoginUserBean();
+        loginUserBean.setUsername(userName);
+        loginUserBean.setPassword(passWord);
+        loginUserBean.login(loginListener);
+
+        mEventBusBean = new EventBusBean();
+        mEventBusBean.setUsername(userName);
     }
 }

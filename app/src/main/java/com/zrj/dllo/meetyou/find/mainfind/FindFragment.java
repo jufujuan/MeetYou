@@ -22,6 +22,8 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.Poi;
 import com.zrj.dllo.meetyou.login.LoginUserBean;
+import com.zrj.dllo.meetyou.widget.CircleImageView;
+import com.zrj.dllo.meetyou.widget.SweepImageView;
 
 import java.util.List;
 

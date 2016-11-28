@@ -1,4 +1,4 @@
-package com.zrj.dllo.meetyou.find.mainfind;
+package com.zrj.dllo.meetyou.widget;
 
 import android.content.Context;
 import android.graphics.Bitmap;

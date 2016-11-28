@@ -14,13 +14,13 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <com.zrj.dllo.meetyou.find.mainfind.SweepImageView
+        <com.zrj.dllo.meetyou.widget.SweepImageView
             android:layout_gravity="center"
             android:id="@+id/fra_find_sweepImageView"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:scaleType="fitXY"/>
-        <com.zrj.dllo.meetyou.find.mainfind.CircleImageView
+        <com.zrj.dllo.meetyou.widget.CircleImageView
             android:id="@+id/fra_find_circleImageView"
             android:layout_gravity="center"
             android:scaleType="fitXY"

@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.RadioButton;
 
 import com.zrj.dllo.meetyou.R;
-import com.zrj.dllo.meetyou.Utils.CircularImageViewUtils;
+import com.zrj.dllo.meetyou.tools.CircularImageViewUtils;
 import com.zrj.dllo.meetyou.base.AbsBaseFragment;
 import com.zrj.dllo.meetyou.msg.contact.MsgContactFragment;
 

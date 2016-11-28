@@ -19,7 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zrj.dllo.meetyou.R;
-import com.zrj.dllo.meetyou.Utils.BitmapBlurUtils;
+import com.zrj.dllo.meetyou.tools.BitmapBlurUtils;
 import com.zrj.dllo.meetyou.base.AbsBaseFragment;
 import com.zrj.dllo.meetyou.editor.EditorActivity;
 import com.zrj.dllo.meetyou.eventbus.EventBusBean;

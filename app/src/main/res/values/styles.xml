@@ -18,6 +18,9 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="mainBackground">@color/nightColorPrimaryDark</item>
     </style>
+    <!--用来用在toolbar身上-->
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
     <attr name="mainBackground" format="color|reference"></attr>
 

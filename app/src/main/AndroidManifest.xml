@@ -33,6 +33,18 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <!-- SD卡读取权限，用户写入离线定位数据 -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <!-- SD卡读取权限，用户写入离线定位数据-->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>
+
+    <!--环信需要的权限-->
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:name=".app.MeetYouApp"
@@ -45,7 +57,8 @@
             <category android:name="android.intent.category.LAUNCHER" />
 
         </activity>
-
+        <activity android:name=".find.listfind.ListFindActivity"
+            android:parentActivityName=".MainActivity"/>
         <receiver android:name=".base.AbsBaseActivity$NightOrderBroadCast"/>
 
         <activity android:name=".base.AbsBaseActivity"/>
@@ -59,10 +72,19 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name="com.baidu.location.f"
-            android:enabled="true"
-            android:process=":remote">
+        <activity android:name=".SweepActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".find.ttfind.ListTTActivity"/>
+
+
+        <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
+
+
         </service>
 
         <meta-data

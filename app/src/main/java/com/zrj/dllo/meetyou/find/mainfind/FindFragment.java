@@ -1,16 +1,18 @@
 package com.zrj.dllo.meetyou.find.mainfind;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.ScaleAnimation;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.zrj.dllo.meetyou.MainActivity;
 import com.zrj.dllo.meetyou.R;
-import com.zrj.dllo.meetyou.Utils.DensityUtil;
+import com.zrj.dllo.meetyou.tools.DensityUtil;
 import com.zrj.dllo.meetyou.app.MeetYouApp;
 import com.zrj.dllo.meetyou.base.AbsBaseFragment;
 
@@ -18,10 +20,15 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.baidu.location.BDNotifyListener;//假如用到位置提醒功能，需要import该类
 import com.baidu.location.Poi;
+import com.zrj.dllo.meetyou.login.LoginUserBean;
+import com.zrj.dllo.meetyou.widget.CircleImageView;
+import com.zrj.dllo.meetyou.widget.SweepImageView;
 
 import java.util.List;
+
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
 
 /**
  * 这是 鞠福娟 创建的哟~
@@ -109,6 +116,7 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
 
     @Override
     public void onClick(View view) {
+        initLocation();
         showClickAnim();
         mLocationClient.start();
     }
@@ -135,6 +143,52 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
 
         @Override
         public void onReceiveLocation(BDLocation location) {
+            switch (location.getLocType()){
+                case 61:
+                    Toast.makeText(context, "GPS定位成功", Toast.LENGTH_SHORT).show();
+                    goTo(context, MainActivity.class,Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                    /*******在这里存储经纬度,地址,半径范围*******/
+                    saveInfo(location);
+                    break;
+                case 62:
+                    break;
+                case 63:
+                    break;
+                case 64:
+                    break;
+                case 65:
+                    break;
+                case 66:
+                    Toast.makeText(context, "离线定位结果", Toast.LENGTH_SHORT).show();
+                    /*******在这里存储经纬度,地址,半径范围*******/
+                    saveInfo(location);
+                    break;
+                case 67:
+                    break;
+                case 68:
+                    break;
+                case 161:
+                    Toast.makeText(context, "网络定位成功", Toast.LENGTH_SHORT).show();
+                    goTo(context,MainActivity.class,Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                    /*******在这里存储经纬度,地址,半径范围*******/
+                    saveInfo(location);
+                    break;
+                case 162:
+                    break;
+                case 167:
+                    break;
+                case 502:
+                    break;
+                case 505:
+                    break;
+                case 601:
+                    break;
+                case 602:
+                    break;
+                default:
+                    break;
+            }
+
             //Receive Location
             StringBuffer sb = new StringBuffer(256);
             sb.append("time : ");
@@ -195,6 +249,33 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
            // Log.i("BaiduLocationApiDem", sb.toString());
             loadingTv.setText(sb.toString());
         }
+    }
+
+    private void saveInfo(BDLocation location) {
+        LoginUserBean person=new LoginUserBean();
+        person.setUsername("鞠福娟");
+        person.setPassword("123456");
+        person.setAdress(location.getAddrStr());
+        person.setLatitude(location.getLatitude());
+        person.setLontitude(location.getLongitude());
+        person.setLikeCount(0);
+        person.setRadius(location.getRadius());
+        person.setUserImgUrl("http://www.feizl.com/upload2007/2012_01/1201010230427610.png");
+        person.save(new SaveListener() {
+            @Override
+            public void done(Object o, BmobException e) {
+                if (e==null){
+                    Toast.makeText(context, "添加数据成功", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, "添加数据失败", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void done(Object o, Object o2) {
+
+            }
+        });
     }
 
     @Override

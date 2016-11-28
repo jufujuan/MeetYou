@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
+import com.zrj.dllo.meetyou.find.listfind.ListFindFragment;
 import com.zrj.dllo.meetyou.msg.MsgFragment;
 import com.zrj.dllo.meetyou.base.AbsBaseActivity;
 
@@ -112,15 +113,15 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
      * 切换到觅友界面
      */
     private void Change2Meet() {
-        FindFragment findFragment=FindFragment.newInstance();
-        FindPresenter findPresenter=new FindPresenter();
-        FindModel findModel=new FindModel();
-
-        findFragment.setPersenter(findPresenter);
-        findModel.setPresenter(findPresenter);
+//        FindFragment findFragment=FindFragment.newInstance();
+//        FindPresenter findPresenter=new FindPresenter();
+//        FindModel findModel=new FindModel();
+//
+//        findFragment.setPersenter(findPresenter);
+//        findModel.setPresenter(findPresenter);
 
         FragmentTransaction transaction =  mFragmentManager.beginTransaction();
-        transaction.replace(R.id.main_fl, findFragment);
+        transaction.replace(R.id.main_fl, new ListFindFragment());
         transaction.commit();
     }
 

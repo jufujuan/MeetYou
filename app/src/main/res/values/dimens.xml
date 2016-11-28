@@ -2,4 +2,11 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <!--toolbar的高度-->
+    <dimen name="toolbar_height">50dp</dimen>
+    <!--觅友详情-->
+    <dimen name="fra_list_find_card_black_distion">8dp</dimen>
+
+    <dimen name="navigation_drawer_width">240dp</dimen>
+
 </resources>

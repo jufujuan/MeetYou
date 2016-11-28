@@ -3,9 +3,11 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <TextView
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/msg_msg_Rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="消息页面"/>
+        android:layout_height="match_parent">
+    </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

@@ -9,6 +9,7 @@ import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.tools.CircularImageViewUtils;
 import com.zrj.dllo.meetyou.base.AbsBaseFragment;
 import com.zrj.dllo.meetyou.msg.contact.MsgContactFragment;
+import com.zrj.dllo.meetyou.msg.conversation.MsgMsgFragment;
 
 /**
  * Created by REN - the most cool programmer all over the world

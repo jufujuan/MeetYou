@@ -11,6 +11,8 @@ import com.zrj.dllo.meetyou.base.CommonViewHolder;
 
 import java.util.ArrayList;
 
+
+
 /**
  * Created by REN - the most cool programmer all over the world
  * on 16/11/26.
@@ -18,7 +20,7 @@ import java.util.ArrayList;
 
 public class ContactRecyclerAdapter extends RecyclerView.Adapter<CommonViewHolder> {
 
-    private ArrayList<ContactBean> mContactBeen;
+    private ArrayList<ContactBean> mContactBeen = new ArrayList<>();
 
     public void setContactBeen(ArrayList<ContactBean> contactBeen) {
         mContactBeen = contactBeen;

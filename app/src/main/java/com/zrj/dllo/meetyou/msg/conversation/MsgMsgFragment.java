@@ -1,4 +1,4 @@
-package com.zrj.dllo.meetyou.msg;
+package com.zrj.dllo.meetyou.msg.conversation;
 
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.AbsBaseFragment;

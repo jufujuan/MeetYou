@@ -10,7 +10,6 @@ import cn.bmob.v3.BmobUser;
 
 public class LoginUserBean extends BmobUser{
 
-    private String username;//账户名
     private String userImgUrl;//用户头像
     private int likeCount;//喜欢的人数
     private String locationDate;//最近更新位置日期
@@ -20,10 +19,10 @@ public class LoginUserBean extends BmobUser{
     private double radius;//半径
 
     public LoginUserBean() {
+        this.setTableName("_User");
     }
 
-    public LoginUserBean(String username, String userImgUrl, int likeCount, String locationDate, double latitude, double lontitude, String adress, double radius) {
-        this.username = username;
+    public LoginUserBean(String userImgUrl, int likeCount, String locationDate, double latitude, double lontitude, String adress, double radius) {
         this.userImgUrl = userImgUrl;
         this.likeCount = likeCount;
         this.locationDate = locationDate;
@@ -31,16 +30,6 @@ public class LoginUserBean extends BmobUser{
         this.lontitude = lontitude;
         this.adress = adress;
         this.radius = radius;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
-    }
-
-    @Override
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getUserImgUrl() {

@@ -21,10 +21,6 @@ public class LoginModel implements LoginContract.Model {
         new Thread(new Runnable() {
             @Override
             public void run() {
-
-
-
-
             }
         }).start();
     }

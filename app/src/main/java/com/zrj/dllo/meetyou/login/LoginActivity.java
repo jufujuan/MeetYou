@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.zrj.dllo.meetyou.MainActivity;
 import com.zrj.dllo.meetyou.R;
+import com.zrj.dllo.meetyou.SweepActivity;
 import com.zrj.dllo.meetyou.base.AbsBaseActivity;
 
 import com.zrj.dllo.meetyou.eventbus.EventBusBean;
@@ -74,7 +75,7 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("userName", mEventBusBean.getUsername());
                 editor.commit();
-                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                Intent intent = new Intent(LoginActivity.this, SweepActivity.class);
                 startActivity(intent);
                 Log.d("MainActivity", "登录成功");
 //                finish();

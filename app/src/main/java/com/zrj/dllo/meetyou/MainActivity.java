@@ -19,6 +19,8 @@ import com.zrj.dllo.meetyou.find.mainfind.FindModel;
 import com.zrj.dllo.meetyou.find.mainfind.FindPresenter;
 import com.zrj.dllo.meetyou.personal.PersonalFragment;
 
+import cn.bmob.v3.Bmob;
+
 
 /**
  * 绑定布局
@@ -36,6 +38,7 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
     @Override
     protected int getLayout() {
         return R.layout.activity_main;
+
     }
 
 
@@ -49,8 +52,9 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
     @Override
     protected void initView() {
 
-        Log.d("MainActivity", "initView");
 
+
+        Log.d("MainActivity", "initView");
         mainAtyMeetBtn = bindView(R.id.aty_main_meet_btn);
         mainAtyMsgBtn = bindView(R.id.aty_main_msg_btn);
         mainAtyWeatherBtn = bindView(R.id.aty_main_weather_btn);

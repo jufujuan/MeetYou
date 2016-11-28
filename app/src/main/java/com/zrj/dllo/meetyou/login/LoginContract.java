@@ -7,7 +7,6 @@ package com.zrj.dllo.meetyou.login;
 public interface LoginContract {
 
     interface View {
-
         void setPresenter(Presenter presenter);
 
         void showEmptyMsg();

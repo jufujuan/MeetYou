@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.hyphenate.chat.EMClient;
@@ -44,41 +45,42 @@ public class MsgContactFragment extends AbsBaseFragment {
     @Override
     protected void initDatas() {
         contactSidebar.setTextView(contactCenterTv);
-
+        mContactRecyclerAdapter = new ContactRecyclerAdapter();
         new Thread(new Runnable() {
             @Override
             public void run() {
-//                try {
-//                    final List<String> userNames = EMClient.getInstance().contactManager().getAllContactsFromServer();
-//                    mHandler.post(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            ArrayList<ContactBean> data = getData(userNames.toArray(new String[userNames.size()]));
-//                            Collections.sort(data, new PinyinComparator());
-//                            ContactRecyclerAdapter contactRecyclerAdapter = new ContactRecyclerAdapter();
-//                            LinearLayoutManager manager = new LinearLayoutManager(getActivity());
-//                            contactRecyclerAdapter.setContactBeen(data);
-//                            msgContactRv.setAdapter(contactRecyclerAdapter);
-//                            msgContactRv.setLayoutManager(manager);
-//                        }
-//                    });
-//                } catch (HyphenateException e) {
-//                    e.printStackTrace();
-//                }
+                try {
+                    final List<String> userNames = EMClient.getInstance().contactManager().getAllContactsFromServer();
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            ArrayList<ContactBean> data = getData(userNames.toArray(new String[userNames.size()]));
+                            Collections.sort(data, new PinyinComparator());
+
+                            LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+                            mContactRecyclerAdapter.setContactBeen(data);
+                            msgContactRv.setAdapter(mContactRecyclerAdapter);
+                            msgContactRv.setLayoutManager(manager);
+                        }
+                    });
+                } catch (HyphenateException e) {
+                    e.printStackTrace();
+                }
             }
         }).start();
 
-//        // 设置字母索引触摸监听
-//        contactSidebar.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
-//            @Override
-//            public void onTouchingLetterChanged(String s) {
-//                int position = mContactRecyclerAdapter.getPositionForSelection(s.charAt(0));
-//                if (position != -1) {
-//                    // 将选中字母对应的item滑到最上,不知道是不是这个方法
-//                    msgContactRv.scrollToPosition(position);
-//                }
-//            }
-//        });
+        // 设置字母索引触摸监听
+        contactSidebar.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
+            @Override
+            public void onTouchingLetterChanged(String s) {
+                Log.d("MsgContactFragment", "mContactRecyclerAdapter:" + mContactRecyclerAdapter);
+                int position = mContactRecyclerAdapter.getPositionForSelection(s.charAt(0));
+                if (position != -1) {
+                    // 将选中字母对应的item滑到最上,不知道是不是这个方法
+                    msgContactRv.scrollToPosition(position);
+                }
+            }
+        });
     }
 
 

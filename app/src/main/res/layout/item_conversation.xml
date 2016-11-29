@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="70dp">
+
+    <com.zrj.dllo.meetyou.Utils.CircularImageViewUtils
+        android:id="@+id/conversation_avatar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:src="@mipmap/ic_launcher"
+        android:layout_margin="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/conversation_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="名字"
+                android:textSize="20sp"
+                android:layout_alignParentBottom="true"/>
+
+            <TextView
+                android:id="@+id/conversation_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="时间"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="15dp"
+                android:textColor="#666666"
+                />
+
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="5dp">
+            <TextView
+                android:id="@+id/conversation_body_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="新消息"
+                android:textSize="17sp"
+                android:textColor="#666666"/>
+            <TextView
+                android:id="@+id/conversation_count_tv"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="15dp"
+                android:textColor="@color/colorWhite"
+                android:text="5"
+                android:gravity="center"
+                android:background="@mipmap/ic_red_point"/>
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

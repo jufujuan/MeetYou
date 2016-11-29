@@ -11,18 +11,18 @@ import cn.bmob.v3.BmobUser;
 public class LoginUserBean extends BmobUser{
 
     private String userImgUrl;//用户头像
-    private int likeCount;//喜欢的人数
+    private String likeCount;//喜欢的人数
     private String locationDate;//最近更新位置日期
-    private double latitude;//纬度
-    private double lontitude;//经度
+    private String latitude;//纬度
+    private String lontitude;//经度
     private String adress;//地址
-    private double radius;//半径
+    private String radius;//半径
 
     public LoginUserBean() {
         this.setTableName("_User");
     }
 
-    public LoginUserBean(String userImgUrl, int likeCount, String locationDate, double latitude, double lontitude, String adress, double radius) {
+    public LoginUserBean(String userImgUrl, String likeCount, String locationDate, String latitude, String lontitude, String adress, String radius) {
         this.userImgUrl = userImgUrl;
         this.likeCount = likeCount;
         this.locationDate = locationDate;
@@ -40,11 +40,11 @@ public class LoginUserBean extends BmobUser{
         this.userImgUrl = userImgUrl;
     }
 
-    public int getLikeCount() {
+    public String getLikeCount() {
         return likeCount;
     }
 
-    public void setLikeCount(int likeCount) {
+    public void setLikeCount(String likeCount) {
         this.likeCount = likeCount;
     }
 
@@ -56,19 +56,19 @@ public class LoginUserBean extends BmobUser{
         this.locationDate = locationDate;
     }
 
-    public double getLatitude() {
+    public String getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(String latitude) {
         this.latitude = latitude;
     }
 
-    public double getLontitude() {
+    public String getLontitude() {
         return lontitude;
     }
 
-    public void setLontitude(double lontitude) {
+    public void setLontitude(String lontitude) {
         this.lontitude = lontitude;
     }
 
@@ -80,11 +80,11 @@ public class LoginUserBean extends BmobUser{
         this.adress = adress;
     }
 
-    public double getRadius() {
+    public String getRadius() {
         return radius;
     }
 
-    public void setRadius(double radius) {
+    public void setRadius(String radius) {
         this.radius = radius;
     }
 

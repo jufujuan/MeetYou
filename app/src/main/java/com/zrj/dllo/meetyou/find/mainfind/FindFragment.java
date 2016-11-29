@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.ScaleAnimation;
@@ -12,8 +13,9 @@ import android.widget.Toast;
 
 import com.zrj.dllo.meetyou.MainActivity;
 import com.zrj.dllo.meetyou.R;
-import com.zrj.dllo.meetyou.tools.DensityUtil;
 import com.zrj.dllo.meetyou.app.MeetYouApp;
+import com.zrj.dllo.meetyou.tools.DensityUtil;
+
 import com.zrj.dllo.meetyou.base.AbsBaseFragment;
 
 import com.baidu.location.BDLocation;
@@ -254,22 +256,23 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
     }
 
     private void saveInfo(BDLocation location) {
+        Log.d("FindFragment", "进来了");
         LoginUserBean person=new LoginUserBean();
         person.setUsername("鞠福娟");
         person.setPassword("123456");
         person.setAdress(location.getAddrStr());
-        person.setLatitude(location.getLatitude());
-        person.setLontitude(location.getLongitude());
-        person.setLikeCount(0);
-        person.setRadius(location.getRadius());
+        person.setLatitude(String.valueOf(location.getLatitude()));
+        person.setLontitude(String.valueOf(location.getLongitude()));
+        person.setLikeCount(String.valueOf(0));
+        person.setRadius(String.valueOf(location.getRadius()));
         person.setUserImgUrl("http://www.feizl.com/upload2007/2012_01/1201010230427610.png");
         person.save(new SaveListener() {
             @Override
             public void done(Object o, BmobException e) {
                 if (e==null){
-                    Toast.makeText(context, "添加数据成功", Toast.LENGTH_SHORT).show();
+                    Log.d("FindFragment", "添加数据成功");
                 }else{
-                    Toast.makeText(context, "添加数据失败", Toast.LENGTH_SHORT).show();
+                    Log.d("FindFragment", "添加数据失败");
                 }
             }
 

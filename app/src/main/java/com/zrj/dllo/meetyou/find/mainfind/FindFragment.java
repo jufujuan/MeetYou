@@ -132,7 +132,7 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
     public void onClick(View view) {
         initLocation();
         showClickAnim();
-        loadingTv.setText("正在搜索附近的人");
+        loadingTv.setText("正在搜索附近的人...");
         mLocationClient.start();
     }
 
@@ -305,7 +305,7 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
         public void done(List<Person> list, BmobException e) {
             nameId=list.get(0).getObjectId();
             LogUtils.d("索引是多少:"+nameId);
-            if (nameId.isEmpty()) {
+            if (!nameId.isEmpty()) {
                 Person person = new Person();
                 //利用id更新数据
                 person.setAdress(mLocation.getAddrStr());

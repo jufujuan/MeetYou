@@ -50,10 +50,13 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
         @Override
         public void done(BmobUser bmobUser, BmobException e) {
             if (e == null) {
+//                EMClient.getInstance().createAccount(mUsernameEdit.getText().toString(), mPasswordEdit.getText().toString());
+
                 Toast.makeText(LoginActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
                 loginOnClick(mUserName, mPassword);
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
+
 
             } else {
                 Log.d("444", e.getMessage());
@@ -156,13 +159,13 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
 
     //注册操作
     public void registerOnClick(String userName, String passWord) {
+
         BmobUser bmobUser = new BmobUser();
         bmobUser.setUsername(userName);
         bmobUser.setPassword(passWord);
         bmobUser.signUp(registerListener);
         mUserName = userName;
         mPassword = passWord;
-
     }
 
     //登录操作

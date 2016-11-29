@@ -180,12 +180,14 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
                 case 502:
                     break;
                 case 505:
+                    goTo(context,MainActivity.class,Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                     break;
                 case 601:
                     break;
                 case 602:
                     break;
                 default:
+
                     break;
             }
 

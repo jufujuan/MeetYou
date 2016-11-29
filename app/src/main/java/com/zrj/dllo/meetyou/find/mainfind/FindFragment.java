@@ -47,6 +47,7 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
     private CircleImageView mCircleImageView;
     private FindContract.Presenter mPresenter;
 
+
     public LocationClient mLocationClient = null;
     public BDLocationListener myListener = new MyLocationListener();
 
@@ -267,17 +268,16 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
         person.setLikeCount(String.valueOf(0));
         person.setRadius(String.valueOf(location.getRadius()));
         person.setUserImgUrl("http://www.feizl.com/upload2007/2012_01/1201010230427610.png");
-        person.save(new SaveListener() {
+        person.save(new SaveListener<String>() {
             @Override
-            public void done(Object o, BmobException e) {
-                LogUtils.d("进入了这个监听");
-                if (e==null){
-                    LogUtils.d("添加数据成功");
-                }else{
-                    LogUtils.d("添加数据失败");
-                }
+            public void done(String s, BmobException e) {
+//                LogUtils.d("进入了这个监听!!!!!!!!!!!!!!!!!");
+//                if (e==null){
+//                    LogUtils.d("添加数据成功");
+//                }else{
+//                    LogUtils.d(e.getMessage()+"添加数据失败");
+//                }
             }
-
         });
     }
 

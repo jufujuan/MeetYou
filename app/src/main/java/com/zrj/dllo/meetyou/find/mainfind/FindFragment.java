@@ -23,11 +23,13 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.Poi;
 import com.zrj.dllo.meetyou.login.LoginUserBean;
+import com.zrj.dllo.meetyou.tools.LogUtils;
 import com.zrj.dllo.meetyou.widget.CircleImageView;
 import com.zrj.dllo.meetyou.widget.SweepImageView;
 
 import java.util.List;
 
+import cn.bmob.v3.Bmob;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 
@@ -253,7 +255,7 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
     }
 
     private void saveInfo(BDLocation location) {
-        Log.d("FindFragment", "进来了");
+        Bmob.initialize(context,"");
         LoginUserBean person=new LoginUserBean();
         person.setUsername("鞠福娟");
         person.setPassword("123456");
@@ -266,16 +268,17 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
         person.save(new SaveListener() {
             @Override
             public void done(Object o, BmobException e) {
+                LogUtils.d("进入了这个监听");
                 if (e==null){
-                    Log.d("FindFragment", "添加数据成功");
+                    LogUtils.d("添加数据成功");
                 }else{
-                    Log.d("FindFragment", "添加数据失败");
+                    LogUtils.d("添加数据失败");
                 }
             }
 
             @Override
             public void done(Object o, Object o2) {
-
+                LogUtils.d("进入了另一个监听");
             }
         });
     }

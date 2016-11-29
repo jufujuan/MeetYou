@@ -1,8 +1,11 @@
 package com.zrj.dllo.meetyou.find.mainfind;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,14 +29,18 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.location.Poi;
 import com.zrj.dllo.meetyou.login.LoginUserBean;
 import com.zrj.dllo.meetyou.tools.LogUtils;
+import com.zrj.dllo.meetyou.tools.StaticValues;
 import com.zrj.dllo.meetyou.widget.CircleImageView;
 import com.zrj.dllo.meetyou.widget.SweepImageView;
 
 import java.util.List;
 
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * 这是 鞠福娟 创建的哟~
@@ -52,6 +59,7 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
     public BDLocationListener myListener = new MyLocationListener();
 
     private TextView loadingTv;
+    private String nameId=null;
 
     public static FindFragment newInstance() {
 
@@ -124,6 +132,7 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
     public void onClick(View view) {
         initLocation();
         showClickAnim();
+        loadingTv.setText("正在搜索附近的人");
         mLocationClient.start();
     }
 
@@ -182,6 +191,9 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
                 case 162:
                     break;
                 case 167:
+                    Toast.makeText(context, "服务端网络定位失败，可以反馈IMEI号和大体定位时间到loc-bugs@baidu.com，会有人追查原因", Toast.LENGTH_SHORT).show();
+                    //重新刷新
+                    mLocationClient.stop();
                     break;
                 case 502:
                     break;
@@ -258,30 +270,68 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
             loadingTv.setText(sb.toString());
         }
     }
-
+    /**
+     * 更新数据的方法
+     * @param location
+     */
     private void saveInfo(BDLocation location) {
         //Bmob.initialize(context,"");
-        Person person=new Person();
-        person.setuName("鞠福娟");
-        person.setuPassword("123456");
-        person.setAdress(location.getAddrStr());
-        person.setLatitude(String.valueOf(location.getLatitude()));
-        person.setLontitude(String.valueOf(location.getLongitude()));
-        person.setLikeCount(String.valueOf(0));
-        person.setRadius(String.valueOf(location.getRadius()));
-        person.setUserImgUrl("http://www.feizl.com/upload2007/2012_01/1201010230427610.png");
-        person.save(new SaveListener<String>() {
-            @Override
-            public void done(String s, BmobException e) {
-//                LogUtils.d("进入了这个监听!!!!!!!!!!!!!!!!!");
-//                if (e==null){
-//                    LogUtils.d("添加数据成功");
-//                }else{
-//                    LogUtils.d(e.getMessage()+"添加数据失败");
-//                }
-            }
-        });
+        SharedPreferences sp=context.getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME, Context.MODE_PRIVATE);
+        String uname=sp.getString(StaticValues.SP_USEING_NAME_COLUMN,"---未登录成功---");
+        if (!uname.equals("---未登录成功---")) {
+            LogUtils.d("查询成功!"+uname);
+            // 查询id,利用id更新数据库
+            BmobQuery<Person> query=new BmobQuery<>("Person");
+            query.addWhereEqualTo("uName", uname);
+            QueryFindListener queryFindListener=new QueryFindListener(location);
+            query.findObjects(queryFindListener);
+
+        }else{
+            LogUtils.d("你确定登录啦?");
+        }
     }
+
+    /**
+     * 查询数据库的监听
+     * 如果查询索引成功,更新数据
+     */
+    private class QueryFindListener extends FindListener<Person>{
+        private BDLocation mLocation;
+
+        public QueryFindListener(BDLocation location) {
+            mLocation = location;
+        }
+        @Override
+        public void done(List<Person> list, BmobException e) {
+            nameId=list.get(0).getObjectId();
+            LogUtils.d("索引是多少:"+nameId);
+            if (nameId.isEmpty()) {
+                Person person = new Person();
+                //利用id更新数据
+                person.setAdress(mLocation.getAddrStr());
+                person.setLatitude(String.valueOf(mLocation.getLatitude()));
+                person.setLontitude(String.valueOf(mLocation.getLongitude()));
+                person.setLikeCount(String.valueOf(0));
+                person.setLocationDate(mLocation.getTime());
+                person.setRadius(String.valueOf(mLocation.getRadius()));
+                person.setUserImgUrl("http://www.feizl.com/upload2007/2012_01/1201010230427610.png");
+                person.update(nameId, new UpdateListener() {
+                    @Override
+                    public void done(BmobException e) {
+                        if (e == null) {
+                            LogUtils.d("更新成功");
+                        } else {
+                            LogUtils.d("更新失败,这个问题就麻烦了,可能是Bmob的原因");
+                        }
+                    }
+                });
+            }else{
+                LogUtils.d("没有查询到该用户!请确定数据库中有该用户");
+            }
+        }
+    }
+
+
 
     @Override
     public void onDestroy() {

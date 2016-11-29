@@ -262,7 +262,7 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
         //Bmob.initialize(context,"");
         Person person=new Person();
         person.setuName("鞠福娟");
-        person.setuPassword("123456");
+
         person.setAdress(location.getAddrStr());
         person.setLatitude(String.valueOf(location.getLatitude()));
         person.setLontitude(String.valueOf(location.getLongitude()));

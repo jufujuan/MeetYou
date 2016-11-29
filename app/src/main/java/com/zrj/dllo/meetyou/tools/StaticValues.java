@@ -15,4 +15,5 @@ public class StaticValues {
      * 正在登录的用户账号
      */
     public final static String SP_USEING_NAME_COLUMN = "userName";
+
 }

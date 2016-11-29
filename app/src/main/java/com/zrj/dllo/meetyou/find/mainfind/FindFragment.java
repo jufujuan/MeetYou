@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zrj.dllo.meetyou.MainActivity;
+import com.zrj.dllo.meetyou.Person;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.app.MeetYouApp;
 import com.zrj.dllo.meetyou.tools.DensityUtil;
@@ -256,10 +257,10 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
     }
 
     private void saveInfo(BDLocation location) {
-        Bmob.initialize(context,"");
-        LoginUserBean person=new LoginUserBean();
-        person.setUsername("鞠福娟");
-        person.setPassword("123456");
+        //Bmob.initialize(context,"");
+        Person person=new Person();
+        person.setuName("鞠福娟");
+        person.setuPassword("123456");
         person.setAdress(location.getAddrStr());
         person.setLatitude(String.valueOf(location.getLatitude()));
         person.setLontitude(String.valueOf(location.getLongitude()));
@@ -277,10 +278,6 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
                 }
             }
 
-            @Override
-            public void done(Object o, Object o2) {
-                LogUtils.d("进入了另一个监听");
-            }
         });
     }
 

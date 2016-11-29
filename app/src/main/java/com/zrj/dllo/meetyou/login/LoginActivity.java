@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zrj.dllo.meetyou.MainActivity;
+import com.zrj.dllo.meetyou.Person;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.SweepActivity;
 import com.zrj.dllo.meetyou.base.AbsBaseActivity;
@@ -33,7 +34,6 @@ import org.greenrobot.eventbus.EventBus;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
-
 public class LoginActivity extends AbsBaseActivity implements View.OnClickListener {
 
     private ImageView mImageViewBackground;
@@ -118,7 +118,6 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
         TextView textViewEsc = bindView(R.id.login_esc_tv);
         textViewEsc.setOnClickListener(this);
     }
-
     /**
      * 初始化数据
      */
@@ -160,6 +159,16 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
         bmobUser.setUsername(userName);
         bmobUser.setPassword(passWord);
         bmobUser.signUp(registerListener);
+
+        Person person = new Person();
+        person.setuName(userName);
+        person.save(new SaveListener<String>() {
+            @Override
+            public void done(String s, BmobException e) {
+                
+            }
+        });
+
         mUserName = userName;
         mPassword = passWord;
 

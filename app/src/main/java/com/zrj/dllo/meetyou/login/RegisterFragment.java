@@ -13,7 +13,7 @@ import com.zrj.dllo.meetyou.base.AbsBaseFragment;
  * Created by ${ZhaoXuancheng} on 16/11/24.
  */
 public class RegisterFragment extends AbsBaseFragment implements View.OnClickListener {
-    private FragmentManager mFragmentManager;
+
     private EditText mEditTextUserName;
     private EditText mEditTextPassword;
 
@@ -69,6 +69,7 @@ public class RegisterFragment extends AbsBaseFragment implements View.OnClickLis
                 break;
             case R.id.login_register_register:
                 mLoginActivity.registerOnClick(mEditTextUserName.getText().toString(), mEditTextPassword.getText().toString());
+                mLoginActivity.signUp(mEditTextUserName.getText().toString(), mEditTextPassword.getText().toString());
                 break;
 
         }

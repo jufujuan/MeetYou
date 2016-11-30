@@ -56,7 +56,6 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
             if (e == null) {
                 Toast.makeText(LoginActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
                 loginOnClick(mUserName, mPassword);
-                signUp();
             } else {
                 Log.d("444", e.getMessage());
                 Toast.makeText(LoginActivity.this, "注册失败", Toast.LENGTH_SHORT).show();
@@ -77,7 +76,7 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString(StaticValues.SP_USEING_NAME_COLUMN, mEventBusBean.getUsername());
                 editor.commit();
-                signIn();
+
                 Log.d("MainActivity", "登录成功");
 //                finish();
             } else {
@@ -193,7 +192,6 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
         loginUserBean.setUsername(userName);
         loginUserBean.setPassword(passWord);
         loginUserBean.login(loginListener);
-
         mEventBusBean = new EventBusBean();
         mEventBusBean.setUsername(userName);
     }
@@ -210,17 +208,16 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
     /**
      * 注册方法
      */
-    private void signUp() {
+    public void signUp(final String userName, final String passWord) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    EMClient.getInstance().createAccount(mUserName, mPassword);
-                    Log.d("111", mUserName);
+                    EMClient.getInstance().createAccount(userName, passWord);
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            signIn();
+                            signIn(userName, passWord);
                         }
                     });
 
@@ -235,9 +232,9 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
     /**
      * 登录方法
      */
-    private void signIn() {
+    public void signIn(String userName, String passWord) {
         EMClient.getInstance().getOptions().setUseHttps(true);
-        EMClient.getInstance().login(mUserName, mPassword, new EMCallBack() {//回调
+        EMClient.getInstance().login(userName, passWord, new EMCallBack() {//回调
             @Override
             public void onSuccess() {
                 EMClient.getInstance().groupManager().loadAllGroups();

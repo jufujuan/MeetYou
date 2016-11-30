@@ -75,6 +75,7 @@ public class LoginFragment extends AbsBaseFragment implements View.OnClickListen
                 String userName = mEditTextUserName.getText().toString();
                 String userPassword = mEditTextPassword.getText().toString();
                 mLoginActivity.loginOnClick(userName, userPassword);
+                mLoginActivity.signIn(userName, userPassword);
 //                mPresenter.login(userName, userPassword);
                 break;
         }

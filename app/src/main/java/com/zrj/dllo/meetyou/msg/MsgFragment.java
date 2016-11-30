@@ -3,6 +3,7 @@ package com.zrj.dllo.meetyou.msg;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 
 import com.zrj.dllo.meetyou.R;
@@ -18,7 +19,7 @@ import com.zrj.dllo.meetyou.msg.conversation.MsgMsgFragment;
 
 public class MsgFragment extends AbsBaseFragment implements View.OnClickListener {
 
-    private CircularImageViewUtils fraMsgTitleAvatar;
+    private ImageView fraMsgTitleAvatar;
     private RadioButton msgMsgBtn;
     private RadioButton msgContactBtn;
     private FragmentManager mFragmentManager;
@@ -60,4 +61,6 @@ public class MsgFragment extends AbsBaseFragment implements View.OnClickListener
         }
         transaction.commit();
     }
+
+
 }

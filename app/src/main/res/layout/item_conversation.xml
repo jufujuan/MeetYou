@@ -3,7 +3,7 @@
               android:layout_width="match_parent"
               android:layout_height="70dp">
 
-    <com.zrj.dllo.meetyou.Utils.CircularImageViewUtils
+    <ImageView
         android:id="@+id/conversation_avatar"
         android:layout_width="50dp"
         android:layout_height="50dp"

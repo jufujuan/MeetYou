@@ -4,10 +4,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import com.hyphenate.chat.EMConversation;
+import com.hyphenate.chat.EMImageMessageBody;
+import com.hyphenate.chat.EMMessage;
+import com.hyphenate.chat.EMTextMessageBody;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.CommonViewHolder;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by REN - the most cool programmer all over the world
@@ -16,9 +20,9 @@ import java.util.ArrayList;
 
 public class MsgMsgAdapter extends RecyclerView.Adapter<CommonViewHolder> {
 
-    ArrayList<EMConversation> mEMConversations;
+    List<EMConversation> mEMConversations;
 
-    public void setEMConversations(ArrayList<EMConversation> EMConversations) {
+    public void setEMConversations(List<EMConversation> EMConversations) {
         mEMConversations = EMConversations;
     }
 
@@ -30,11 +34,36 @@ public class MsgMsgAdapter extends RecyclerView.Adapter<CommonViewHolder> {
     @Override
     public void onBindViewHolder(CommonViewHolder holder, int position) {
         holder.setText(R.id.conversation_name_tv, mEMConversations.get(position).getUserName());
-        holder.setText(R.id.conversation_body_tv, mEMConversations.get(position).getLastMessage().getBody().toString());
+        holder.setText(R.id.conversation_body_tv, getMessage(mEMConversations.get(position).getLastMessage()));
     }
 
     @Override
     public int getItemCount() {
         return mEMConversations == null ? 0 : mEMConversations.size();
+    }
+
+    private String getMessage(EMMessage message){
+
+        String str = "";
+
+        switch(message.getType()){
+
+            //图片消息
+            case IMAGE:{
+                EMImageMessageBody imageBody = (EMImageMessageBody) message.getBody();
+                str = "[picture]" + imageBody.getFileName();
+                break;
+            }
+
+            case TXT:{
+                EMTextMessageBody txtBody = (EMTextMessageBody) message.getBody();
+                str = txtBody.getMessage();
+
+                break;
+            }
+
+        }
+
+        return str;
     }
 }

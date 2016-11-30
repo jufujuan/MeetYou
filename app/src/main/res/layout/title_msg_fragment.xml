@@ -4,7 +4,7 @@
                 android:layout_height="50dp"
                 android:background="@color/colorMain">
 
-    <com.zrj.dllo.meetyou.tools.CircularImageViewUtils
+    <ImageView
         android:id="@+id/fra_msg_title_avatar"
         android:layout_width="40dp"
         android:layout_height="40dp"

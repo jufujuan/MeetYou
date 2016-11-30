@@ -223,11 +223,10 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
                             signIn();
                         }
                     });
-//                    Toast.makeText(LoginActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
-//                    signIn();
+
                 } catch (HyphenateException e) {
                     e.printStackTrace();
-//                    Toast.makeText(LoginActivity.this, "注册失败", Toast.LENGTH_SHORT).show();
+
                 }
             }
         }).start();

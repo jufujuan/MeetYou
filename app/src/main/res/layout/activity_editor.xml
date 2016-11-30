@@ -5,35 +5,73 @@
     android:id="@+id/activity_editor"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f9806e"
     android:orientation="vertical"
     tools:context="com.zrj.dllo.meetyou.editor.EditorActivity">
 
     <RelativeLayout
-        android:background="#dadada"
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:layout_height="40dp"
+        android:background="#dadada">
 
         <TextView
-            android:layout_marginBottom="5dp"
-            android:textSize="20dp"
-            android:layout_alignParentBottom="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="返回"/>
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"
+            android:text="返回"
+            android:textSize="20dp"/>
 
         <TextView
-            android:textSize="22dp"
-            android:layout_marginBottom="5dp"
-            android:layout_alignParentBottom="true"
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="个人资料"/>
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"
+            android:gravity="center"
+            android:text="个人资料"
+            android:textSize="22dp"/>
     </RelativeLayout>
 
-    
+    <LinearLayout
 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+        <TextView
+            android:id="@+id/editor_camera_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="拍照修改头像"
+            android:textColor="#ffffff"
+            android:textSize="15dp"/>
+
+        <com.zrj.dllo.meetyou.tools.CircularImageViewUtils
+            android:id="@+id/editor_head_image"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="5dp"
+            android:src="@mipmap/sidebar_pic"/>
+
+        <TextView
+            android:id="@+id/editor_album_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="相册选择头像"
+            android:textColor="#ffffff"
+            android:textSize="15dp"/>
+
+    </LinearLayout>
 
 
 </LinearLayout>

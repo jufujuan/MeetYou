@@ -105,7 +105,6 @@ public class PersonalFragment extends AbsBaseFragment implements View.OnClickLis
      */
     @Override
     protected void initDatas() {
-
     }
 
     /**
@@ -134,9 +133,7 @@ public class PersonalFragment extends AbsBaseFragment implements View.OnClickLis
                 editor.commit();
                 BmobUser.logOut();   //清除缓存用户对象
                 BmobUser currentUser = BmobUser.getCurrentUser(); // 现在的currentUser是null了
-
                 getActivity().finish();
-
                 Toast.makeText(context, "已退出登录", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.personal_editor_tv:

@@ -81,6 +81,8 @@ public class MsgContactFragment extends AbsBaseFragment {
                 if (position != -1) {
                     // 将选中字母对应的item滑到最上,不知道是不是这个方法
                     msgContactRv.scrollToPosition(position);
+//                    msgContactRv.setVerticalScrollbarPosition(position);
+
                 }
             }
         });

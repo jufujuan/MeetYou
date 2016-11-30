@@ -37,6 +37,7 @@ public class ListFindFragment extends AbsBaseFragment implements View.OnClickLis
 
     @Override
     protected void initDatas() {
+        /******构造数据******/
         imgUrls=new ArrayList<>();
         for (int i = 0; i <6 ; i++) {
             imgUrls.add("http://g.hiphotos.baidu.com/image/pic/item/8ad4b31c8701a18b91badb619c2f07082838fe4f.jpg");
@@ -50,12 +51,16 @@ public class ListFindFragment extends AbsBaseFragment implements View.OnClickLis
         for (int i = 0; i <36; i++) {
             datas.add(new ListFindBean(imgUrls.get(i),"张三","女"));
         }
+
+
+
+
+        /*****************/
         mRecyclerAdapter=new ListFindRecyclerAdapter(context);
         mRecyclerAdapter.setDatas(datas);
         mRecyclerAdapter.setOnClickListener(this);
         StaggeredGridLayoutManager staggeredGridLayoutManager=new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
-     //   mRecyclerView.setItemAnimator();
         mRecyclerView.setAdapter(mRecyclerAdapter);
     }
 

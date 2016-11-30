@@ -16,7 +16,4 @@ public class StaticValues {
      */
     public final static String SP_USEING_NAME_COLUMN = "userName";
 
-
-
-
 }

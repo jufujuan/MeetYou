@@ -59,7 +59,7 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
     public BDLocationListener myListener = new MyLocationListener();
 
     private TextView loadingTv;
-    private String nameId=null;
+    private String nameId = null;
 
     public static FindFragment newInstance() {
 
@@ -79,7 +79,7 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
     protected void initView() {
         mSweepImageView = bindView(R.id.fra_find_sweepImageView);
         mCircleImageView = bindView(R.id.fra_find_circleImageView);
-        loadingTv=bindView(R.id.fra_find_seek_tv);
+        loadingTv = bindView(R.id.fra_find_seek_tv);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
         mCircleImageView.setOnClickListener(this);
 
         mLocationClient = new LocationClient(MeetYouApp.getContext());     //声明LocationClient类
-        mLocationClient.registerLocationListener( myListener );    //注册监听函数
+        mLocationClient.registerLocationListener(myListener);    //注册监听函数
     }
 
     /**
@@ -98,7 +98,7 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
      */
     @Override
     public void setPersenter(FindContract.Presenter presenter) {
-        mPresenter=presenter;
+        mPresenter = presenter;
     }
 
     /**
@@ -106,8 +106,8 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
      */
     @Override
     public void showSweepView() {
-        Bitmap bgBitmap=BitmapFactory.decodeResource(context.getResources(), R.mipmap.find_bg_img);
-        Bitmap userBimap=BitmapFactory.decodeResource(context.getResources(), R.mipmap.find_user_img2);
+        Bitmap bgBitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.find_bg_img);
+        Bitmap userBimap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.find_user_img2);
         mSweepImageView.setImageBitmap(bgBitmap);
         mCircleImageView.setImageBitmap(userBimap);
     }
@@ -121,8 +121,8 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
         mSweepImageView.addSweepRestartAnim();
         //点击头像的动画效果
         ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1.2f, 0.8f, 1.2f,
-                DensityUtil.px2dip(context,mSweepImageView.getLeft()+mSweepImageView.getWidth()/2),
-                DensityUtil.px2dip(context,mSweepImageView.getTop()+mSweepImageView.getHeight()/2));
+                DensityUtil.px2dip(context, mSweepImageView.getLeft() + mSweepImageView.getWidth() / 2),
+                DensityUtil.px2dip(context, mSweepImageView.getTop() + mSweepImageView.getHeight() / 2));
         scaleAnimation.setDuration(500);
         scaleAnimation.setInterpolator(new AccelerateInterpolator());
         mCircleImageView.startAnimation(scaleAnimation);
@@ -136,12 +136,12 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
         mLocationClient.start();
     }
 
-    private void initLocation(){
+    private void initLocation() {
         LocationClientOption option = new LocationClientOption();
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy
         );//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
         option.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系
-        int span=1000;
+        int span = 1000;
         option.setScanSpan(span);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
         option.setIsNeedAddress(true);//可选，设置是否需要地址信息，默认不需要
         option.setOpenGps(true);//可选，默认false,设置是否使用gps
@@ -158,10 +158,10 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
 
         @Override
         public void onReceiveLocation(BDLocation location) {
-            switch (location.getLocType()){
+            switch (location.getLocType()) {
                 case 61:
                     Toast.makeText(context, "GPS定位成功", Toast.LENGTH_SHORT).show();
-                    goTo(context, MainActivity.class,Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                    goTo(context, MainActivity.class, Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     /*******在这里存储经纬度,地址,半径范围*******/
                     saveInfo(location);
                     break;
@@ -184,7 +184,7 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
                     break;
                 case 161:
                     Toast.makeText(context, "网络定位成功", Toast.LENGTH_SHORT).show();
-                    goTo(context,MainActivity.class,Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                    goTo(context, MainActivity.class, Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     /*******在这里存储经纬度,地址,半径范围*******/
                     saveInfo(location);
                     break;
@@ -198,7 +198,7 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
                 case 502:
                     break;
                 case 505:
-                    goTo(context,MainActivity.class,Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                    goTo(context, MainActivity.class, Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     break;
                 case 601:
                     break;
@@ -208,85 +208,86 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
 
                     break;
             }
-
-            //Receive Location
-            StringBuffer sb = new StringBuffer(256);
-            sb.append("time : ");
-            sb.append(location.getTime());
-            sb.append("\nerror code : ");
-            sb.append(location.getLocType());
-            sb.append("\nlatitude : ");
-            sb.append(location.getLatitude());
-            sb.append("\nlontitude : ");
-            sb.append(location.getLongitude());
-            sb.append("\nradius : ");
-            sb.append(location.getRadius());
-            if (location.getLocType() == BDLocation.TypeGpsLocation) {// GPS定位结果
-                sb.append("\nspeed : ");
-                sb.append(location.getSpeed());// 单位：公里每小时
-                sb.append("\nsatellite : ");
-                sb.append(location.getSatelliteNumber());
-                sb.append("\nheight : ");
-                sb.append(location.getAltitude());// 单位：米
-                sb.append("\ndirection : ");
-                sb.append(location.getDirection());// 单位度
-                sb.append("\naddr : ");
-                sb.append(location.getAddrStr());
-                sb.append("\ndescribe : ");
-                sb.append("gps定位成功");
-            } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {// 网络定位结果
-                sb.append("\naddr : ");
-                sb.append(location.getAddrStr());
-                //运营商信息
-                sb.append("\noperationers : ");
-                sb.append(location.getOperators());
-                sb.append("\ndescribe : ");
-                sb.append("网络定位成功");
-            } else if (location.getLocType() == BDLocation.TypeOffLineLocation) {// 离线定位结果
-                sb.append("\ndescribe : ");
-                sb.append("离线定位成功，离线定位结果也是有效的");
-            } else if (location.getLocType() == BDLocation.TypeServerError) {
-                sb.append("\ndescribe : ");
-                sb.append("服务端网络定位失败，可以反馈IMEI号和大体定位时间到loc-bugs@baidu.com，会有人追查原因");
-            } else if (location.getLocType() == BDLocation.TypeNetWorkException) {
-                sb.append("\ndescribe : ");
-                sb.append("网络不同导致定位失败，请检查网络是否通畅");
-            } else if (location.getLocType() == BDLocation.TypeCriteriaException) {
-                sb.append("\ndescribe : ");
-                sb.append("无法获取有效定位依据导致定位失败，一般是由于手机的原因，处于飞行模式下一般会造成这种结果，可以试着重启手机");
-            }
-            sb.append("\nlocationdescribe : ");
-            sb.append(location.getLocationDescribe());// 位置语义化信息
-            List<Poi> list = location.getPoiList();// POI数据
-            if (list != null) {
-                sb.append("\npoilist size = : ");
-                sb.append(list.size());
-                for (Poi p : list) {
-                    sb.append("\npoi= : ");
-                    sb.append(p.getId() + " " + p.getName() + " " + p.getRank());
-                }
-            }
-           // Log.i("BaiduLocationApiDem", sb.toString());
-            loadingTv.setText(sb.toString());
+//            //Receive Location
+//            StringBuffer sb = new StringBuffer(256);
+//            sb.append("time : ");
+//            sb.append(location.getTime());
+//            sb.append("\nerror code : ");
+//            sb.append(location.getLocType());
+//            sb.append("\nlatitude : ");
+//            sb.append(location.getLatitude());
+//            sb.append("\nlontitude : ");
+//            sb.append(location.getLongitude());
+//            sb.append("\nradius : ");
+//            sb.append(location.getRadius());
+//            if (location.getLocType() == BDLocation.TypeGpsLocation) {// GPS定位结果
+//                sb.append("\nspeed : ");
+//                sb.append(location.getSpeed());// 单位：公里每小时
+//                sb.append("\nsatellite : ");
+//                sb.append(location.getSatelliteNumber());
+//                sb.append("\nheight : ");
+//                sb.append(location.getAltitude());// 单位：米
+//                sb.append("\ndirection : ");
+//                sb.append(location.getDirection());// 单位度
+//                sb.append("\naddr : ");
+//                sb.append(location.getAddrStr());
+//                sb.append("\ndescribe : ");
+//                sb.append("gps定位成功");
+//            } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {// 网络定位结果
+//                sb.append("\naddr : ");
+//                sb.append(location.getAddrStr());
+//                //运营商信息
+//                sb.append("\noperationers : ");
+//                sb.append(location.getOperators());
+//                sb.append("\ndescribe : ");
+//                sb.append("网络定位成功");
+//            } else if (location.getLocType() == BDLocation.TypeOffLineLocation) {// 离线定位结果
+//                sb.append("\ndescribe : ");
+//                sb.append("离线定位成功，离线定位结果也是有效的");
+//            } else if (location.getLocType() == BDLocation.TypeServerError) {
+//                sb.append("\ndescribe : ");
+//                sb.append("服务端网络定位失败，可以反馈IMEI号和大体定位时间到loc-bugs@baidu.com，会有人追查原因");
+//            } else if (location.getLocType() == BDLocation.TypeNetWorkException) {
+//                sb.append("\ndescribe : ");
+//                sb.append("网络不同导致定位失败，请检查网络是否通畅");
+//            } else if (location.getLocType() == BDLocation.TypeCriteriaException) {
+//                sb.append("\ndescribe : ");
+//                sb.append("无法获取有效定位依据导致定位失败，一般是由于手机的原因，处于飞行模式下一般会造成这种结果，可以试着重启手机");
+//            }
+//            sb.append("\nlocationdescribe : ");
+//            sb.append(location.getLocationDescribe());// 位置语义化信息
+//            List<Poi> list = location.getPoiList();// POI数据
+//            if (list != null) {
+//                sb.append("\npoilist size = : ");
+//                sb.append(list.size());
+//                for (Poi p : list) {
+//                    sb.append("\npoi= : ");
+//                    sb.append(p.getId() + " " + p.getName() + " " + p.getRank());
+//                }
+//            }
+//            // Log.i("BaiduLocationApiDem", sb.toString());
+//            loadingTv.setText(sb.toString());
         }
+
     }
+
     /**
      * 更新数据的方法
+     *
      * @param location
      */
     private void saveInfo(BDLocation location) {
-        //Bmob.initialize(context,"");
-        SharedPreferences sp=context.getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME, Context.MODE_PRIVATE);
-        String uname=sp.getString(StaticValues.SP_USEING_NAME_COLUMN,"---未登录成功---");
+        SharedPreferences sp = context.getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME, Context.MODE_PRIVATE);
+        String uname = sp.getString(StaticValues.SP_USEING_NAME_COLUMN, "---未登录成功---");
         if (!uname.equals("---未登录成功---")) {
-            LogUtils.d("查询成功!"+uname);
+            LogUtils.d("查询成功!" + uname);
             // 查询id,利用id更新数据库
-            BmobQuery<Person> query=new BmobQuery<>("Person");
+            BmobQuery<Person> query = new BmobQuery<>("Person");
             query.addWhereEqualTo("uName", uname);
-            QueryFindListener queryFindListener=new QueryFindListener(location);
+            QueryFindListener queryFindListener = new QueryFindListener(location);
             query.findObjects(queryFindListener);
 
-        }else{
+        } else {
             LogUtils.d("你确定登录啦?");
         }
     }
@@ -295,12 +296,13 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
      * 查询数据库的监听
      * 如果查询索引成功,更新数据
      */
-    private class QueryFindListener extends FindListener<Person>{
+    private class QueryFindListener extends FindListener<Person> {
         private BDLocation mLocation;
 
         public QueryFindListener(BDLocation location) {
             mLocation = location;
         }
+
         @Override
         public void done(List<Person> list, BmobException e) {
             nameId=list.get(0).getObjectId();
@@ -325,12 +327,11 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
                         }
                     }
                 });
-            }else{
+            } else {
                 LogUtils.d("没有查询到该用户!请确定数据库中有该用户");
             }
         }
     }
-
 
 
     @Override

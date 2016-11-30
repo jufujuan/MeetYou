@@ -18,6 +18,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.HyphenateException;
 import com.zrj.dllo.meetyou.MainActivity;
 import com.zrj.dllo.meetyou.Person;
 import com.zrj.dllo.meetyou.R;
@@ -27,6 +30,7 @@ import com.zrj.dllo.meetyou.base.AbsBaseActivity;
 import com.zrj.dllo.meetyou.eventbus.EventBusBean;
 
 import com.zrj.dllo.meetyou.tools.BitmapBlurUtils;
+import com.zrj.dllo.meetyou.tools.StaticValues;
 
 
 import org.greenrobot.eventbus.EventBus;
@@ -34,6 +38,7 @@ import org.greenrobot.eventbus.EventBus;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
+
 public class LoginActivity extends AbsBaseActivity implements View.OnClickListener {
 
     private ImageView mImageViewBackground;
@@ -43,17 +48,17 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
     private EventBusBean mEventBusBean;
     private String mUserName;
     private String mPassword;
-
-
+    
     //注册
     private SaveListener<BmobUser> registerListener = new SaveListener<BmobUser>() {
         @Override
         public void done(BmobUser bmobUser, BmobException e) {
+
             if (e == null) {
                 Toast.makeText(LoginActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
                 loginOnClick(mUserName, mPassword);
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
+                signUp();
+                signIn();
 
             } else {
                 Log.d("444", e.getMessage());
@@ -67,20 +72,19 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
         @Override
         public void done(LoginUserBean loginUserBean, BmobException e) {
             if (e == null) {
-
-
-                EventBus.getDefault().post(mEventBusBean);
-                Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
-                SharedPreferences preferences = getSharedPreferences("userMessage", Activity.MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("userName", mEventBusBean.getUsername());
-                editor.commit();
                 Intent intent = new Intent(LoginActivity.this, SweepActivity.class);
                 startActivity(intent);
+                EventBus.getDefault().post(mEventBusBean);
+                Toast.makeText(LoginActivity.this, "登录成功1", Toast.LENGTH_SHORT).show();
+                SharedPreferences preferences = getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME, Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString(StaticValues.SP_USEING_NAME_COLUMN, mEventBusBean.getUsername());
+                editor.commit();
+                signIn();
                 Log.d("MainActivity", "登录成功");
 //                finish();
             } else {
-                Toast.makeText(LoginActivity.this, "用户名或密码不正确", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "用户名或密码不正确1", Toast.LENGTH_SHORT).show();
                 Log.d("MainActivity", e.getMessage());
                 Log.d("MainActivity", "登录失败");
             }
@@ -94,6 +98,15 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
      */
     @Override
     protected int getLayout() {
+
+        SharedPreferences sharedPreferences = getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME, Activity.MODE_PRIVATE);
+        String usingName = sharedPreferences.getString(StaticValues.SP_USEING_NAME_COLUMN, "");
+        Log.d("yyy", usingName);
+        if (!usingName.equals("")) {
+            Intent intent = new Intent(LoginActivity.this, SweepActivity.class);
+            startActivity(intent);
+            finish();
+        }
         return R.layout.activity_login;
     }
 
@@ -118,6 +131,7 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
         TextView textViewEsc = bindView(R.id.login_esc_tv);
         textViewEsc.setOnClickListener(this);
     }
+
     /**
      * 初始化数据
      */
@@ -165,13 +179,12 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
         person.save(new SaveListener<String>() {
             @Override
             public void done(String s, BmobException e) {
-                
+
             }
         });
 
         mUserName = userName;
         mPassword = passWord;
-
     }
 
     //登录操作
@@ -194,4 +207,54 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
                 break;
         }
     }
+
+    /**
+     * 注册方法
+     */
+    private void signUp() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    EMClient.getInstance().createAccount(mUserName, mPassword);
+                    Log.d("111", mUserName);
+
+//                    Toast.makeText(LoginActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+//                    signIn();
+                } catch (HyphenateException e) {
+                    e.printStackTrace();
+//                    Toast.makeText(LoginActivity.this, "注册失败", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }).start();
+    }
+
+    /**
+     * 登录方法
+     */
+    private void signIn() {
+        EMClient.getInstance().getOptions().setUseHttps(true);
+        EMClient.getInstance().login(mUserName, mPassword, new EMCallBack() {//回调
+            @Override
+            public void onSuccess() {
+                EMClient.getInstance().groupManager().loadAllGroups();
+                EMClient.getInstance().chatManager().loadAllConversations();
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                Log.d("main", "登录聊天服务器成功！");
+//                Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onProgress(int progress, String status) {
+
+            }
+
+            @Override
+            public void onError(int code, String message) {
+                Log.d("main", "登录聊天服务器失败！");
+            }
+        });
+    }
+
+
 }

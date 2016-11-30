@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -32,9 +33,6 @@ import com.zrj.dllo.meetyou.eventbus.EventBusBean;
 import com.zrj.dllo.meetyou.tools.BitmapBlurUtils;
 import com.zrj.dllo.meetyou.tools.StaticValues;
 
-
-import org.greenrobot.eventbus.EventBus;
-
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
@@ -48,6 +46,7 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
     private EventBusBean mEventBusBean;
     private String mUserName;
     private String mPassword;
+    private Handler mHandler = new Handler(Looper.getMainLooper());
     
     //注册
     private SaveListener<BmobUser> registerListener = new SaveListener<BmobUser>() {
@@ -58,8 +57,6 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
                 Toast.makeText(LoginActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
                 loginOnClick(mUserName, mPassword);
                 signUp();
-                signIn();
-
             } else {
                 Log.d("444", e.getMessage());
                 Toast.makeText(LoginActivity.this, "注册失败", Toast.LENGTH_SHORT).show();
@@ -73,8 +70,8 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
         public void done(LoginUserBean loginUserBean, BmobException e) {
             if (e == null) {
                 Intent intent = new Intent(LoginActivity.this, SweepActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-                EventBus.getDefault().post(mEventBusBean);
                 Toast.makeText(LoginActivity.this, "登录成功1", Toast.LENGTH_SHORT).show();
                 SharedPreferences preferences = getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME, Activity.MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
@@ -98,15 +95,6 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
      */
     @Override
     protected int getLayout() {
-
-        SharedPreferences sharedPreferences = getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME, Activity.MODE_PRIVATE);
-        String usingName = sharedPreferences.getString(StaticValues.SP_USEING_NAME_COLUMN, "");
-        Log.d("yyy", usingName);
-        if (!usingName.equals("")) {
-            Intent intent = new Intent(LoginActivity.this, SweepActivity.class);
-            startActivity(intent);
-            finish();
-        }
         return R.layout.activity_login;
     }
 
@@ -137,6 +125,16 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
      */
     @Override
     protected void initDatas() {
+
+        SharedPreferences sharedPreferences = getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME, Activity.MODE_PRIVATE);
+        String usingName = sharedPreferences.getString(StaticValues.SP_USEING_NAME_COLUMN, "10086");
+        Log.d("yyy", "nfgvujghik,bh,j"+usingName);
+        if (!usingName.equals("10086")) {
+
+            Intent intent = new Intent(LoginActivity.this, SweepActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         Resources res = getResources();
         Bitmap bmp = BitmapFactory.decodeResource(res, R.mipmap.aiqing1);
@@ -169,6 +167,7 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
 
     //注册操作
     public void registerOnClick(String userName, String passWord) {
+
         BmobUser bmobUser = new BmobUser();
         bmobUser.setUsername(userName);
         bmobUser.setPassword(passWord);
@@ -218,7 +217,12 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
                 try {
                     EMClient.getInstance().createAccount(mUserName, mPassword);
                     Log.d("111", mUserName);
-
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            signIn();
+                        }
+                    });
 //                    Toast.makeText(LoginActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
 //                    signIn();
                 } catch (HyphenateException e) {

@@ -166,7 +166,6 @@ public class PersonalFragment extends AbsBaseFragment implements View.OnClickLis
         mTextViewUsername.setText(eventBusBean.getUsername());
     }
 
-
     /**
      * 登出
      * 异步

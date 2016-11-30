@@ -13,7 +13,7 @@ import com.zrj.dllo.meetyou.base.AbsBaseFragment;
  * Created by ${ZhaoXuancheng} on 16/11/24.
  */
 public class RegisterFragment extends AbsBaseFragment implements View.OnClickListener {
-    private FragmentManager mFragmentManager;
+
     private EditText mEditTextUserName;
     private EditText mEditTextPassword;
 

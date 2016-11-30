@@ -27,6 +27,8 @@ public class MsgContactFragment extends AbsBaseFragment {
     private SideBar contactSidebar;
     private ContactRecyclerAdapter mContactRecyclerAdapter;
     private Handler mHandler;
+    private List<String> mUserNames;
+    private List<ContactBean> mData;
 
 
     @Override
@@ -46,19 +48,20 @@ public class MsgContactFragment extends AbsBaseFragment {
     protected void initDatas() {
         contactSidebar.setTextView(contactCenterTv);
         mContactRecyclerAdapter = new ContactRecyclerAdapter();
+
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    final List<String> userNames = EMClient.getInstance().contactManager().getAllContactsFromServer();
+                    mUserNames = EMClient.getInstance().contactManager().getAllContactsFromServer();
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            ArrayList<ContactBean> data = getData(userNames.toArray(new String[userNames.size()]));
-                            Collections.sort(data, new PinyinComparator());
-
+                            mData = getData(mUserNames.toArray(new String[mUserNames.size()]));
+                            Collections.sort(mData, new PinyinComparator());
                             LinearLayoutManager manager = new LinearLayoutManager(getActivity());
-                            mContactRecyclerAdapter.setContactBeen(data);
+                            Log.d("MsgContactFragment", "data:" + mData);
+                            mContactRecyclerAdapter.setContactBeen(mData);
                             msgContactRv.setAdapter(mContactRecyclerAdapter);
                             msgContactRv.setLayoutManager(manager);
                         }
@@ -84,8 +87,8 @@ public class MsgContactFragment extends AbsBaseFragment {
     }
 
 
-    private ArrayList<ContactBean> getData(String[] data) {
-        ArrayList<ContactBean> arrayList = new ArrayList<ContactBean>();
+    private List<ContactBean> getData(String[] data) {
+        List<ContactBean> arrayList = new ArrayList<ContactBean>();
         for (int i = 0; i < data.length; i++) {
             String pinyin = PinYinUtils.getPingYin(data[i]);
             String Fpinyin = pinyin.substring(0, 1).toUpperCase();

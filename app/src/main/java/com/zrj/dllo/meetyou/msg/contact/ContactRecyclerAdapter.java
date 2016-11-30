@@ -10,7 +10,7 @@ import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.CommonViewHolder;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 
 /**
@@ -20,9 +20,9 @@ import java.util.ArrayList;
 
 public class ContactRecyclerAdapter extends RecyclerView.Adapter<CommonViewHolder> {
 
-    private ArrayList<ContactBean> mContactBeen = new ArrayList<>();
+    private List<ContactBean> mContactBeen = new ArrayList<>();
 
-    public void setContactBeen(ArrayList<ContactBean> contactBeen) {
+    public void setContactBeen(List<ContactBean> contactBeen) {
         mContactBeen = contactBeen;
     }
 
@@ -34,7 +34,7 @@ public class ContactRecyclerAdapter extends RecyclerView.Adapter<CommonViewHolde
 
     @Override
     public void onBindViewHolder(CommonViewHolder holder, int position) {
-        ContactBean contactBean = new ContactBean();
+        ContactBean contactBean = mContactBeen.get(position);
         // 获取首字母的ascii值
         int selection = contactBean.getFirstPinYin().charAt(0);
         // 判断是否显示首字母
@@ -45,7 +45,7 @@ public class ContactRecyclerAdapter extends RecyclerView.Adapter<CommonViewHolde
         } else {
             holder.getView(R.id.item_contact_tag_tv).setVisibility(View.GONE);
         }
-        holder.setText(R.id.msg_contact_name_tv, mContactBeen.get(position).getName());
+        holder.setText(R.id.msg_contact_name_tv, contactBean.getName());
 
     }
 

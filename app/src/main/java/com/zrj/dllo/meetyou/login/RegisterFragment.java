@@ -69,6 +69,7 @@ public class RegisterFragment extends AbsBaseFragment implements View.OnClickLis
                 break;
             case R.id.login_register_register:
                 mLoginActivity.registerOnClick(mEditTextUserName.getText().toString(), mEditTextPassword.getText().toString());
+                mLoginActivity.signUp(mEditTextUserName.getText().toString(), mEditTextPassword.getText().toString());
                 break;
 
         }

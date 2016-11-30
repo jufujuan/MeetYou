@@ -34,7 +34,7 @@ public class ContactRecyclerAdapter extends RecyclerView.Adapter<CommonViewHolde
 
     @Override
     public void onBindViewHolder(CommonViewHolder holder, int position) {
-        ContactBean contactBean = new ContactBean();
+        ContactBean contactBean = mContactBeen.get(position);
         // 获取首字母的ascii值
         int selection = contactBean.getFirstPinYin().charAt(0);
         // 判断是否显示首字母

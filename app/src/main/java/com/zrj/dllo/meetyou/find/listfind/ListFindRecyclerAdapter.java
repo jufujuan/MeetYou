@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.zrj.dllo.meetyou.Person;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.CommonViewHolder;
 
@@ -17,7 +18,7 @@ import java.util.List;
  */
 
 public class ListFindRecyclerAdapter extends RecyclerView.Adapter<CommonViewHolder>{
-    private List<ListFindBean> datas;
+    private List<Person> datas;
     private Context mContext;
     private List<Integer> heights;
     private View.OnClickListener mOnClickListener;
@@ -34,7 +35,7 @@ public class ListFindRecyclerAdapter extends RecyclerView.Adapter<CommonViewHold
     public ListFindRecyclerAdapter() {
     }
 
-    public void setDatas(List<ListFindBean> datas) {
+    public void setDatas(List<Person> datas) {
         this.datas = datas;
         heights = new ArrayList<>();
         for (int i = 0; i < datas.size(); i++) {
@@ -54,7 +55,7 @@ public class ListFindRecyclerAdapter extends RecyclerView.Adapter<CommonViewHold
         ViewGroup.LayoutParams params =  holder.getItemView().getLayoutParams();//得到item的LayoutParams布局参数
         params.height = heights.get(position);//把随机的高度赋予itemView布局
         holder.getItemView().setLayoutParams(params);//把params设置给itemView布局
-        holder.setImage(R.id.item_list_find_img,datas.get(position).getAvatar(),mContext,mOnClickListener);
+        holder.setImage(R.id.item_list_find_img,datas.get(position).getUserImgUrl(),mContext,mOnClickListener);
         holder.setImage(R.id.item_list_find_dislike,mOnClickListener);
         holder.setImage(R.id.item_list_find_like,mOnClickListener);
     }

@@ -71,7 +71,7 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
                 Intent intent = new Intent(LoginActivity.this, SweepActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-                Toast.makeText(LoginActivity.this, "登录成功1", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                 SharedPreferences preferences = getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME, Activity.MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString(StaticValues.SP_USEING_NAME_COLUMN, mEventBusBean.getUsername());
@@ -80,7 +80,7 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
                 Log.d("MainActivity", "登录成功");
 //                finish();
             } else {
-                Toast.makeText(LoginActivity.this, "用户名或密码不正确1", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "用户名或密码不正确", Toast.LENGTH_SHORT).show();
                 Log.d("MainActivity", e.getMessage());
                 Log.d("MainActivity", "登录失败");
             }
@@ -127,9 +127,7 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
 
         SharedPreferences sharedPreferences = getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME, Activity.MODE_PRIVATE);
         String usingName = sharedPreferences.getString(StaticValues.SP_USEING_NAME_COLUMN, "10086");
-        Log.d("yyy", "nfgvujghik,bh,j"+usingName);
         if (!usingName.equals("10086")) {
-
             Intent intent = new Intent(LoginActivity.this, SweepActivity.class);
             startActivity(intent);
             finish();
@@ -239,7 +237,7 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
             public void onSuccess() {
                 EMClient.getInstance().groupManager().loadAllGroups();
                 EMClient.getInstance().chatManager().loadAllConversations();
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+//                startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 Log.d("main", "登录聊天服务器成功！");
 //                Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
             }

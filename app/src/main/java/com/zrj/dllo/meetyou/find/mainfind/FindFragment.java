@@ -306,7 +306,14 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
         @Override
         public void done(List<Person> list, BmobException e) {
             nameId=list.get(0).getObjectId();
-            LogUtils.d("索引是多少:"+nameId);
+            //将查询到的信息存储到sp中
+            SharedPreferences sp=context.getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME,Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor=sp.edit();
+            editor.putString(StaticValues.SP_USEING_ADRESS_COLUMN,list.get(0).getAdress());
+            editor.putString(StaticValues.SP_USEING_LONTITUDE_COLUMN,list.get(0).getLontitude());
+            editor.putString(StaticValues.SP_USEING_LATITUDE_COLUMN,list.get(0).getLatitude());
+            editor.commit();
+            LogUtils.d("bbb索引是多少:"+nameId);
             if (!nameId.isEmpty()) {
                 Person person = new Person();
                 //利用id更新数据
@@ -316,14 +323,13 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
                 person.setLikeCount(String.valueOf(0));
                 person.setLocationDate(mLocation.getTime());
                 person.setRadius(String.valueOf(mLocation.getRadius()));
-                person.setUserImgUrl("http://www.feizl.com/upload2007/2012_01/1201010230427610.png");
                 person.update(nameId, new UpdateListener() {
                     @Override
                     public void done(BmobException e) {
                         if (e == null) {
-                            LogUtils.d("更新成功");
+                            LogUtils.d("bbb更新成功");
                         } else {
-                            LogUtils.d("更新失败,这个问题就麻烦了,可能是Bmob的原因");
+                            LogUtils.d("bbb更新失败,这个问题就麻烦了,可能是Bmob的原因");
                         }
                     }
                 });

@@ -9,5 +9,14 @@ import cn.bmob.v3.BmobUser;
  */
 
 public class LoginUserBean extends BmobUser{
-    
+
+    private String userImgUrl;//用户头像
+
+    public String getUserImgUrl() {
+        return userImgUrl;
+    }
+
+    public void setUserImgUrl(String userImgUrl) {
+        this.userImgUrl = userImgUrl;
+    }
 }

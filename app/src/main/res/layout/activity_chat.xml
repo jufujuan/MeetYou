@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <include layout="@layout/title_chat"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/msg_chat_rv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+    </android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/msg_chat_et"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:maxLines="6"/>
+
+        <Button
+            android:id="@+id/chat_send_btn"
+            android:layout_width="50dp"
+            android:layout_height="35dp"
+            android:text="发送"
+            android:textColor="@color/colorWhite"
+            android:background="@color/colorMain"
+            android:layout_gravity="bottom"/>
+    </LinearLayout>
+
+</LinearLayout>

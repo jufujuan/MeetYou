@@ -47,7 +47,7 @@ public class MsgContactFragment extends AbsBaseFragment {
     @Override
     protected void initDatas() {
         contactSidebar.setTextView(contactCenterTv);
-        mContactRecyclerAdapter = new ContactRecyclerAdapter();
+        mContactRecyclerAdapter = new ContactRecyclerAdapter(context);
 
         new Thread(new Runnable() {
             @Override

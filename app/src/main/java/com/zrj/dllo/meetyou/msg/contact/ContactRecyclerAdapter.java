@@ -1,13 +1,14 @@
 package com.zrj.dllo.meetyou.msg.contact;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.CommonViewHolder;
+import com.zrj.dllo.meetyou.msg.chat.ChatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,11 @@ import java.util.List;
 public class ContactRecyclerAdapter extends RecyclerView.Adapter<CommonViewHolder> {
 
     private List<ContactBean> mContactBeen = new ArrayList<>();
+    private Context mContext;
+
+    public ContactRecyclerAdapter(Context context) {
+        mContext = context;
+    }
 
     public void setContactBeen(List<ContactBean> contactBeen) {
         mContactBeen = contactBeen;
@@ -34,7 +40,7 @@ public class ContactRecyclerAdapter extends RecyclerView.Adapter<CommonViewHolde
 
     @Override
     public void onBindViewHolder(CommonViewHolder holder, int position) {
-        ContactBean contactBean = mContactBeen.get(position);
+        final ContactBean contactBean = mContactBeen.get(position);
         // 获取首字母的ascii值
         int selection = contactBean.getFirstPinYin().charAt(0);
         // 判断是否显示首字母
@@ -46,6 +52,15 @@ public class ContactRecyclerAdapter extends RecyclerView.Adapter<CommonViewHolde
             holder.getView(R.id.item_contact_tag_tv).setVisibility(View.GONE);
         }
         holder.setText(R.id.msg_contact_name_tv, contactBean.getName());
+
+        holder.setItemClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, ChatActivity.class);
+                intent.putExtra("userName", contactBean.getName());
+                mContext.startActivity(intent);
+            }
+        });
 
     }
 

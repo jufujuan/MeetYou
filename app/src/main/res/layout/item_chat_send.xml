@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:layout_alignParentRight="true">
+
+        <ImageView
+            android:id="@+id/msg_chat_send_avatar"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_alignParentRight="true"/>
+
+        <TextView
+            android:id="@+id/msg_chat_send_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1111111111111"
+            android:textSize="20sp"
+            android:background="@drawable/xh"
+            android:layout_toLeftOf="@+id/msg_chat_send_avatar"/>
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

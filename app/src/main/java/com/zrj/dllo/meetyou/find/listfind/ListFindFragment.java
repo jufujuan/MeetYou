@@ -23,6 +23,7 @@ import java.util.List;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.QueryListener;
 
 /**
  * 这是 鞠福娟 创建的哟~
@@ -76,48 +77,76 @@ public class ListFindFragment extends AbsBaseFragment implements View.OnClickLis
 
         /*****************/
         mRecyclerAdapter = new ListFindRecyclerAdapter(context);
-        mRecyclerAdapter.setDatas(mPersons);
-        mRecyclerAdapter.setOnClickListener(this);
-        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
-        mRecyclerView.setAdapter(mRecyclerAdapter);
+       // mRecyclerAdapter.setDatas(mPersons);
+
     }
 
     private void setPersons() {
         //获得从数据库中的到的当前用户的信息
         SharedPreferences sp = context.getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME, Context.MODE_PRIVATE);
-        String lo = sp.getString(StaticValues.SP_USEING_LONTITUDE_COLUMN, "");
-        String la = sp.getString(StaticValues.SP_USEING_LATITUDE_COLUMN, "");
+        //获取该用户的地理位置
+        //String lo = sp.getString(StaticValues.SP_USEING_LONTITUDE_COLUMN, "0");
+        //String la = sp.getString(StaticValues.SP_USEING_LATITUDE_COLUMN, "0");
+        String nameId=sp.getString(StaticValues.SP_USEING_ID,"0");
+        BmobQuery<Person> query=new BmobQuery<>();
+        query.getObject(nameId, new QueryListener<Person>() {
+            @Override
+            public void done(Person person, BmobException e) {
+                String lo=person.getLontitude();
+                String la=person.getLatitude();
 
-        mPersons = new ArrayList<>();
-        for (int i = 0; i < mAllPersons.size(); i++) {
-            Double loOne = Double.parseDouble(lo);
-            Double laOne = Double.parseDouble(la);
-            LogUtils.d(loOne+"-----------"+laOne);
-            if (lo.isEmpty() || la.isEmpty()) {
-                LogUtils.d("该用户的经纬度没找到....");
-            } else {
-                LogUtils.d(mAllPersons.get(i).getLontitude() + "  " + mAllPersons.get(i).getLatitude());
+                mPersons = new ArrayList<>();
+                for (int i = 0; i < mAllPersons.size(); i++) {
+                    Double loOne = Double.parseDouble(lo);
+                    Double laOne = Double.parseDouble(la);
+                    LogUtils.d(loOne+"-----------"+laOne);
+                    if (lo.isEmpty() || la.isEmpty()) {
+                        LogUtils.d("该用户的经纬度没找到....");
+                    } else {
+                        LogUtils.d(mAllPersons.get(i).getLontitude() + "  " + mAllPersons.get(i).getLatitude());
 
-                if (TextUtils.isEmpty(mAllPersons.get(i).getLontitude()) ||TextUtils.isEmpty(mAllPersons.get(i).getLatitude())) {
-                    LogUtils.d("跳过去");
-                    continue;
+                        if (TextUtils.isEmpty(mAllPersons.get(i).getLontitude()) ||TextUtils.isEmpty(mAllPersons.get(i).getLatitude())) {
+                            LogUtils.d("跳过去");
+                            continue;
+                        }
+
+                        Double loTwo = Double.parseDouble(mAllPersons.get(i).getLontitude());
+                        Double laTwo = Double.parseDouble(mAllPersons.get(i).getLatitude());
+
+                        LogUtils.d("距离" + DistanceUtils.getDistance(loOne, laOne, loTwo, laTwo));
+                        if (DistanceUtils.getDistance(loOne, laOne, loTwo, laTwo) < DISTANCE) {
+                            mPersons.add(mAllPersons.get(i));
+                        }
+
+                    }
                 }
-
-                Double loTwo = Double.parseDouble(mAllPersons.get(i).getLontitude());
-                Double laTwo = Double.parseDouble(mAllPersons.get(i).getLatitude());
-
-                LogUtils.d("距离" + DistanceUtils.getDistance(loOne, laOne, loTwo, laTwo));
-                if (DistanceUtils.getDistance(loOne, laOne, loTwo, laTwo) < DISTANCE) {
-                    mPersons.add(mAllPersons.get(i));
+                LogUtils.d("得到的:" + mPersons.size());
+                if (mPersons.size()>0){
+                    mRecyclerAdapter.setDatas(mPersons);
+                    mRecyclerAdapter.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            switch (view.getId()) {
+                                case R.id.item_list_find_dislike:
+                                    Toast.makeText(context, "不喜欢", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case R.id.item_list_find_like:
+                                    Toast.makeText(context, "喜欢", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case R.id.item_list_find_img:
+                                    Toast.makeText(context, "点击了图片", Toast.LENGTH_SHORT).show();
+                                    goTo(context, ListTTActivity.class);
+                                    break;
+                            }
+                        }
+                    });
+                    StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+                    mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
+                    mRecyclerView.setAdapter(mRecyclerAdapter);
                 }
-
             }
-        }
-        LogUtils.d("得到的:" + mPersons.size());
-        if (mPersons.size()>0){
-            mRecyclerAdapter.setDatas(mPersons);
-        }
+        });
+
 
 
 

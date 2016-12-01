@@ -32,6 +32,10 @@ public class StaticValues {
      *  正在登录的用户地址
      */
     public final static String SP_USEING_ADRESS_COLUMN= "adress";
+    /**
+     *  正在登录的用户地址
+     */
+    public final static String SP_USEING_ID= "id";
 
 
 }

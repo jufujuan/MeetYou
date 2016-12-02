@@ -49,7 +49,8 @@
             android:textColor="#ffffff"
             android:textSize="15dp"/>
 
-        <com.zrj.dllo.meetyou.tools.CircularImageViewUtils
+        <ImageView
+            android:scaleType="centerCrop"
             android:id="@+id/editor_head_image"
             android:layout_width="75dp"
             android:layout_height="75dp"

@@ -86,8 +86,8 @@ public class ListFindFragment extends AbsBaseFragment implements View.OnClickLis
     private void setPersons() {
         //获得从数据库中的到的当前用户的信息
         SharedPreferences sp = context.getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME, Context.MODE_PRIVATE);
-        String lo = sp.getString(StaticValues.SP_USEING_LONTITUDE_COLUMN, "");
-        String la = sp.getString(StaticValues.SP_USEING_LATITUDE_COLUMN, "");
+        String lo = sp.getString(StaticValues.SP_USEING_LONTITUDE_COLUMN, "0");
+        String la = sp.getString(StaticValues.SP_USEING_LATITUDE_COLUMN, "0");
 
         mPersons = new ArrayList<>();
         for (int i = 0; i < mAllPersons.size(); i++) {
@@ -118,9 +118,6 @@ public class ListFindFragment extends AbsBaseFragment implements View.OnClickLis
         if (mPersons.size()>0){
             mRecyclerAdapter.setDatas(mPersons);
         }
-
-
-
     }
 
     private class QueryAll extends FindListener<Person> {

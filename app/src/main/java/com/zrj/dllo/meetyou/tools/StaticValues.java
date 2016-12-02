@@ -1,5 +1,7 @@
 package com.zrj.dllo.meetyou.tools;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by ${ZhaoXuancheng} on 16/11/29.
  * 静态常量类

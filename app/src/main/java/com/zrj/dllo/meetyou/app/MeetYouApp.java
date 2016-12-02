@@ -1,5 +1,6 @@
 package com.zrj.dllo.meetyou.app;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.util.Log;
 
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
+import com.zrj.dllo.meetyou.tools.StaticValues;
 
 import java.util.Iterator;
 import java.util.List;

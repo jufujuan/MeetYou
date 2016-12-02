@@ -16,10 +16,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.zrj.dllo.meetyou.Person;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.AbsBaseActivity;
 import com.zrj.dllo.meetyou.login.LoginUserBean;
+import com.zrj.dllo.meetyou.tools.CircularImageViewUtils;
 import com.zrj.dllo.meetyou.tools.LogUtils;
 import com.zrj.dllo.meetyou.tools.StaticValues;
 
@@ -37,7 +39,6 @@ import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
-
 public class EditorActivity extends AbsBaseActivity implements View.OnClickListener {
 
     private final static int REQUEST_CODE_PICK_IMAGE = 0;
@@ -45,6 +46,7 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
     private ImageView mImageViewHead;
     private FileOutputStream fileOutputStream;
     private String mNameId;
+    private SharedPreferences mSp;
 
     @Override
     protected int getLayout() {
@@ -58,12 +60,17 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
         TextView textViewCamera = bindView(R.id.editor_camera_tv);
         textViewCamera.setOnClickListener(this);
         mImageViewHead = bindView(R.id.editor_head_image);
-
+        mSp = getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME, MODE_PRIVATE);
 
     }
 
     @Override
     protected void initDatas() {
+       String imgUrl =  mSp.getString(StaticValues.SP_USEING_IMG_URL_COLUMN, "4869");
+        Log.d("ninini", imgUrl);
+        if(!imgUrl.equals("4869")){
+            Glide.with(this).load(imgUrl).into(mImageViewHead);
+        }
 
     }
 
@@ -181,8 +188,12 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
                         //拿到图片的url
                         String fileUrl = bmobFile.getFileUrl();
                         /************************/
-                        SharedPreferences sp = getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME, MODE_PRIVATE);
-                        String uName = sp.getString(StaticValues.SP_USEING_NAME_COLUMN, "---未登录成功---");
+
+                        String uName = mSp.getString(StaticValues.SP_USEING_NAME_COLUMN, "---未登录成功---");
+//                          sp.getString(StaticValues.SP_USEING_IMG_URL_COLUMN,fileUrl);
+                        mSp.edit().putString(StaticValues.SP_USEING_IMG_URL_COLUMN, fileUrl).commit();
+
+
                         if (!uName.equals("---未登录成功---")) {
                             BmobQuery<Person> query = new BmobQuery<>("Person");
                             query.addWhereEqualTo("uName", uName);

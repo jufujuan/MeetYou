@@ -147,6 +147,7 @@ public class FindModel implements FindContract.Model {
             editor.putString(StaticValues.SP_USEING_ADRESS_COLUMN, list.get(0).getAdress());
             editor.putString(StaticValues.SP_USEING_LONTITUDE_COLUMN, list.get(0).getLontitude());
             editor.putString(StaticValues.SP_USEING_LATITUDE_COLUMN, list.get(0).getLatitude());
+            editor.putString(StaticValues.SP_USEING_IMG_URL_COLUMN,list.get(0).getUserImgUrl());
             editor.commit();
             LogUtils.d("bbb索引是多少:" + nameId);
             if (!nameId.isEmpty()) {

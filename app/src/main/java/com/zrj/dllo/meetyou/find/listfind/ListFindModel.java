@@ -7,10 +7,12 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
+import com.litesuits.orm.LiteOrm;
 import com.zrj.dllo.meetyou.Person;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.find.ttfind.ListTTActivity;
 import com.zrj.dllo.meetyou.tools.DistanceUtils;
+import com.zrj.dllo.meetyou.tools.LiteOrmInstance;
 import com.zrj.dllo.meetyou.tools.LogUtils;
 import com.zrj.dllo.meetyou.tools.StaticValues;
 
@@ -46,7 +48,7 @@ public class ListFindModel implements ListFindContract.Model {
      * (这是一个耗时操作)
      */
     @Override
-    public void selectAllDatas(String name,Context context,int distance) {
+    public void selectAllDatas(String name, Context context, int distance) {
 
         BmobQuery<Person> query = new BmobQuery<>();
         QueryAll queryAll = new QueryAll();
@@ -78,24 +80,24 @@ public class ListFindModel implements ListFindContract.Model {
      */
     @Override
     public void getFillDatas(final List<Person> allDatas, final Context context, final int distance) {
-        BmobQuery<Person> query=new BmobQuery<>();
+        BmobQuery<Person> query = new BmobQuery<>();
         query.getObject(searchCurrentL(context), new QueryListener<Person>() {
             @Override
             public void done(Person person, BmobException e) {
-                String lo=person.getLontitude();
-                String la=person.getLatitude();
+                String lo = person.getLontitude();
+                String la = person.getLatitude();
 
                 List<Person> mPersons = new ArrayList<>();
                 for (int i = 0; i < allDatas.size(); i++) {
                     Double loOne = Double.parseDouble(lo);
                     Double laOne = Double.parseDouble(la);
-                    LogUtils.d(loOne+"-----------"+laOne);
+                    LogUtils.d(loOne + "-----------" + laOne);
                     if (lo.isEmpty() || la.isEmpty()) {
                         LogUtils.d("该用户的经纬度没找到....");
                     } else {
                         LogUtils.d(allDatas.get(i).getLontitude() + "  " + allDatas.get(i).getLatitude());
 
-                        if (TextUtils.isEmpty(allDatas.get(i).getLontitude()) ||TextUtils.isEmpty(allDatas.get(i).getLatitude())) {
+                        if (TextUtils.isEmpty(allDatas.get(i).getLontitude()) || TextUtils.isEmpty(allDatas.get(i).getLatitude())) {
                             LogUtils.d("跳过去");
                             continue;
                         }
@@ -111,7 +113,7 @@ public class ListFindModel implements ListFindContract.Model {
                     }
                 }
                 LogUtils.d("得到的:" + mPersons.size());
-                mPresenter.sendDatasToView(mPersons,context);
+                mPresenter.sendDatasToView(mPersons, context);
             }
         });
     }
@@ -120,8 +122,27 @@ public class ListFindModel implements ListFindContract.Model {
      * 将喜欢的人数据存储在数据库中
      */
     @Override
-    public void setLikePersonInLocal() {
+    public void setLikePersonInLocal(Person person) {
+        InsertLiteOrm insertRunnable = new InsertLiteOrm(person);
+        new Thread(insertRunnable).start();
 
+    }
+
+    /**
+     * 将喜欢的人数据存储在数据库中的线程
+     */
+    private class InsertLiteOrm implements Runnable {
+        private Person mPerson;
+
+        public InsertLiteOrm(Person person) {
+            mPerson = person;
+        }
+
+        @Override
+        public void run() {
+            LiteOrmInstance liteOrmInstance = LiteOrmInstance.getInstance();
+            liteOrmInstance.insert(mPerson);
+        }
     }
 
     /**
@@ -151,7 +172,7 @@ public class ListFindModel implements ListFindContract.Model {
                 LogUtils.d("查询到的数据集" + list.size());
                 for (Person person : list) {
                     LogUtils.d(person.getuName());
-                    if (person.getObjectId()==name){
+                    if (person.getObjectId() == name) {
                         continue;
                     }
                     allDatas.add(person);
@@ -161,12 +182,12 @@ public class ListFindModel implements ListFindContract.Model {
             }
             //LogUtils.d(e.getMessage() + "," + e.getErrorCode());
             //setPersons();
-           // mPresenter.setAdpterDatas(mContext);
+            // mPresenter.setAdpterDatas(mContext);
             /*************在这里得到了所有的数据**************/
             /**
              *  得到的数据进行各种操作放在这里
              */
-            getFillDatas(allDatas,mContext,distance);
+            getFillDatas(allDatas, mContext, distance);
             /***********************************************/
         }
     }

@@ -9,6 +9,9 @@ import android.widget.Toast;
 import com.zrj.dllo.meetyou.Person;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.find.ttfind.ListTTActivity;
+import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemDislikeClickListener;
+import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemImgClickListener;
+import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemLikeClickListener;
 
 import java.util.List;
 
@@ -43,25 +46,27 @@ public class ListFindPresenter implements ListFindContract.Presenter {
     public void sendDatasToView(List<Person> mPersons, final Context context) {
         if (mPersons.size()>0){
             mView.mRecyclerAdapter.setDatas(mPersons);
-            mView.mRecyclerAdapter.setOnClickListener(new View.OnClickListener() {
+            mView.mRecyclerAdapter.setImgClickListener(new RecyclerViewItemImgClickListener() {
                 @Override
-                public void onClick(View view) {
-                    switch (view.getId()) {
-                        case R.id.item_list_find_dislike:
-                            Toast.makeText(context, "不喜欢", Toast.LENGTH_SHORT).show();
-                            break;
-                        case R.id.item_list_find_like:
-                            Toast.makeText(context, "喜欢", Toast.LENGTH_SHORT).show();
-                            //1.向本地数据库中数据存储(存储自己的喜欢列表)
-                            mModel.setLikePersonInLocal();
-                            //2.向对方这个人发送好友申请
-                            break;
-                        case R.id.item_list_find_img:
-                            Toast.makeText(context, "点击了图片", Toast.LENGTH_SHORT).show();
-                           // goTo(context, ListTTActivity.class);
-                            context.startActivity(new Intent(context,ListTTActivity.class));
-                            break;
-                    }
+                public void onItemImg(View view, int position, Person person) {
+                    Toast.makeText(context, "点击了图片", Toast.LENGTH_SHORT).show();
+                    // goTo(context, ListTTActivity.class);
+                    context.startActivity(new Intent(context,ListTTActivity.class));
+                }
+            });
+            mView.mRecyclerAdapter.setLikeClickListener(new RecyclerViewItemLikeClickListener() {
+                @Override
+                public void onItemLike(View view, int position, Person person) {
+                    Toast.makeText(context, "喜欢", Toast.LENGTH_SHORT).show();
+                    //1.向本地数据库中数据存储(存储自己的喜欢列表)
+                    mModel.setLikePersonInLocal(person);
+                    //2.向对方这个人发送好友申请
+                }
+            });
+            mView.mRecyclerAdapter.setDislikeClickListener(new RecyclerViewItemDislikeClickListener() {
+                @Override
+                public void onItemDislike(View view, int position, Person person) {
+                    Toast.makeText(context, "不喜欢", Toast.LENGTH_SHORT).show();
                 }
             });
             StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);

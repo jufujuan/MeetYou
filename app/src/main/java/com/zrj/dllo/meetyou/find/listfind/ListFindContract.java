@@ -53,7 +53,7 @@ public class ListFindContract {
         /**
          * 将喜欢的人数据存储在数据库中
          */
-        void setLikePersonInLocal();
+        void setLikePersonInLocal(Person personvb);
     }
 
 }

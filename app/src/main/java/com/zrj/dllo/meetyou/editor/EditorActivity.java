@@ -109,11 +109,11 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_PICK_IMAGE) {
-            if (data.getData() != null && data.getData().equals("")) {
+
                 Uri uri = data.getData();
                 getBitmap(uri);
                 Log.d("EditorActivity", "uri:" + uri);
-            }
+
         } else if (requestCode == REQUEST_CODE_CAPTURE_CAMEIA) {
             Uri uri = data.getData();
             Log.d("EditorActivity", "uri:" + uri);
@@ -121,7 +121,7 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
     }
 
     public void getBitmap(Uri uri) {
-
+        Log.d("EditorActivity", "呵呵");
         ContentResolver cr = getContentResolver();
         try {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(cr, uri);//显得到bitmap图片
@@ -192,9 +192,7 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
                         /************************/
 
                         String uName = mSp.getString(StaticValues.SP_USEING_NAME_COLUMN, "---未登录成功---");
-//                          sp.getString(StaticValues.SP_USEING_IMG_URL_COLUMN,fileUrl);
                         mSp.edit().putString(StaticValues.SP_USEING_IMG_URL_COLUMN, fileUrl).commit();
-
 
                         if (!uName.equals("---未登录成功---")) {
                             BmobQuery<Person> query = new BmobQuery<>("Person");

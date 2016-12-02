@@ -12,11 +12,16 @@ import com.zrj.dllo.meetyou.base.AbsBaseActivity;
 /**
  * 这是 鞠福娟 创建的哟~
  * on 16/11/26.
+ * 觅友列表界面
  */
 
 public class ListFindActivity extends AbsBaseActivity{
     private FragmentManager mFragmentManager;
     private Toolbar mToolbar;
+
+    private ListFindFragment mView;
+    private ListFindPresenter mPresenter;
+    private ListFindModel mModel;
 
     @Override
     protected int getLayout() {
@@ -30,9 +35,16 @@ public class ListFindActivity extends AbsBaseActivity{
 
     @Override
     protected void initDatas() {
+
+        mView=ListFindFragment.newInstance();
+        mModel=new ListFindModel();
+        mPresenter=new ListFindPresenter(mView,mModel);
+        mView.setPresenter(mPresenter);
+        mModel.setPresenter(mPresenter);
+
         mFragmentManager=getSupportFragmentManager();
         FragmentTransaction mTransaction=mFragmentManager.beginTransaction();
-        mTransaction.replace(R.id.ac_list_find_framelayout,new ListFindFragment());
+        mTransaction.replace(R.id.ac_list_find_framelayout,mView);
         mTransaction.commit();
 
         setSupportActionBar(mToolbar);

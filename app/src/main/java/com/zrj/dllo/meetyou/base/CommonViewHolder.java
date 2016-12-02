@@ -10,6 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.zrj.dllo.meetyou.Person;
+import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemDislikeClickListener;
+import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemImgClickListener;
+import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemLikeClickListener;
 
 /**
  * Created by REN - the most cool programmer all over the world
@@ -121,16 +125,47 @@ public class CommonViewHolder extends RecyclerView.ViewHolder {
         return this;
     }
     /**
-     * 设置网络图片
+     * 设置recyclerview行布局的背景网络图片
      *
      * @param id     ImageView的资源id
      * @param imgUrl 图片的网址
      * @return this
      */
-    public CommonViewHolder setImage(int id, String imgUrl, Context context, View.OnClickListener onClickListener) {
-        ImageView imageView = getView(id);
+    public CommonViewHolder setImage(int id, String imgUrl, Context context, final RecyclerViewItemImgClickListener imgClickListener, final int position, final Person person) {
+        final ImageView imageView = getView(id);
         Glide.with(context).load(imgUrl).into(imageView);
-        imageView.setOnClickListener(onClickListener);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imgClickListener.onItemImg(imageView,position,person);
+            }
+        });
+        return this;
+    }
+    /**
+     * 设置RecyclerView行布局的喜欢的本地图片
+     */
+    public CommonViewHolder setImage(int id, final RecyclerViewItemLikeClickListener likeClickListener, final int position, final Person person) {
+        final ImageView imageView = getView(id);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                likeClickListener.onItemLike(imageView,position,person);
+            }
+        });
+        return this;
+    }
+    /**
+     * 设置RecylerView行布局的不喜欢网络图片
+     */
+    public CommonViewHolder setImage(int id, final RecyclerViewItemDislikeClickListener dislikeClickListener, final int position, final Person person) {
+        final ImageView imageView = getView(id);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dislikeClickListener.onItemDislike(imageView,position,person);
+            }
+        });
         return this;
     }
     /**

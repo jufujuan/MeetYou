@@ -66,9 +66,9 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
 
     @Override
     protected void initDatas() {
-       String imgUrl =  mSp.getString(StaticValues.SP_USEING_IMG_URL_COLUMN, "4869");
+        String imgUrl = mSp.getString(StaticValues.SP_USEING_IMG_URL_COLUMN, "4869");
         Log.d("ninini", imgUrl);
-        if(!imgUrl.equals("4869")){
+        if (!imgUrl.equals("4869")) {
             Glide.with(this).load(imgUrl).into(mImageViewHead);
         }
 
@@ -109,9 +109,11 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_PICK_IMAGE) {
-            Uri uri = data.getData();
-            getBitmap(uri);
-            Log.d("EditorActivity", "uri:" + uri);
+            if (data.getData() != null && data.getData().equals("")) {
+                Uri uri = data.getData();
+                getBitmap(uri);
+                Log.d("EditorActivity", "uri:" + uri);
+            }
         } else if (requestCode == REQUEST_CODE_CAPTURE_CAMEIA) {
             Uri uri = data.getData();
             Log.d("EditorActivity", "uri:" + uri);

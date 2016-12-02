@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import com.zrj.dllo.meetyou.Person;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.CommonViewHolder;
+import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemDislikeClickListener;
+import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemImgClickListener;
+import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemLikeClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,15 +25,29 @@ public class ListFindRecyclerAdapter extends RecyclerView.Adapter<CommonViewHold
     private Context mContext;
     private List<Integer> heights;
     private View.OnClickListener mOnClickListener;
+    private RecyclerViewItemLikeClickListener mLikeClickListener;
+    private RecyclerViewItemDislikeClickListener mDislikeClickListener;
+    private RecyclerViewItemImgClickListener mImgClickListener;
 
     public ListFindRecyclerAdapter(Context context) {
         mContext = context;
 
     }
 
-    public void setOnClickListener(View.OnClickListener onClickListener) {
-        mOnClickListener = onClickListener;
+    public void setLikeClickListener(RecyclerViewItemLikeClickListener likeClickListener) {
+        mLikeClickListener = likeClickListener;
     }
+
+    public void setDislikeClickListener(RecyclerViewItemDislikeClickListener dislikeClickListener) {
+        mDislikeClickListener = dislikeClickListener;
+    }
+
+    public void setImgClickListener(RecyclerViewItemImgClickListener imgClickListener) {
+        mImgClickListener = imgClickListener;
+    }
+//    public void setOnClickListener(View.OnClickListener onClickListener) {
+//        mOnClickListener = onClickListener;
+//    }
 
     public ListFindRecyclerAdapter() {
     }
@@ -55,9 +72,9 @@ public class ListFindRecyclerAdapter extends RecyclerView.Adapter<CommonViewHold
         ViewGroup.LayoutParams params =  holder.getItemView().getLayoutParams();//得到item的LayoutParams布局参数
         params.height = heights.get(position);//把随机的高度赋予itemView布局
         holder.getItemView().setLayoutParams(params);//把params设置给itemView布局
-        holder.setImage(R.id.item_list_find_img,datas.get(position).getUserImgUrl(),mContext,mOnClickListener);
-        holder.setImage(R.id.item_list_find_dislike,mOnClickListener);
-        holder.setImage(R.id.item_list_find_like,mOnClickListener);
+        holder.setImage(R.id.item_list_find_img,datas.get(position).getUserImgUrl(),mContext,mImgClickListener,position,datas.get(position));
+        holder.setImage(R.id.item_list_find_dislike,mDislikeClickListener,position,datas.get(position));
+        holder.setImage(R.id.item_list_find_like,mLikeClickListener,position,datas.get(position));
     }
 
     @Override

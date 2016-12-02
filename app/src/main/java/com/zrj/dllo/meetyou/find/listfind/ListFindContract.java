@@ -54,6 +54,10 @@ public class ListFindContract {
          * 将喜欢的人数据存储在数据库中
          */
         void setLikePersonInLocal(Person personvb);
+        /**
+         * 发送好友请求
+         */
+        void sendGoodFriendsRequest(Person person);
     }
 
 }

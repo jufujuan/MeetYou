@@ -1,30 +1,10 @@
 package com.zrj.dllo.meetyou.find.listfind;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
-import com.zrj.dllo.meetyou.Person;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.AbsBaseFragment;
-import com.zrj.dllo.meetyou.find.ttfind.ListTTActivity;
-import com.zrj.dllo.meetyou.tools.DistanceUtils;
-import com.zrj.dllo.meetyou.tools.LogUtils;
-import com.zrj.dllo.meetyou.tools.StaticValues;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.QueryListener;
 
 /**
  * 这是 鞠福娟 创建的哟~

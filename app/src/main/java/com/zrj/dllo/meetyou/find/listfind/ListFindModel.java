@@ -7,6 +7,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.HyphenateException;
 import com.litesuits.orm.LiteOrm;
 import com.zrj.dllo.meetyou.Person;
 import com.zrj.dllo.meetyou.R;
@@ -126,6 +128,20 @@ public class ListFindModel implements ListFindContract.Model {
         InsertLiteOrm insertRunnable = new InsertLiteOrm(person);
         new Thread(insertRunnable).start();
 
+    }
+
+    /**
+     * 发送好友请求
+     *
+     * @param person
+     */
+    @Override
+    public void sendGoodFriendsRequest(Person person) {
+        try {
+            EMClient.getInstance().contactManager().addContact(person.getuName(), null);
+        } catch (HyphenateException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

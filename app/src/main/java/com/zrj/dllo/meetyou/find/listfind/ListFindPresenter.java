@@ -61,6 +61,7 @@ public class ListFindPresenter implements ListFindContract.Presenter {
                     //1.向本地数据库中数据存储(存储自己的喜欢列表)
                     mModel.setLikePersonInLocal(person);
                     //2.向对方这个人发送好友申请
+                    mModel.sendGoodFriendsRequest(person);
                 }
             });
             mView.mRecyclerAdapter.setDislikeClickListener(new RecyclerViewItemDislikeClickListener() {

@@ -53,7 +53,7 @@ public class ListFindModel implements ListFindContract.Model {
         queryAll.setName(name);
         queryAll.setContext(context);
         queryAll.setDistance(distance);
-        query.findObjects(new QueryAll());
+        query.findObjects(queryAll);
     }
 
     /**
@@ -115,6 +115,15 @@ public class ListFindModel implements ListFindContract.Model {
             }
         });
     }
+
+    /**
+     * 将喜欢的人数据存储在数据库中
+     */
+    @Override
+    public void setLikePersonInLocal() {
+
+    }
+
     /**
      * 得到所有的数据集合
      */

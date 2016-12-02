@@ -50,6 +50,10 @@ public class ListFindContract {
          * 经过判断,在全部的数据库中查询到符合条件的数据集合
          */
         void getFillDatas(List<Person> allDatas, Context context, int distance);
+        /**
+         * 将喜欢的人数据存储在数据库中
+         */
+        void setLikePersonInLocal();
     }
 
 }

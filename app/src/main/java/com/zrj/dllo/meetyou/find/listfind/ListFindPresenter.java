@@ -52,6 +52,9 @@ public class ListFindPresenter implements ListFindContract.Presenter {
                             break;
                         case R.id.item_list_find_like:
                             Toast.makeText(context, "喜欢", Toast.LENGTH_SHORT).show();
+                            //1.向本地数据库中数据存储(存储自己的喜欢列表)
+                            mModel.setLikePersonInLocal();
+                            //2.向对方这个人发送好友申请
                             break;
                         case R.id.item_list_find_img:
                             Toast.makeText(context, "点击了图片", Toast.LENGTH_SHORT).show();

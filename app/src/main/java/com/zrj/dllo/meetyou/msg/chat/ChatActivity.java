@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.location.OnNmeaMessageListener;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -36,7 +37,9 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
     private Button chatSendBtn;
     private RecyclerView msgChatRv;
     private String mUserName;
-//    private NewMessageBroadcastReceiver msgReceiver;
+    private List<EMMessage> mMessages;
+    private MsgChatAdapter mAdapter;
+    //    private NewMessageBroadcastReceiver msgReceiver;
 
     @Override
     protected int getLayout() {
@@ -62,10 +65,58 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
 
         EMConversation conversation = EMClient.getInstance().chatManager().getConversation(mUserName);
         //获取此会话的所有消息
-        List<EMMessage> messages = conversation.getAllMessages();
+        mMessages = conversation.getAllMessages();
         //SDK初始化加载的聊天记录为20条，到顶时需要去DB里获取更多
         //获取startMsgId之前的pagesize条消息，此方法获取的messages SDK会自动存入到此会话中，APP中无需再次把获取到的messages添加到会话中
 //        List<EMMessage> messageList = conversation.loadMoreMsgFromDB(startMsgId, pagesize);
+
+        mAdapter = new MsgChatAdapter();
+        mAdapter.setEMMessages(mMessages);
+
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+//        manager.setStackFromEnd(true);
+        msgChatRv.setAdapter(mAdapter);
+        msgChatRv.setLayoutManager(manager);
+        msgChatRv.smoothScrollToPosition(mMessages.size());
+
+
+        EMMessageListener msgListener = new EMMessageListener() {
+
+            @Override
+            public void onMessageReceived(List<EMMessage> messages) {
+                //收到消息
+                for (EMMessage message : messages) {
+                    if (mUserName.equals(message.getFrom())) {
+                        mMessages.add(message);
+                        mAdapter.setEMMessages(mMessages);
+                        msgChatRv.smoothScrollToPosition(mMessages.size());
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCmdMessageReceived(List<EMMessage> messages) {
+                //收到透传消息
+            }
+
+            @Override
+            public void onMessageReadAckReceived(List<EMMessage> messages) {
+                //收到已读回执
+            }
+
+            @Override
+            public void onMessageDeliveryAckReceived(List<EMMessage> message) {
+                //收到已送达回执
+            }
+
+            @Override
+            public void onMessageChanged(EMMessage message, Object change) {
+                //消息状态变动
+            }
+        };
+
+        EMClient.getInstance().chatManager().addMessageListener(msgListener);
     }
 
     @Override
@@ -79,6 +130,9 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
                 if (!TextUtils.isEmpty(content)) {
                     msgChatEt.setText("");
                     EMMessage message = EMMessage.createTxtSendMessage(content, mUserName);
+                    mMessages.add(message);
+                    mAdapter.setEMMessages(mMessages);
+                    msgChatRv.smoothScrollToPosition(mMessages.size());
                     // 将新的消息内容和时间加入到下边
 //                    mContentText.setText(mContentText.getText() + "\n发送：" + content + " - time: " + message.getMsgTime());
                     // 调用发送消息的方法
@@ -135,32 +189,5 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
 //        }
 //    }
 
-//    EMClient.getInstance().chatManager().addMessageListener(msgListener);
-//    EMMessageListener msgListener = new EMMessageListener() {
-//
-//        @Override
-//        public void onMessageReceived(List<EMMessage> messages) {
-//            //收到消息
-//        }
-//
-//        @Override
-//        public void onCmdMessageReceived(List<EMMessage> messages) {
-//            //收到透传消息
-//        }
-//
-//        @Override
-//        public void onMessageReadAckReceived(List<EMMessage> messages) {
-//            //收到已读回执
-//        }
-//
-//        @Override
-//        public void onMessageDeliveryAckReceived(List<EMMessage> message) {
-//            //收到已送达回执
-//        }
-//
-//        @Override
-//        public void onMessageChanged(EMMessage message, Object change) {
-//            //消息状态变动
-//        }
-//    };
+
 }

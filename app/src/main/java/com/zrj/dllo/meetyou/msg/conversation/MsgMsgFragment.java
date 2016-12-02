@@ -24,6 +24,7 @@ public class MsgMsgFragment extends AbsBaseFragment {
 
     private RecyclerView msgMsgRv;
     private List<EMConversation> mConversations;
+    private MsgMsgAdapter mAdapter;
 
     @Override
     protected int getLayout() {
@@ -40,10 +41,10 @@ public class MsgMsgFragment extends AbsBaseFragment {
     protected void initDatas() {
         mConversations.addAll(loadConversation());
 
-        MsgMsgAdapter adapter = new MsgMsgAdapter();
-        adapter.setEMConversations(mConversations);
+        mAdapter = new MsgMsgAdapter(context);
+        mAdapter.setEMConversations(mConversations);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
-        msgMsgRv.setAdapter(adapter);
+        msgMsgRv.setAdapter(mAdapter);
         msgMsgRv.setLayoutManager(manager);
     }
 
@@ -100,5 +101,12 @@ public class MsgMsgFragment extends AbsBaseFragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+//        mConversations.addAll(loadConversation());
+        mAdapter.setEMConversations(mConversations);
     }
 }

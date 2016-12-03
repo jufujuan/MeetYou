@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.zrj.dllo.meetyou.Person;
 import com.zrj.dllo.meetyou.R;
+import com.zrj.dllo.meetyou.find.imgbgclick.FindBgClickActivity;
 import com.zrj.dllo.meetyou.find.ttfind.ListTTActivity;
 import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemDislikeClickListener;
 import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemImgClickListener;
@@ -51,7 +52,7 @@ public class ListFindPresenter implements ListFindContract.Presenter {
                 public void onItemImg(View view, int position, Person person) {
                     Toast.makeText(context, "点击了图片", Toast.LENGTH_SHORT).show();
                     // goTo(context, ListTTActivity.class);
-                    context.startActivity(new Intent(context,ListTTActivity.class));
+                    context.startActivity(new Intent(context,FindBgClickActivity.class));
                 }
             });
             mView.mRecyclerAdapter.setLikeClickListener(new RecyclerViewItemLikeClickListener() {

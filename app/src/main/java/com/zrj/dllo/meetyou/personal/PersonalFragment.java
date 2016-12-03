@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,20 +15,22 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
-import com.zrj.dllo.meetyou.MainActivity;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.tools.BitmapBlurUtils;
 import com.zrj.dllo.meetyou.base.AbsBaseFragment;
 import com.zrj.dllo.meetyou.editor.EditorActivity;
 import com.zrj.dllo.meetyou.eventbus.EventBusBean;
 import com.zrj.dllo.meetyou.login.LoginActivity;
+import com.zrj.dllo.meetyou.tools.CircleDrawable;
+import com.zrj.dllo.meetyou.tools.StaticValues;
+import com.zrj.dllo.meetyou.tools.UrlChangeBitmap;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -47,30 +50,24 @@ public class PersonalFragment extends AbsBaseFragment implements View.OnClickLis
     private TextView mTextViewUsername;
     private RelativeLayout mRelativeLayoutEscLogin;
     private TextView mTextViewEdtor;
+    private String mImgUrl;
+    private String mUserName;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         SharedPreferences preferences = context.getSharedPreferences("userMessage", Activity.MODE_PRIVATE);
-        String userName = preferences.getString("userName", "");
+        mUserName = preferences.getString("userName", "");
+        mImgUrl = preferences.getString(StaticValues.SP_USEING_IMG_URL_COLUMN, "4869");
         EventBus.getDefault().register(this);
-
         mRes = getResources();
+        mBmp = BitmapFactory.decodeResource(mRes, R.mipmap.default_head);
 
-            mBmp = BitmapFactory.decodeResource(mRes, R.mipmap.default_head);
-            //TODO Handler目前这种写法 可能会导致短期的内存泄露
-            //后期需要修改
-            BitmapBlurUtils.addTask(mBmp, new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                    super.handleMessage(msg);
-                    Drawable drawable = (Drawable) msg.obj;
-                    pullImg.setImageDrawable(drawable);
-                }
-            });
-            mImageViewLogin.setImageBitmap(mBmp);
-            mTextViewUsername.setText(userName);
+        if (!mImgUrl.equals("4869")) {
+            ImgAsync imgAsync = new ImgAsync();
+            imgAsync.execute();
+            Glide.with(this).load(mImgUrl).into(mImageViewLogin);
+        }
     }
 
     /**
@@ -128,16 +125,14 @@ public class PersonalFragment extends AbsBaseFragment implements View.OnClickLis
                 SharedPreferences preferences = context.getSharedPreferences("userMessage", Activity.MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.clear();
-                Intent intent3 = new Intent(getActivity(),LoginActivity.class);
+                Intent intent3 = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent3);
                 editor.commit();
                 BmobUser.logOut();   //清除缓存用户对象
-                BmobUser currentUser = BmobUser.getCurrentUser(); // 现在的currentUser是null了
                 getActivity().finish();
                 Toast.makeText(context, "已退出登录", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.personal_editor_tv:
-
                 Intent intent2 = new Intent(getActivity(), EditorActivity.class);
                 startActivity(intent2);
                 break;
@@ -167,7 +162,7 @@ public class PersonalFragment extends AbsBaseFragment implements View.OnClickLis
      * 登出
      * 异步
      */
-    private void logOut(){
+    private void logOut() {
         EMClient.getInstance().logout(false, new EMCallBack() {
 
             @Override
@@ -190,4 +185,30 @@ public class PersonalFragment extends AbsBaseFragment implements View.OnClickLis
         });
     }
 
+
+    class ImgAsync extends AsyncTask<String, String, Bitmap> {
+        @Override
+        protected Bitmap doInBackground(String... params) {
+            mBmp = UrlChangeBitmap.getBitMBitmap(mImgUrl);
+            return mBmp;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+            //TODO Handler目前这种写法 可能会导致短期的内存泄露
+            //后期需要修改
+            BitmapBlurUtils.addTask(mBmp,
+                    new Handler() {
+                        @Override
+                        public void handleMessage(Message msg) {
+                            super.handleMessage(msg);
+                            Drawable drawable = (Drawable) msg.obj;
+                            pullImg.setImageDrawable(drawable);
+                        }
+                    });
+            mImageViewLogin.setImageBitmap(mBmp);
+            mTextViewUsername.setText(mUserName);
+        }
+    }
 }

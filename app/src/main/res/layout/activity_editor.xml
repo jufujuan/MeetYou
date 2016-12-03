@@ -5,7 +5,6 @@
     android:id="@+id/activity_editor"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f9806e"
     android:orientation="vertical"
     tools:context="com.zrj.dllo.meetyou.editor.EditorActivity">
 
@@ -46,10 +45,9 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="拍照修改头像"
-            android:textColor="#ffffff"
             android:textSize="15dp"/>
 
-        <com.zrj.dllo.meetyou.tools.CircularImageViewUtils
+        <ImageView
             android:id="@+id/editor_head_image"
             android:layout_width="75dp"
             android:layout_height="75dp"
@@ -57,6 +55,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
             android:layout_marginTop="5dp"
+            android:scaleType="centerCrop"
             android:src="@mipmap/sidebar_pic"/>
 
         <TextView
@@ -68,10 +67,31 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="相册选择头像"
-            android:textColor="#ffffff"
             android:textSize="15dp"/>
 
     </LinearLayout>
+
+    <EditText
+
+        android:id="@+id/editor_name_et"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginLeft="15dp"
+        android:background="@null"
+        android:hint=" 姓名"
+        android:textColor="@color/colorDivider"
+        android:textCursorDrawable="@drawable/edittext_one"
+        android:textSize="20dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignBottom="@id/editor_name_et"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@color/colorDivider"
+        />
 
 
 </LinearLayout>

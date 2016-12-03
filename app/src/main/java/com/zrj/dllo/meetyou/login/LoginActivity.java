@@ -33,6 +33,7 @@ import com.zrj.dllo.meetyou.eventbus.EventBusBean;
 import com.zrj.dllo.meetyou.tools.BitmapBlurUtils;
 import com.zrj.dllo.meetyou.tools.StaticValues;
 
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
@@ -74,7 +75,9 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
                 Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                 SharedPreferences preferences = getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME, Activity.MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
+
                 editor.putString(StaticValues.SP_USEING_NAME_COLUMN, mEventBusBean.getUsername());
+//                editor.putString(StaticValues.SP_USEING_IMG_URL_COLUMN)
                 editor.commit();
 
                 Log.d("MainActivity", "登录成功");

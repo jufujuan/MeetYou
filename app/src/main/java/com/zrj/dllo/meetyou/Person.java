@@ -1,13 +1,20 @@
 package com.zrj.dllo.meetyou;
 
+import com.litesuits.orm.db.annotation.Column;
+import com.litesuits.orm.db.annotation.PrimaryKey;
+import com.litesuits.orm.db.annotation.Table;
+import com.litesuits.orm.db.enums.AssignType;
+import com.zrj.dllo.meetyou.tools.StaticValues;
+
 import cn.bmob.v3.BmobObject;
 
 /**
  * 这是 鞠福娟 创建的哟~
  * on 16/11/29.
  */
-
+@Table(StaticValues.LO_TABLE_LIKE_NAME)
 public class Person extends BmobObject{
+    @PrimaryKey(AssignType.BY_MYSELF)
     private String uName;//用户名
     private String uPassword;//密码
     private String userImgUrl;//用户头像

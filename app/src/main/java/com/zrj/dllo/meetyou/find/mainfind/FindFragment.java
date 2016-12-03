@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.ScaleAnimation;
@@ -26,8 +24,6 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.baidu.location.Poi;
-import com.zrj.dllo.meetyou.login.LoginUserBean;
 import com.zrj.dllo.meetyou.tools.LogUtils;
 import com.zrj.dllo.meetyou.tools.StaticValues;
 import com.zrj.dllo.meetyou.widget.CircleImageView;
@@ -35,11 +31,9 @@ import com.zrj.dllo.meetyou.widget.SweepImageView;
 
 import java.util.List;
 
-import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 /**
@@ -53,11 +47,8 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
     private SweepImageView mSweepImageView;
     private CircleImageView mCircleImageView;
     private FindContract.Presenter mPresenter;
-
-
     public LocationClient mLocationClient = null;
-    public BDLocationListener myListener = new MyLocationListener();
-
+    public BDLocationListener myListener;
     private TextView loadingTv;
     private String nameId = null;
 
@@ -80,6 +71,7 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
         mSweepImageView = bindView(R.id.fra_find_sweepImageView);
         mCircleImageView = bindView(R.id.fra_find_circleImageView);
         loadingTv = bindView(R.id.fra_find_seek_tv);
+        myListener = new MyLocationListener();
     }
 
     @Override
@@ -128,30 +120,50 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
         mCircleImageView.startAnimation(scaleAnimation);
     }
 
+
     @Override
     public void onClick(View view) {
-        initLocation();
+        mPresenter.startSearch(mLocationClient);
         showClickAnim();
         loadingTv.setText("正在搜索附近的人...");
         mLocationClient.start();
     }
+    /**
+     * GPS定位成功,显示提示信息信息
+     */
+    @Override
+    public void showGPSMsg(BDLocation location) {
+        Toast.makeText(context, "GPS定位成功", Toast.LENGTH_SHORT).show();
+        /*******在这里存储经纬度,地址,半径范围*******/
+        mLocationClient.stop();
+        mPresenter.goToMainAc(context, Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK,1000,location);
+    }
 
-    private void initLocation() {
-        LocationClientOption option = new LocationClientOption();
-        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy
-        );//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
-        option.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系
-        int span = 1000;
-        option.setScanSpan(span);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
-        option.setIsNeedAddress(true);//可选，设置是否需要地址信息，默认不需要
-        option.setOpenGps(true);//可选，默认false,设置是否使用gps
-        option.setLocationNotify(true);//可选，默认false，设置是否当GPS有效时按照1S/1次频率输出GPS结果
-        option.setIsNeedLocationDescribe(true);//可选，默认false，设置是否需要位置语义化结果，可以在BDLocation.getLocationDescribe里得到，结果类似于“在北京天安门附近”
-        option.setIsNeedLocationPoiList(true);//可选，默认false，设置是否需要POI结果，可以在BDLocation.getPoiList里得到
-        option.setIgnoreKillProcess(false);//可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
-        option.SetIgnoreCacheException(false);//可选，默认false，设置是否收集CRASH信息，默认收集
-        option.setEnableSimulateGps(false);//可选，默认false，设置是否需要过滤GPS仿真结果，默认需要
-        mLocationClient.setLocOption(option);
+    /**
+     * 网络定位成功,显示提示信息信息
+     *
+     * @param location
+     */
+    @Override
+    public void showNetMsg(BDLocation location) {
+        Toast.makeText(context, "网络定位成功", Toast.LENGTH_SHORT).show();
+        /*******在这里存储经纬度,地址,半径范围*******/
+        mPresenter.goToMainAc(context, Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK,1000,location);
+        mLocationClient.stop();
+
+    }
+
+    /**
+     * 离线定位定位成功,显示提示信息信息
+     *
+     * @param location
+     */
+    @Override
+    public void showNotNetMsg(BDLocation location) {
+        Toast.makeText(context, "离线定位成功", Toast.LENGTH_SHORT).show();
+        /*******在这里存储经纬度,地址,半径范围*******/
+        mPresenter.goToMainAc(context, Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK,1000,location);
+        mLocationClient.stop();
     }
 
     public class MyLocationListener implements BDLocationListener {
@@ -160,10 +172,7 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
         public void onReceiveLocation(BDLocation location) {
             switch (location.getLocType()) {
                 case 61:
-                    Toast.makeText(context, "GPS定位成功", Toast.LENGTH_SHORT).show();
-                    goTo(context, MainActivity.class, Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    /*******在这里存储经纬度,地址,半径范围*******/
-                    saveInfo(location);
+                    showGPSMsg(location);
                     break;
                 case 62:
                     break;
@@ -174,19 +183,14 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
                 case 65:
                     break;
                 case 66:
-                    Toast.makeText(context, "离线定位结果", Toast.LENGTH_SHORT).show();
-                    /*******在这里存储经纬度,地址,半径范围*******/
-                    saveInfo(location);
+                    showNotNetMsg(location);
                     break;
                 case 67:
                     break;
                 case 68:
                     break;
                 case 161:
-                    Toast.makeText(context, "网络定位成功", Toast.LENGTH_SHORT).show();
-                    goTo(context, MainActivity.class, Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    /*******在这里存储经纬度,地址,半径范围*******/
-                    saveInfo(location);
+                    showNetMsg(location);
                     break;
                 case 162:
                     break;
@@ -205,7 +209,6 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
                 case 602:
                     break;
                 default:
-
                     break;
             }
 //            //Receive Location
@@ -268,78 +271,7 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
 //            // Log.i("BaiduLocationApiDem", sb.toString());
 //            loadingTv.setText(sb.toString());
         }
-
     }
-
-    /**
-     * 更新数据的方法
-     *
-     * @param location
-     */
-    private void saveInfo(BDLocation location) {
-        SharedPreferences sp = context.getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME, Context.MODE_PRIVATE);
-        String uname = sp.getString(StaticValues.SP_USEING_NAME_COLUMN, "---未登录成功---");
-        if (!uname.equals("---未登录成功---")) {
-            LogUtils.d("查询成功!" + uname);
-            // 查询id,利用id更新数据库
-            BmobQuery<Person> query = new BmobQuery<>("Person");
-            query.addWhereEqualTo("uName", uname);
-            QueryFindListener queryFindListener = new QueryFindListener(location);
-            query.findObjects(queryFindListener);
-
-        } else {
-            LogUtils.d("你确定登录啦?");
-        }
-    }
-
-    /**
-     * 查询数据库的监听
-     * 如果查询索引成功,更新数据
-     */
-    private class QueryFindListener extends FindListener<Person> {
-        private BDLocation mLocation;
-
-        public QueryFindListener(BDLocation location) {
-            mLocation = location;
-        }
-
-        @Override
-        public void done(List<Person> list, BmobException e) {
-            nameId=list.get(0).getObjectId();
-            //将查询到的信息存储到sp中
-            SharedPreferences sp=context.getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME,Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor=sp.edit();
-            editor.putString(StaticValues.SP_USEING_ADRESS_COLUMN,list.get(0).getAdress());
-            editor.putString(StaticValues.SP_USEING_LONTITUDE_COLUMN,list.get(0).getLontitude());
-            editor.putString(StaticValues.SP_USEING_LATITUDE_COLUMN,list.get(0).getLatitude());
-            editor.commit();
-            LogUtils.d("bbb索引是多少:"+nameId);
-            if (!nameId.isEmpty()) {
-                Person person = new Person();
-                //利用id更新数据
-                person.setAdress(mLocation.getAddrStr());
-                person.setLatitude(String.valueOf(mLocation.getLatitude()));
-                person.setLontitude(String.valueOf(mLocation.getLongitude()));
-                person.setLikeCount(String.valueOf(0));
-                person.setLocationDate(mLocation.getTime());
-                person.setRadius(String.valueOf(mLocation.getRadius()));
-                person.update(nameId, new UpdateListener() {
-                    @Override
-                    public void done(BmobException e) {
-                        if (e == null) {
-                            LogUtils.d("bbb更新成功");
-                        } else {
-                            LogUtils.d("bbb更新失败,这个问题就麻烦了,可能是Bmob的原因");
-                        }
-                    }
-                });
-            } else {
-                LogUtils.d("没有查询到该用户!请确定数据库中有该用户");
-            }
-        }
-    }
-
-
     @Override
     public void onDestroy() {
         super.onDestroy();

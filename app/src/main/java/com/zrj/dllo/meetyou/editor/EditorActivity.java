@@ -16,10 +16,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.zrj.dllo.meetyou.Person;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.AbsBaseActivity;
 import com.zrj.dllo.meetyou.login.LoginUserBean;
+import com.zrj.dllo.meetyou.tools.CircularImageViewUtils;
 import com.zrj.dllo.meetyou.tools.LogUtils;
 import com.zrj.dllo.meetyou.tools.StaticValues;
 
@@ -37,7 +39,6 @@ import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
-
 public class EditorActivity extends AbsBaseActivity implements View.OnClickListener {
 
     private final static int REQUEST_CODE_PICK_IMAGE = 0;
@@ -45,6 +46,7 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
     private ImageView mImageViewHead;
     private FileOutputStream fileOutputStream;
     private String mNameId;
+    private SharedPreferences mSp;
 
     @Override
     protected int getLayout() {
@@ -58,12 +60,17 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
         TextView textViewCamera = bindView(R.id.editor_camera_tv);
         textViewCamera.setOnClickListener(this);
         mImageViewHead = bindView(R.id.editor_head_image);
-
+        mSp = getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME, MODE_PRIVATE);
 
     }
 
     @Override
     protected void initDatas() {
+        String imgUrl = mSp.getString(StaticValues.SP_USEING_IMG_URL_COLUMN, "4869");
+        Log.d("ninini", imgUrl);
+        if (!imgUrl.equals("4869")) {
+            Glide.with(this).load(imgUrl).into(mImageViewHead);
+        }
 
     }
 
@@ -102,9 +109,11 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_PICK_IMAGE) {
-            Uri uri = data.getData();
-            getBitmap(uri);
-            Log.d("EditorActivity", "uri:" + uri);
+
+                Uri uri = data.getData();
+                getBitmap(uri);
+                Log.d("EditorActivity", "uri:" + uri);
+
         } else if (requestCode == REQUEST_CODE_CAPTURE_CAMEIA) {
             Uri uri = data.getData();
             Log.d("EditorActivity", "uri:" + uri);
@@ -112,7 +121,7 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
     }
 
     public void getBitmap(Uri uri) {
-
+        Log.d("EditorActivity", "呵呵");
         ContentResolver cr = getContentResolver();
         try {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(cr, uri);//显得到bitmap图片
@@ -181,8 +190,10 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
                         //拿到图片的url
                         String fileUrl = bmobFile.getFileUrl();
                         /************************/
-                        SharedPreferences sp = getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME, MODE_PRIVATE);
-                        String uName = sp.getString(StaticValues.SP_USEING_NAME_COLUMN, "---未登录成功---");
+
+                        String uName = mSp.getString(StaticValues.SP_USEING_NAME_COLUMN, "---未登录成功---");
+                        mSp.edit().putString(StaticValues.SP_USEING_IMG_URL_COLUMN, fileUrl).commit();
+
                         if (!uName.equals("---未登录成功---")) {
                             BmobQuery<Person> query = new BmobQuery<>("Person");
                             query.addWhereEqualTo("uName", uName);

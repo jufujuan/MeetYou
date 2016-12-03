@@ -33,14 +33,15 @@ public class SweepActivity extends AbsBaseActivity{
         mManager = getSupportFragmentManager();
 
         FindFragment findFragment = FindFragment.newInstance();
-        FindPresenter findPresenter = new FindPresenter();
         FindModel findModel = new FindModel();
+        FindPresenter findPresenter = new FindPresenter(findModel,findFragment);
+
 
         findFragment.setPersenter(findPresenter);
         findModel.setPresenter(findPresenter);
 
         FragmentTransaction mTransacyion = mManager.beginTransaction();
-        mTransacyion.replace(R.id.ac_sweep_framelayout, FindFragment.newInstance());
+        mTransacyion.replace(R.id.ac_sweep_framelayout, findFragment);
         mTransacyion.commit();
 
     }

@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hyphenate.EMCallBack;
+import com.hyphenate.EMContactListener;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMChatManager;
 import com.hyphenate.chat.EMClient;
@@ -64,20 +65,26 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
         msgChatNameTv.setText(mUserName);
 
         EMConversation conversation = EMClient.getInstance().chatManager().getConversation(mUserName);
-        //获取此会话的所有消息
-        mMessages = conversation.getAllMessages();
-        //SDK初始化加载的聊天记录为20条，到顶时需要去DB里获取更多
-        //获取startMsgId之前的pagesize条消息，此方法获取的messages SDK会自动存入到此会话中，APP中无需再次把获取到的messages添加到会话中
+        Log.d("ChatActivity", "conversation:" + conversation);
+
+        if (conversation != null) {
+            //获取此会话的所有消息
+            mMessages = conversation.getAllMessages();
+            //SDK初始化加载的聊天记录为20条，到顶时需要去DB里获取更多
+            //获取startMsgId之前的pagesize条消息，此方法获取的messages SDK会自动存入到此会话中，APP中无需再次把获取到的messages添加到会话中
 //        List<EMMessage> messageList = conversation.loadMoreMsgFromDB(startMsgId, pagesize);
 
-        mAdapter = new MsgChatAdapter();
-        mAdapter.setEMMessages(mMessages);
+            mAdapter = new MsgChatAdapter();
+            mAdapter.setEMMessages(mMessages);
 
-        LinearLayoutManager manager = new LinearLayoutManager(this);
+            LinearLayoutManager manager = new LinearLayoutManager(this);
 //        manager.setStackFromEnd(true);
-        msgChatRv.setAdapter(mAdapter);
-        msgChatRv.setLayoutManager(manager);
-        msgChatRv.smoothScrollToPosition(mMessages.size());
+            msgChatRv.setAdapter(mAdapter);
+            msgChatRv.setLayoutManager(manager);
+            msgChatRv.smoothScrollToPosition(mMessages.size());
+        }
+
+
 
 
         EMMessageListener msgListener = new EMMessageListener() {
@@ -117,6 +124,36 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
         };
 
         EMClient.getInstance().chatManager().addMessageListener(msgListener);
+
+        // 监听好友请求
+        EMClient.getInstance().contactManager().setContactListener(new EMContactListener() {
+
+            @Override
+            public void onContactAgreed(String username) {
+                //好友请求被同意
+            }
+
+            @Override
+            public void onContactRefused(String username) {
+                //好友请求被拒绝
+            }
+
+            @Override
+            public void onContactInvited(String username, String reason) {
+                //收到好友邀请
+            }
+
+            @Override
+            public void onContactDeleted(String username) {
+                //被删除时回调此方法
+            }
+
+
+            @Override
+            public void onContactAdded(String username) {
+                //增加了联系人时回调此方法
+            }
+        });
     }
 
     @Override
@@ -162,32 +199,6 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
     }
 
 
-
-
-//    private class NewMessageBroadcastReceiver extends BroadcastReceiver{
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            // 注销广播
-//            abortBroadcast();
-//
-//            // 消息id（每条消息都会生成唯一的一个id，目前是SDK生成）
-//            String msgId = intent.getStringExtra("msgid");
-//            //发送方
-//            String username = intent.getStringExtra("from");
-//            // 收到这个广播的时候，message已经在db和内存里了，可以通过id获取mesage对象
-//            EMMessage message = EMChatManager.getInstance().getMessage(msgId);
-//
-//            if (!username.equals(username)) {
-//                // 消息不是发给当前会话，return
-//                return;
-//            }
-//
-////            conversation.addMessage(message);
-////            adapter.notifyDataSetChanged();
-////            listView.setAdapter(adapter);
-////            listView.setSelection(listView.getCount() - 1);
-//        }
-//    }
 
 
 }

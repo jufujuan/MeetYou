@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hyphenate.EMCallBack;
-import com.hyphenate.EMContactListener;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMChatManager;
 import com.hyphenate.chat.EMClient;
@@ -24,6 +23,7 @@ import com.hyphenate.chat.EMMessage;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.AbsBaseActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -63,9 +63,10 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
         Intent intent = getIntent();
         mUserName = intent.getStringExtra("userName");
         msgChatNameTv.setText(mUserName);
+        mAdapter = new MsgChatAdapter();
 
         EMConversation conversation = EMClient.getInstance().chatManager().getConversation(mUserName);
-        Log.d("ChatActivity", "conversation:" + conversation);
+//        mMessages = new ArrayList<>();
 
         if (conversation != null) {
             //获取此会话的所有消息
@@ -74,11 +75,8 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
             //获取startMsgId之前的pagesize条消息，此方法获取的messages SDK会自动存入到此会话中，APP中无需再次把获取到的messages添加到会话中
 //        List<EMMessage> messageList = conversation.loadMoreMsgFromDB(startMsgId, pagesize);
 
-            mAdapter = new MsgChatAdapter();
             mAdapter.setEMMessages(mMessages);
-
             LinearLayoutManager manager = new LinearLayoutManager(this);
-//        manager.setStackFromEnd(true);
             msgChatRv.setAdapter(mAdapter);
             msgChatRv.setLayoutManager(manager);
             msgChatRv.smoothScrollToPosition(mMessages.size());
@@ -124,36 +122,6 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
         };
 
         EMClient.getInstance().chatManager().addMessageListener(msgListener);
-
-        // 监听好友请求
-        EMClient.getInstance().contactManager().setContactListener(new EMContactListener() {
-
-            @Override
-            public void onContactAgreed(String username) {
-                //好友请求被同意
-            }
-
-            @Override
-            public void onContactRefused(String username) {
-                //好友请求被拒绝
-            }
-
-            @Override
-            public void onContactInvited(String username, String reason) {
-                //收到好友邀请
-            }
-
-            @Override
-            public void onContactDeleted(String username) {
-                //被删除时回调此方法
-            }
-
-
-            @Override
-            public void onContactAdded(String username) {
-                //增加了联系人时回调此方法
-            }
-        });
     }
 
     @Override
@@ -170,11 +138,9 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
                     mMessages.add(message);
                     mAdapter.setEMMessages(mMessages);
                     msgChatRv.smoothScrollToPosition(mMessages.size());
-                    // 将新的消息内容和时间加入到下边
-//                    mContentText.setText(mContentText.getText() + "\n发送：" + content + " - time: " + message.getMsgTime());
                     // 调用发送消息的方法
                     EMClient.getInstance().chatManager().sendMessage(message);
-                    // 为消息设置回调
+//                     为消息设置回调
                     message.setMessageStatusCallback(new EMCallBack() {
                         @Override
                         public void onSuccess() {
@@ -197,8 +163,5 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
                 break;
         }
     }
-
-
-
 
 }

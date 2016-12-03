@@ -41,7 +41,7 @@ public class MsgFragment extends AbsBaseFragment implements View.OnClickListener
 
     @Override
     protected void initDatas() {
-        mFragmentManager = getFragmentManager();
+        mFragmentManager = getChildFragmentManager();
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         transaction.replace(R.id.msg_fl, new MsgMsgFragment());
         transaction.commit();
@@ -49,7 +49,7 @@ public class MsgFragment extends AbsBaseFragment implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        mFragmentManager = getFragmentManager();
+//        mFragmentManager = getFragmentManager();
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         switch (v.getId()) {
             case R.id.msg_msg_btn:

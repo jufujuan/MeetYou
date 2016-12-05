@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -188,7 +189,7 @@ public class ListFindModel implements ListFindContract.Model {
                 LogUtils.d("查询到的数据集" + list.size());
                 for (Person person : list) {
                     LogUtils.d(person.getuName());
-                    if (person.getObjectId() == name) {
+                    if (person.getObjectId().equals(name)) {
                         continue;
                     }
                     allDatas.add(person);

@@ -27,6 +27,8 @@ public class ListFindRecyclerAdapter extends RecyclerView.Adapter<CommonViewHold
     private RecyclerViewItemLikeClickListener mLikeClickListener;
     private RecyclerViewItemDislikeClickListener mDislikeClickListener;
     private RecyclerViewItemImgClickListener mImgClickListener;
+    private int TYPE_HEADER=1;
+    private int TYPE_CONTENT=2;
 
     public ListFindRecyclerAdapter(Context context) {
         mContext = context;
@@ -34,7 +36,11 @@ public class ListFindRecyclerAdapter extends RecyclerView.Adapter<CommonViewHold
 
     @Override
     public int getItemViewType(int position) {
-        return super.getItemViewType(position);
+        if (position==0){
+            return TYPE_HEADER;
+        }else{
+            return TYPE_CONTENT;
+        }
     }
 
     public void setLikeClickListener(RecyclerViewItemLikeClickListener likeClickListener) {
@@ -61,6 +67,9 @@ public class ListFindRecyclerAdapter extends RecyclerView.Adapter<CommonViewHold
 
     @Override
     public CommonViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        switch (viewType)
+
+
         return CommonViewHolder.getViewHolder(parent, R.layout.item_list_find_rv);
     }
 

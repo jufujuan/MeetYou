@@ -8,6 +8,8 @@
     <!--觅友界面-->
     <string name="fra_find_seek_text">正在寻找附近的人...</string>
     <string name="item_list_find_text">性别女,爱好男</string>
+    <!--扫描界面-->
+    <string name="fra_find_sweep">你只会在定位失败的时候看到这个按钮,注意,如果是用户在数据库中没有定位数据,那么进去就会报错,当然正常的app是定位不成功不允许进去的,但是由于未知的原因,总是定位不成功的话还想调试或者演示程序,那么你就点击这个按钮</string>
 
 
 

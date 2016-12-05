@@ -16,5 +16,10 @@
     <!--纯白色-->
     <color name="colorWhite">#FFFFFF</color>
 
+    <!--觅友界面点击详情-->
+    <color name="background_color">#9931ef</color>
+    <color name="tabbar_main">#43f43c</color>
+    <color name="tabbar_secondly">#43dde2</color>
+
 
 </resources>

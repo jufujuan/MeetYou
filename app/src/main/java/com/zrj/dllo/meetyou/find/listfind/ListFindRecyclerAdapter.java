@@ -24,14 +24,17 @@ public class ListFindRecyclerAdapter extends RecyclerView.Adapter<CommonViewHold
     private List<Person> datas;
     private Context mContext;
     private List<Integer> heights;
-    private View.OnClickListener mOnClickListener;
     private RecyclerViewItemLikeClickListener mLikeClickListener;
     private RecyclerViewItemDislikeClickListener mDislikeClickListener;
     private RecyclerViewItemImgClickListener mImgClickListener;
 
     public ListFindRecyclerAdapter(Context context) {
         mContext = context;
+    }
 
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
     }
 
     public void setLikeClickListener(RecyclerViewItemLikeClickListener likeClickListener) {
@@ -44,12 +47,6 @@ public class ListFindRecyclerAdapter extends RecyclerView.Adapter<CommonViewHold
 
     public void setImgClickListener(RecyclerViewItemImgClickListener imgClickListener) {
         mImgClickListener = imgClickListener;
-    }
-//    public void setOnClickListener(View.OnClickListener onClickListener) {
-//        mOnClickListener = onClickListener;
-//    }
-
-    public ListFindRecyclerAdapter() {
     }
 
     public void setDatas(List<Person> datas) {

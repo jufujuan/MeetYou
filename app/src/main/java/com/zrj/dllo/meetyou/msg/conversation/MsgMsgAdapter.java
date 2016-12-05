@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMImageMessageBody;
@@ -42,10 +43,17 @@ public class MsgMsgAdapter extends RecyclerView.Adapter<CommonViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(CommonViewHolder holder, int position) {
+    public void onBindViewHolder(CommonViewHolder holder, final int position) {
         final String userName = mEMConversations.get(position).getUserName();
+        final TextView countTv = holder.getView(R.id.conversation_count_tv);
         holder.setText(R.id.conversation_name_tv, userName);
         holder.setText(R.id.conversation_body_tv, getMessage(mEMConversations.get(position).getLastMessage()));
+        holder.setText(R.id.conversation_time_tv, String.valueOf(mEMConversations.get(position).getLastMessage().getMsgTime()));
+        if (mEMConversations.get(position).getUnreadMsgCount() > 0) {
+            countTv.setVisibility(View.VISIBLE);
+            holder.setText(R.id.conversation_count_tv, String.valueOf(mEMConversations.get(position).getUnreadMsgCount()));
+        }
+
 
         holder.setItemClick(new View.OnClickListener() {
             @Override
@@ -53,6 +61,8 @@ public class MsgMsgAdapter extends RecyclerView.Adapter<CommonViewHolder> {
                 Intent intent = new Intent(mContext, ChatActivity.class);
                 intent.putExtra("userName", userName);
                 mContext.startActivity(intent);
+                mEMConversations.get(position).markAllMessagesAsRead();
+                countTv.setVisibility(View.GONE);
             }
         });
     }

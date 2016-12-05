@@ -10,6 +10,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
+import com.hyphenate.EMContactListener;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.HyphenateException;
 import com.zrj.dllo.meetyou.find.listfind.ListFindFragment;
 import com.zrj.dllo.meetyou.find.listfind.ListFindModel;
 import com.zrj.dllo.meetyou.find.listfind.ListFindPresenter;
@@ -21,6 +24,9 @@ import com.zrj.dllo.meetyou.find.mainfind.FindFragment;
 import com.zrj.dllo.meetyou.find.mainfind.FindModel;
 import com.zrj.dllo.meetyou.find.mainfind.FindPresenter;
 import com.zrj.dllo.meetyou.personal.PersonalFragment;
+import com.zrj.dllo.meetyou.tools.LiteOrmInstance;
+
+import java.util.List;
 
 import cn.bmob.v3.Bmob;
 
@@ -85,6 +91,12 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
             btnChange(mainAtyMyBtn, mainAtyMyTv);
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        acceptRequest();
     }
 
     @Override
@@ -165,5 +177,44 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
                 mainAtyMyBtn.setBackgroundResource(R.drawable.btn_my_select);
                 break;
         }
+    }
+
+    public void acceptRequest() {
+        EMClient.getInstance().contactManager().setContactListener(new EMContactListener() {
+
+            @Override
+            public void onContactAgreed(String username) {
+                //好友请求被同意
+            }
+
+            @Override
+            public void onContactRefused(String username) {
+                //好友请求被拒绝
+            }
+
+            @Override
+            public void onContactInvited(String username, String reason) {
+                //收到好友邀请
+                if (LiteOrmInstance.getInstance().getQueryByWhere(Person.class, "uName", new String[]{username}) != null) {
+                    try {
+                        EMClient.getInstance().contactManager().acceptInvitation(username);
+                    } catch (HyphenateException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onContactDeleted(String username) {
+                //被删除时回调此方法
+            }
+
+
+            @Override
+            public void onContactAdded(String username) {
+                //增加了联系人时回调此方法
+            }
+        });
     }
 }

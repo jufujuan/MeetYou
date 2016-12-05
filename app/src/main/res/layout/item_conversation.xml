@@ -63,9 +63,11 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginEnd="15dp"
                 android:textColor="@color/colorWhite"
-                android:text="5"
+                android:text="0"
                 android:gravity="center"
-                android:background="@mipmap/ic_red_point"/>
+                android:textSize="13sp"
+                android:background="@mipmap/ic_red_point"
+                android:visibility="gone"/>
         </RelativeLayout>
 
 

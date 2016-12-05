@@ -1,6 +1,7 @@
 package com.zrj.dllo.meetyou.msg.chat;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.ViewGroup;
 
 import com.hyphenate.chat.EMMessage;
@@ -25,6 +26,7 @@ public class MsgChatAdapter extends RecyclerView.Adapter<CommonViewHolder> {
 
     public void setEMMessages(List<EMMessage> EMMessages) {
         mEMMessages = EMMessages;
+        Log.d("MsgChatAdapter", "mEMMessages:" + mEMMessages);
         notifyDataSetChanged();
     }
 

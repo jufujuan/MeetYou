@@ -15,13 +15,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hyphenate.EMCallBack;
+import com.hyphenate.EMContactListener;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMChatManager;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
+import com.hyphenate.exceptions.HyphenateException;
+import com.zrj.dllo.meetyou.Person;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.AbsBaseActivity;
+import com.zrj.dllo.meetyou.tools.LiteOrmInstance;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,10 +67,11 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
         Intent intent = getIntent();
         mUserName = intent.getStringExtra("userName");
         msgChatNameTv.setText(mUserName);
+
         mAdapter = new MsgChatAdapter();
 
         EMConversation conversation = EMClient.getInstance().chatManager().getConversation(mUserName);
-//        mMessages = new ArrayList<>();
+        mMessages = new ArrayList<>();
 
         if (conversation != null) {
             //获取此会话的所有消息
@@ -136,7 +141,9 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
                     msgChatEt.setText("");
                     EMMessage message = EMMessage.createTxtSendMessage(content, mUserName);
                     mMessages.add(message);
+                    Log.d("ChatActivity", "mMessages:" + mMessages);
                     mAdapter.setEMMessages(mMessages);
+
                     msgChatRv.smoothScrollToPosition(mMessages.size());
                     // 调用发送消息的方法
                     EMClient.getInstance().chatManager().sendMessage(message);
@@ -164,4 +171,49 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
         }
     }
 
+    public void acceptRequest() {
+        EMClient.getInstance().contactManager().setContactListener(new EMContactListener() {
+
+            @Override
+            public void onContactAgreed(String username) {
+                //好友请求被同意
+            }
+
+            @Override
+            public void onContactRefused(String username) {
+                //好友请求被拒绝
+            }
+
+            @Override
+            public void onContactInvited(String username, String reason) {
+                //收到好友邀请
+                if (LiteOrmInstance.getInstance().getQueryByWhere(Person.class, "uName", new String[]{username}) != null) {
+                    try {
+                        EMClient.getInstance().contactManager().acceptInvitation(username);
+                    } catch (HyphenateException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onContactDeleted(String username) {
+                //被删除时回调此方法
+            }
+
+
+            @Override
+            public void onContactAdded(String username) {
+                //增加了联系人时回调此方法
+            }
+        });
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        acceptRequest();
+    }
 }

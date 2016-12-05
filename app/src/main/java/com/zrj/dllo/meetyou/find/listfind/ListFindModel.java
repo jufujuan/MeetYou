@@ -73,6 +73,11 @@ public class ListFindModel implements ListFindContract.Model {
         //String lo = sp.getString(StaticValues.SP_USEING_LONTITUDE_COLUMN, "0");
         //String la = sp.getString(StaticValues.SP_USEING_LATITUDE_COLUMN, "0");
         String nameId = sp.getString(StaticValues.SP_USEING_ID, "0");
+        if (TextUtils.isEmpty(nameId)){
+            Toast.makeText(context, "索引为空", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(context, "索引为:" + nameId, Toast.LENGTH_SHORT).show();
+        }
         return nameId;
     }
 
@@ -84,41 +89,49 @@ public class ListFindModel implements ListFindContract.Model {
     @Override
     public void getFillDatas(final List<Person> allDatas, final Context context, final int distance) {
         BmobQuery<Person> query = new BmobQuery<>();
-        query.getObject(searchCurrentL(context), new QueryListener<Person>() {
-            @Override
-            public void done(Person person, BmobException e) {
-                String lo = person.getLontitude();
-                String la = person.getLatitude();
+        if (!TextUtils.isEmpty(searchCurrentL(context))) {
+            query.getObject(searchCurrentL(context), new QueryListener<Person>() {
+                @Override
+                public void done(Person person, BmobException e) {
+                    if (e==null) {
+                        String lo = person.getLontitude();
+                        String la = person.getLatitude();
 
-                List<Person> mPersons = new ArrayList<>();
-                for (int i = 0; i < allDatas.size(); i++) {
-                    Double loOne = Double.parseDouble(lo);
-                    Double laOne = Double.parseDouble(la);
-                    LogUtils.d(loOne + "-----------" + laOne);
-                    if (lo.isEmpty() || la.isEmpty()) {
-                        LogUtils.d("该用户的经纬度没找到....");
-                    } else {
-                        LogUtils.d(allDatas.get(i).getLontitude() + "  " + allDatas.get(i).getLatitude());
+                        List<Person> mPersons = new ArrayList<>();
+                        for (int i = 0; i < allDatas.size(); i++) {
+                            Double loOne = Double.parseDouble(lo);
+                            Double laOne = Double.parseDouble(la);
+                            LogUtils.d(loOne + "-----------" + laOne);
+                            if (lo.isEmpty() || la.isEmpty()) {
+                                LogUtils.d("该用户的经纬度没找到....");
+                            } else {
+                                LogUtils.d(allDatas.get(i).getLontitude() + "  " + allDatas.get(i).getLatitude());
 
-                        if (TextUtils.isEmpty(allDatas.get(i).getLontitude()) || TextUtils.isEmpty(allDatas.get(i).getLatitude())) {
-                            LogUtils.d("跳过去");
-                            continue;
+                                if (TextUtils.isEmpty(allDatas.get(i).getLontitude()) || TextUtils.isEmpty(allDatas.get(i).getLatitude())) {
+                                    LogUtils.d("跳过去");
+                                    continue;
+                                }
+
+                                Double loTwo = Double.parseDouble(allDatas.get(i).getLontitude());
+                                Double laTwo = Double.parseDouble(allDatas.get(i).getLatitude());
+
+                                LogUtils.d("距离" + DistanceUtils.getDistance(loOne, laOne, loTwo, laTwo));
+                                if (DistanceUtils.getDistance(loOne, laOne, loTwo, laTwo) < distance) {
+                                    mPersons.add(allDatas.get(i));
+                                }
+
+                            }
                         }
-
-                        Double loTwo = Double.parseDouble(allDatas.get(i).getLontitude());
-                        Double laTwo = Double.parseDouble(allDatas.get(i).getLatitude());
-
-                        LogUtils.d("距离" + DistanceUtils.getDistance(loOne, laOne, loTwo, laTwo));
-                        if (DistanceUtils.getDistance(loOne, laOne, loTwo, laTwo) < distance) {
-                            mPersons.add(allDatas.get(i));
-                        }
-
+                        LogUtils.d("得到的:" + mPersons.size());
+                        mPresenter.sendDatasToView(mPersons, context);
+                    }else{
+                        Toast.makeText(context, "bmob数据库查询失败"+e.getErrorCode()+e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
-                LogUtils.d("得到的:" + mPersons.size());
-                mPresenter.sendDatasToView(mPersons, context);
-            }
-        });
+            });
+        }else {
+            Toast.makeText(context, "用户的索引没有获取到", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**

@@ -13,8 +13,16 @@ import cn.bmob.v3.BmobObject;
  * on 16/11/29.
  */
 @Table(StaticValues.LO_TABLE_LIKE_NAME)
-public class Person extends BmobObject{
+public class Person extends BmobObject {
     @PrimaryKey(AssignType.BY_MYSELF)
+
+    private String searchR;//搜索半径
+    private int day;//出生天
+    private int moon;//出生月
+    private int year;//出生年
+    private String signature;//签名
+    private String realName;//真实姓名
+    private String sex;//性别
     private String uName;//用户名
     private String uPassword;//密码
     private String userImgUrl;//用户头像
@@ -24,8 +32,9 @@ public class Person extends BmobObject{
     private String lontitude;//经度
     private String adress;//地址
     private String radius;//半径
-
     public Person() {
+
+
 
     }
 
@@ -39,6 +48,15 @@ public class Person extends BmobObject{
         this.lontitude = lontitude;
         this.adress = adress;
         this.radius = radius;
+
+        this.searchR = searchR;
+        this.day = day;
+        this.moon = moon;
+        this.year = year;
+        this.signature = signature;
+        this.realName = realName;
+        this.sex = sex;
+
     }
 
     public Person(String tableName, String uName, String uPassword, String userImgUrl, String likeCount, String locationDate, String latitude, String lontitude, String adress, String radius) {
@@ -52,6 +70,69 @@ public class Person extends BmobObject{
         this.lontitude = lontitude;
         this.adress = adress;
         this.radius = radius;
+        this.searchR = searchR;
+        this.day = day;
+        this.moon = moon;
+        this.year = year;
+        this.signature = signature;
+        this.realName = realName;
+        this.sex = sex;
+    }
+
+    public String getSearchR() {
+        return searchR;
+    }
+
+    public void setSearchR(String searchR) {
+        this.searchR = searchR;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
+    public int getMoon() {
+        return moon;
+    }
+
+    public void setMoon(int moon) {
+        this.moon = moon;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
     public String getuName() {

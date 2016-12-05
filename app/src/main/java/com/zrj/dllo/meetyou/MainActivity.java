@@ -37,11 +37,9 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
     private FragmentManager mFragmentManager;
     private PersonalFragment mFragment;
 
-
     @Override
     protected int getLayout() {
         return R.layout.activity_main;
-
     }
 
 
@@ -49,13 +47,10 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
     protected void onDestroy() {
         Log.d("MainActivity", "destory");
         super.onDestroy();
-
     }
 
     @Override
     protected void initView() {
-
-
 
         Log.d("MainActivity", "initView");
         mainAtyMeetBtn = bindView(R.id.aty_main_meet_btn);
@@ -115,18 +110,12 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
      * 切换到觅友界面
      */
     private void Change2Meet() {
-//        FindFragment findFragment=FindFragment.newInstance();
-//        FindPresenter findPresenter=new FindPresenter();
-//        FindModel findModel=new FindModel();
-//
-//        findFragment.setPersenter(findPresenter);
-//        findModel.setPresenter(findPresenter);
+
         ListFindFragment mView=ListFindFragment.newInstance();
         ListFindModel mModel=new ListFindModel();
         ListFindPresenter mPresenter=new ListFindPresenter(mView,mModel);
         mView.setPresenter(mPresenter);
         mModel.setPresenter(mPresenter);
-
 
         FragmentTransaction transaction =  mFragmentManager.beginTransaction();
         transaction.replace(R.id.main_fl, mView);

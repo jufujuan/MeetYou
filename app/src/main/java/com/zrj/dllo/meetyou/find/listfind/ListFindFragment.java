@@ -36,12 +36,14 @@ public class ListFindFragment extends AbsBaseFragment implements ListFindContrac
     protected void initView() {
         mRecyclerView = bindView(R.id.fra_list_find_recyclerview);
         mRecyclerAdapter = new ListFindRecyclerAdapter(context);
-
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.space);
+        //mRecyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
     }
 
     @Override
     protected void initDatas() {
         mPresenter.getAllDatas(context,DISTANCE);
+
     }
 
     /**

@@ -54,23 +54,22 @@ public class FindBgClickActivity extends AbsBaseActivity{
 
     @Override
     protected void initView() {
-
-    }
-
-    @Override
-    protected void initDatas() {
-        initView1();
-        initListener();
-        initDrawable();
-        initTabBarAnimView();
-        onTabBarClickListener.onMainBtnsClick(pageTable);
-    }
-    private void initView1() {
         groundView = findViewById(R.id.groundView);
         imageView = (ImageView) findViewById(R.id.imageView);
         tabBarAnimView = (TabBarView) findViewById(R.id.tabBarAnimView);
     }
 
+    @Override
+    protected void initDatas() {
+        initListener();
+        initDrawable();
+        initTabBarAnimView();
+        onTabBarClickListener.onMainBtnsClick(pageTable);
+    }
+
+    /**
+     * 设置监听事件
+     */
     private void initListener() {
         tabBarAnimView.setOnTabBarClickListener(onTabBarClickListener);
         animation.setDuration(durationMillis);
@@ -117,11 +116,13 @@ public class FindBgClickActivity extends AbsBaseActivity{
 
         @Override
         public void onLeftBtnClick(int page) {
+            imageView.setImageDrawable((getResources().getDrawable(R.drawable.aaaa1)));
             Log.e(TAG, "left--->" + page);
         }
 
         @Override
         public void onRightBtnClick(int page) {
+            imageView.setImageDrawable((getResources().getDrawable(R.drawable.aaaa2)));
             Log.e(TAG, "right--->" + page);
         }
 

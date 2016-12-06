@@ -10,10 +10,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.Transformer;
 import com.zrj.dllo.meetyou.Person;
 import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemDislikeClickListener;
 import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemImgClickListener;
 import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemLikeClickListener;
+import com.zrj.dllo.meetyou.widget.GlideImageLoader;
+
+import java.util.List;
 
 /**
  * Created by REN - the most cool programmer all over the world
@@ -200,6 +206,18 @@ public class CommonViewHolder extends RecyclerView.ViewHolder {
      */
     public CommonViewHolder setViewClick(int id, View.OnClickListener listener) {
         getView(id).setOnClickListener(listener);
+        return this;
+    }
+    public CommonViewHolder setBanner(int id, int bannerStyle, List<String> urls){
+        Banner banner=getView(id);
+        banner.setImages(urls);
+        banner.setBannerStyle(bannerStyle);
+        banner.setImageLoader(new GlideImageLoader());
+        banner.setBannerAnimation(Transformer.DepthPage);
+        banner.setDelayTime(1500);
+        banner.isAutoPlay(true);
+        //banner.setIndicatorGravity(BannerConfig.CENTER);
+        banner.start();
         return this;
     }
 }

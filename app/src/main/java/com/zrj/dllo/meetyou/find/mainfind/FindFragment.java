@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.ScaleAnimation;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import com.zrj.dllo.meetyou.MainActivity;
 import com.zrj.dllo.meetyou.Person;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.app.MeetYouApp;
+import com.zrj.dllo.meetyou.find.listfind.ListFindActivity;
 import com.zrj.dllo.meetyou.tools.DensityUtil;
 
 import com.zrj.dllo.meetyou.base.AbsBaseFragment;
@@ -51,6 +53,7 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
     public BDLocationListener myListener;
     private TextView loadingTv;
     private String nameId = null;
+    private Button ignoreBtn;
 
     public static FindFragment newInstance() {
 
@@ -72,12 +75,15 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
         mCircleImageView = bindView(R.id.fra_find_circleImageView);
         loadingTv = bindView(R.id.fra_find_seek_tv);
         myListener = new MyLocationListener();
+        ignoreBtn = bindView(R.id.fra_find_sweep_ignore);
     }
 
     @Override
     protected void initDatas() {
+        ignoreBtn.setVisibility(View.GONE);
         showSweepView();
         mCircleImageView.setOnClickListener(this);
+        ignoreBtn.setOnClickListener(this);
 
         mLocationClient = new LocationClient(MeetYouApp.getContext());     //声明LocationClient类
         mLocationClient.registerLocationListener(myListener);    //注册监听函数
@@ -123,11 +129,24 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
 
     @Override
     public void onClick(View view) {
-        mPresenter.startSearch(mLocationClient);
-        showClickAnim();
-        loadingTv.setText("正在搜索附近的人...");
-        mLocationClient.start();
+        switch (view.getId()) {
+            case R.id.fra_find_circleImageView:
+                mPresenter.startSearch(mLocationClient);
+                showClickAnim();
+                loadingTv.setText("正在搜索附近的人...");
+                mLocationClient.start();
+                break;
+            case R.id.fra_find_sweep_ignore:
+                //专门用来调试的
+                //当定位失败的时候进入到这里面
+                Intent intent=new Intent(context, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                mLocationClient.stop();
+                break;
+        }
     }
+
     /**
      * GPS定位成功,显示提示信息信息
      */
@@ -136,7 +155,7 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
         Toast.makeText(context, "GPS定位成功", Toast.LENGTH_SHORT).show();
         /*******在这里存储经纬度,地址,半径范围*******/
         mLocationClient.stop();
-        mPresenter.goToMainAc(context, Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK,1000,location);
+        mPresenter.goToMainAc(context, Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK, 1000, location);
     }
 
     /**
@@ -148,7 +167,7 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
     public void showNetMsg(BDLocation location) {
         Toast.makeText(context, "网络定位成功", Toast.LENGTH_SHORT).show();
         /*******在这里存储经纬度,地址,半径范围*******/
-        mPresenter.goToMainAc(context, Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK,1000,location);
+        mPresenter.goToMainAc(context, Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK, 1000, location);
         mLocationClient.stop();
 
     }
@@ -162,7 +181,7 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
     public void showNotNetMsg(BDLocation location) {
         Toast.makeText(context, "离线定位成功", Toast.LENGTH_SHORT).show();
         /*******在这里存储经纬度,地址,半径范围*******/
-        mPresenter.goToMainAc(context, Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK,1000,location);
+        mPresenter.goToMainAc(context, Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK, 1000, location);
         mLocationClient.stop();
     }
 
@@ -175,40 +194,50 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
                     showGPSMsg(location);
                     break;
                 case 62:
+                    ignoreBtn.setVisibility(View.VISIBLE);
                     break;
                 case 63:
+                    ignoreBtn.setVisibility(View.VISIBLE);
                     break;
                 case 64:
+                    ignoreBtn.setVisibility(View.VISIBLE);
                     break;
                 case 65:
+                    ignoreBtn.setVisibility(View.VISIBLE);
                     break;
                 case 66:
                     showNotNetMsg(location);
                     break;
                 case 67:
+                    ignoreBtn.setVisibility(View.VISIBLE);
                     break;
                 case 68:
+                    ignoreBtn.setVisibility(View.VISIBLE);
                     break;
                 case 161:
                     showNetMsg(location);
                     break;
                 case 162:
+                    ignoreBtn.setVisibility(View.VISIBLE);
                     break;
                 case 167:
                     Toast.makeText(context, "服务端网络定位失败，可以反馈IMEI号和大体定位时间到loc-bugs@baidu.com，会有人追查原因", Toast.LENGTH_SHORT).show();
-                    //重新刷新
-                    mLocationClient.stop();
+                    ignoreBtn.setVisibility(View.VISIBLE);
                     break;
                 case 502:
+                    ignoreBtn.setVisibility(View.VISIBLE);
                     break;
                 case 505:
                     goTo(context, MainActivity.class, Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     break;
                 case 601:
+                    ignoreBtn.setVisibility(View.VISIBLE);
                     break;
                 case 602:
+                    ignoreBtn.setVisibility(View.VISIBLE);
                     break;
                 default:
+                    ignoreBtn.setVisibility(View.VISIBLE);
                     break;
             }
 //            //Receive Location
@@ -272,6 +301,7 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
 //            loadingTv.setText(sb.toString());
         }
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();

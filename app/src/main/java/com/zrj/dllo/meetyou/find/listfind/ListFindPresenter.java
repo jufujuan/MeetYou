@@ -3,11 +3,13 @@ package com.zrj.dllo.meetyou.find.listfind;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.zrj.dllo.meetyou.Person;
 import com.zrj.dllo.meetyou.R;
+import com.zrj.dllo.meetyou.find.imgbgclick.FindBgClickActivity;
 import com.zrj.dllo.meetyou.find.ttfind.ListTTActivity;
 import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemDislikeClickListener;
 import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemImgClickListener;
@@ -43,7 +45,7 @@ public class ListFindPresenter implements ListFindContract.Presenter {
      * @param mPersons 得到的数据集
      */
     @Override
-    public void sendDatasToView(List<Person> mPersons, final Context context) {
+    public void sendDatasToView(final List<Person> mPersons, final Context context) {
         if (mPersons.size()>0){
             mView.mRecyclerAdapter.setDatas(mPersons);
             mView.mRecyclerAdapter.setImgClickListener(new RecyclerViewItemImgClickListener() {
@@ -51,7 +53,7 @@ public class ListFindPresenter implements ListFindContract.Presenter {
                 public void onItemImg(View view, int position, Person person) {
                     Toast.makeText(context, "点击了图片", Toast.LENGTH_SHORT).show();
                     // goTo(context, ListTTActivity.class);
-                    context.startActivity(new Intent(context,ListTTActivity.class));
+                    context.startActivity(new Intent(context,FindBgClickActivity.class));
                 }
             });
             mView.mRecyclerAdapter.setLikeClickListener(new RecyclerViewItemLikeClickListener() {
@@ -62,12 +64,21 @@ public class ListFindPresenter implements ListFindContract.Presenter {
                     mModel.setLikePersonInLocal(person);
                     //2.向对方这个人发送好友申请
                     mModel.sendGoodFriendsRequest(person);
+
+                    mPersons.remove(position);
+                    mView.mRecyclerAdapter.notifyItemRemoved(position);
+                    mView.mRecyclerAdapter.notifyItemRangeChanged(position-1,mPersons.size()+1-position);
                 }
             });
             mView.mRecyclerAdapter.setDislikeClickListener(new RecyclerViewItemDislikeClickListener() {
                 @Override
                 public void onItemDislike(View view, int position, Person person) {
                     Toast.makeText(context, "不喜欢", Toast.LENGTH_SHORT).show();
+                    Log.d("aaaaa", "position"+position+"persons:"+mPersons.size());
+
+                    mPersons.remove(position);
+                    mView.mRecyclerAdapter.notifyItemRemoved(position);
+                    mView.mRecyclerAdapter.notifyItemRangeChanged(position-1,mPersons.size()+1-position);
                 }
             });
             StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);

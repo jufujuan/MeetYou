@@ -3,6 +3,7 @@ package com.zrj.dllo.meetyou.find.listfind;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,6 +35,7 @@ import java.util.List;
 public class ListFindPresenter implements ListFindContract.Presenter {
     private ListFindFragment mView;
     private ListFindModel mModel;
+    private HeaderAndFooterWrapper mHeaderAndFooterWrapper;
 
     public ListFindPresenter(ListFindFragment view, ListFindModel model) {
         mView = view;
@@ -74,9 +76,7 @@ public class ListFindPresenter implements ListFindContract.Presenter {
                     //2.向对方这个人发送好友申请
                     mModel.sendGoodFriendsRequest(person);
 
-                    mPersons.remove(position);
-                    mView.mRecyclerAdapter.notifyItemRemoved(position);
-                    mView.mRecyclerAdapter.notifyItemRangeChanged(position-1,mPersons.size()+1-position);
+                    deleteRecyclerviewItem(position, mPersons);
                 }
             });
             mView.mRecyclerAdapter.setDislikeClickListener(new RecyclerViewItemDislikeClickListener() {
@@ -85,19 +85,31 @@ public class ListFindPresenter implements ListFindContract.Presenter {
                     Toast.makeText(context, "不喜欢", Toast.LENGTH_SHORT).show();
                     Log.d("aaaaa", "position"+position+"persons:"+mPersons.size());
 
-                    mPersons.remove(position);
-                    mView.mRecyclerAdapter.notifyItemRemoved(position);
-                    mView.mRecyclerAdapter.notifyItemRangeChanged(position-1,mPersons.size()+1-position);
+                    deleteRecyclerviewItem(position, mPersons);
                 }
             });
             StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
             mView.mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
 
             //添加头布局
-            HeaderAndFooterWrapper headerAndFooterWrapper = addHeader(context);
+            mHeaderAndFooterWrapper = addHeader(context);
 
-            mView.mRecyclerView.setAdapter(headerAndFooterWrapper);
+            mView.mRecyclerView.setAdapter(mHeaderAndFooterWrapper);
         }
+    }
+
+    private void deleteRecyclerviewItem(int position, List<Person> mPersons) {
+        //保证列表有数据，并且最少有一条
+        if(mPersons.size()<2&&mPersons.size()!=0){
+            mPersons.remove(0);
+            mHeaderAndFooterWrapper.notifyDataSetChanged();
+        }else if(mPersons.size()==0){//当列表没有数据提示用户，免得造成系统崩溃
+
+        }else{//更新列表
+            mPersons.remove(position);
+            mHeaderAndFooterWrapper.notifyItemRemoved(position);
+        }
+
     }
 
     /**

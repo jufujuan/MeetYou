@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
+import com.zrj.dllo.meetyou.cons.ConsFragment;
 import com.zrj.dllo.meetyou.find.listfind.ListFindFragment;
 import com.zrj.dllo.meetyou.find.listfind.ListFindModel;
 import com.zrj.dllo.meetyou.find.listfind.ListFindPresenter;
@@ -97,6 +98,8 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
                 break;
             case R.id.aty_main_weather_btn:
                 btnChange(mainAtyWeatherBtn, mainAtyWeatherTv);
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_fl, new ConsFragment()).commit();
+
                 break;
             case R.id.aty_main_my_btn:
                 mFragment = new PersonalFragment();
@@ -116,7 +119,6 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
         ListFindPresenter mPresenter=new ListFindPresenter(mView,mModel);
         mView.setPresenter(mPresenter);
         mModel.setPresenter(mPresenter);
-
         FragmentTransaction transaction =  mFragmentManager.beginTransaction();
         transaction.replace(R.id.main_fl, mView);
         transaction.commit();

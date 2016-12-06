@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="200dp"
+    android:layout_height="200dp"
+    android:background="#b9b9b9"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:background="#ffffff"
+            android:textSize="20dp"
+            android:layout_margin="10dp"
+            android:id="@+id/pop_aquarius"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="水瓶"/>
+
+        <TextView
+            android:background="#ffffff"
+            android:textSize="20dp"
+            android:layout_margin="10dp"
+            android:id="@+id/pop_pisces"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="双鱼"/>
+
+        <TextView
+            android:background="#ffffff"
+            android:textSize="20dp"
+            android:layout_margin="10dp"
+            android:id="@+id/pop_aries"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="白羊"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:background="#ffffff"
+            android:textSize="20dp"
+            android:layout_margin="10dp"
+            android:id="@+id/pop_taurus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="金牛"/>
+
+
+        <TextView
+            android:background="#ffffff"
+            android:textSize="20dp"
+            android:layout_margin="10dp"
+            android:id="@+id/pop_gemini"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="双子"/>
+
+        <TextView
+            android:background="#ffffff"
+            android:textSize="20dp"
+            android:layout_margin="10dp"
+            android:id="@+id/pop_cancer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="巨蟹"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:background="#ffffff"
+            android:textSize="20dp"
+            android:layout_margin="10dp"
+            android:id="@+id/pop_leo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="狮子"/>
+
+        <TextView
+            android:background="#ffffff"
+            android:textSize="20dp"
+            android:layout_margin="10dp"
+            android:id="@+id/pop_virgo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="处女"/>
+
+        <TextView
+            android:background="#ffffff"
+            android:textSize="20dp"
+            android:layout_margin="10dp"
+            android:id="@+id/pop_libra"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="天秤"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:background="#ffffff"
+            android:textSize="20dp"
+            android:layout_margin="10dp"
+            android:id="@+id/pop_scorpio"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="天蝎"/>
+
+        <TextView
+            android:background="#ffffff"
+            android:textSize="20dp"
+            android:layout_margin="10dp"
+            android:id="@+id/pop_sagittarius"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="射手"/>
+
+        <TextView
+            android:background="#ffffff"
+            android:textSize="20dp"
+            android:layout_margin="10dp"
+            android:id="@+id/pop_capricorn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="摩羯"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/pop_esc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="取消"
+        android:layout_gravity="right"
+        android:layout_marginRight="20dp"
+        />
+
+
+
+</LinearLayout>

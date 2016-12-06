@@ -208,16 +208,5 @@ public class CommonViewHolder extends RecyclerView.ViewHolder {
         getView(id).setOnClickListener(listener);
         return this;
     }
-    public CommonViewHolder setBanner(int id, int bannerStyle, List<String> urls){
-        Banner banner=getView(id);
-        banner.setImages(urls);
-        banner.setBannerStyle(bannerStyle);
-        banner.setImageLoader(new GlideImageLoader());
-        banner.setBannerAnimation(Transformer.DepthPage);
-        banner.setDelayTime(1500);
-        banner.isAutoPlay(true);
-        //banner.setIndicatorGravity(BannerConfig.CENTER);
-        banner.start();
-        return this;
-    }
+
 }

@@ -49,4 +49,6 @@ dependencies {
     compile files('libs/android-support-multidex.jar')
     compile files('libs/lite-orm-1.9.2-2.jar')
     compile 'com.youth.banner:banner:1.4.2'
+
+    compile 'com.zhy:base-rvadapter:3.0.3'
 }

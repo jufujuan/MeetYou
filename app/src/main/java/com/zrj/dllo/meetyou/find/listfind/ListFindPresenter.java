@@ -2,19 +2,28 @@ package com.zrj.dllo.meetyou.find.listfind;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.Transformer;
+import com.zhy.adapter.recyclerview.wrapper.HeaderAndFooterWrapper;
 import com.zrj.dllo.meetyou.Person;
 import com.zrj.dllo.meetyou.R;
+import com.zrj.dllo.meetyou.base.CommonViewHolder;
 import com.zrj.dllo.meetyou.find.imgbgclick.FindBgClickActivity;
 import com.zrj.dllo.meetyou.find.ttfind.ListTTActivity;
 import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemDislikeClickListener;
 import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemImgClickListener;
 import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemLikeClickListener;
+import com.zrj.dllo.meetyou.widget.GlideImageLoader;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -83,8 +92,41 @@ public class ListFindPresenter implements ListFindContract.Presenter {
             });
             StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
             mView.mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
-            mView.mRecyclerView.setAdapter(mView.mRecyclerAdapter);
+
+            //添加头布局
+            HeaderAndFooterWrapper headerAndFooterWrapper = addHeader(context);
+
+            mView.mRecyclerView.setAdapter(headerAndFooterWrapper);
         }
     }
+
+    /**
+     * 添加头布局
+     * @param context
+     * @return
+     */
+    @NonNull
+    private HeaderAndFooterWrapper addHeader(Context context) {
+        HeaderAndFooterWrapper headerAndFooterWrapper=new HeaderAndFooterWrapper(mView.mRecyclerAdapter);
+        List<String> imgUrls=new ArrayList<>();
+        imgUrls.add("http://images2.china.com/game/zh_cn/picnews/11128819/20140314/18394327_20140314115011898593008.jpg");
+        imgUrls.add("http://4493bz.1985t.com/uploads/allimg/150127/4-15012G52133.jpg");
+        imgUrls.add("http://image92.360doc.com/DownloadImg/2016/01/0121/63840877_39.jpg");
+
+        View itemView= LayoutInflater.from(context).inflate(R.layout.item_list_find_header,null);
+        Banner banner= (Banner) itemView.findViewById(R.id.item_list_find_banner);
+        banner.setImages(imgUrls);
+        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE);
+        banner.setImageLoader(new GlideImageLoader());
+        banner.setBannerAnimation(Transformer.DepthPage);
+        banner.setDelayTime(1500);
+        banner.isAutoPlay(true);
+        banner.setMinimumHeight(200);
+        //banner.setIndicatorGravity(BannerConfig.CENTER);
+        banner.start();
+        headerAndFooterWrapper.addHeaderView(itemView);
+        return headerAndFooterWrapper;
+    }
+
 
 }

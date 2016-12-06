@@ -1,16 +1,24 @@
 package com.zrj.dllo.meetyou.msg;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 
+import com.bumptech.glide.Glide;
 import com.zrj.dllo.meetyou.R;
+import com.zrj.dllo.meetyou.personal.PersonalFragment;
 import com.zrj.dllo.meetyou.tools.CircularImageViewUtils;
 import com.zrj.dllo.meetyou.base.AbsBaseFragment;
 import com.zrj.dllo.meetyou.msg.contact.MsgContactFragment;
 import com.zrj.dllo.meetyou.msg.conversation.MsgMsgFragment;
+import com.zrj.dllo.meetyou.tools.StaticValues;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by REN - the most cool programmer all over the world
@@ -45,6 +53,13 @@ public class MsgFragment extends AbsBaseFragment implements View.OnClickListener
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         transaction.replace(R.id.msg_fl, new MsgMsgFragment());
         transaction.commit();
+
+
+        SharedPreferences preferences = context.getSharedPreferences("userMessage", Activity.MODE_PRIVATE);
+        String mImgUrl = preferences.getString(StaticValues.SP_USEING_IMG_URL_COLUMN, "4869");
+        if (!mImgUrl.equals("4869")) {
+            Glide.with(this).load(mImgUrl).into(fraMsgTitleAvatar);
+        }
     }
 
     @Override

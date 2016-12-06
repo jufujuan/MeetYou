@@ -10,7 +10,7 @@
         android:layout_height="40dp"
         android:layout_centerVertical="true"
         android:layout_marginStart="15dp"
-        android:src="@mipmap/ic_launcher"/>
+        android:scaleType="centerCrop"/>
 
     <RadioGroup
         android:layout_width="100dp"

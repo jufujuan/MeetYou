@@ -8,8 +8,8 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:src="@mipmap/ic_launcher"
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp"
+        android:scaleType="centerCrop"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -65,7 +65,7 @@
                 android:textColor="@color/colorWhite"
                 android:text="0"
                 android:gravity="center"
-                android:textSize="13sp"
+                android:textSize="10sp"
                 android:background="@mipmap/ic_red_point"
                 android:visibility="gone"/>
         </RelativeLayout>

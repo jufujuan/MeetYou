@@ -1,6 +1,8 @@
 package com.zrj.dllo.meetyou.tools;
 
 
+import android.animation.ObjectAnimator;
+
 import com.litesuits.orm.LiteOrm;
 import com.litesuits.orm.db.assit.QueryBuilder;
 import com.zrj.dllo.meetyou.app.MeetYouApp;
@@ -177,7 +179,7 @@ public class LiteOrmInstance {
      * @param value
      * @return
      */
-    public <T> List<T> getQueryByWhere(Class<T> cla, String field, String[] value) {
+    public <T> List<T> getQueryByWhere(Class<T> cla, String field, Object[] value) {
         return mLiteOrm.<T>query(new QueryBuilder(cla).where(field + "=?", value));
     }
 

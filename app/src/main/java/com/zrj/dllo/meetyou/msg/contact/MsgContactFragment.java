@@ -60,7 +60,7 @@ public class MsgContactFragment extends AbsBaseFragment {
                             mData = getData(mUserNames.toArray(new String[mUserNames.size()]));
                             Collections.sort(mData, new PinyinComparator());
                             LinearLayoutManager manager = new LinearLayoutManager(getActivity());
-                            Log.d("MsgContactFragment", "data:" + mData);
+
                             mContactRecyclerAdapter.setContactBeen(mData);
                             msgContactRv.setAdapter(mContactRecyclerAdapter);
                             msgContactRv.setLayoutManager(manager);
@@ -109,5 +109,31 @@ public class MsgContactFragment extends AbsBaseFragment {
         }
         return arrayList;
 
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    mUserNames = EMClient.getInstance().contactManager().getAllContactsFromServer();
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mData = getData(mUserNames.toArray(new String[mUserNames.size()]));
+                            Collections.sort(mData, new PinyinComparator());
+
+                            mContactRecyclerAdapter.setContactBeen(mData);
+//                            msgContactRv.setAdapter(mContactRecyclerAdapter);
+                        }
+                    });
+                } catch (HyphenateException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 }

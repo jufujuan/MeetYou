@@ -1,13 +1,20 @@
 package com.zrj.dllo.meetyou.msg.conversation;
 
+import android.content.Context;
+import android.os.Vibrator;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
+import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
+import com.hyphenate.chat.EMMessage;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.AbsBaseFragment;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,6 +32,7 @@ public class MsgMsgFragment extends AbsBaseFragment {
     private RecyclerView msgMsgRv;
     private List<EMConversation> mConversations;
     private MsgMsgAdapter mAdapter;
+//    private Vibrator vibrator;
 
     @Override
     protected int getLayout() {
@@ -35,6 +43,7 @@ public class MsgMsgFragment extends AbsBaseFragment {
     protected void initView() {
         msgMsgRv = bindView(R.id.msg_msg_Rv);
         mConversations = new ArrayList<>();
+
     }
 
     @Override
@@ -46,6 +55,46 @@ public class MsgMsgFragment extends AbsBaseFragment {
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         msgMsgRv.setAdapter(mAdapter);
         msgMsgRv.setLayoutManager(manager);
+
+        // 震动初始化
+//        vibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
+
+        // 接收消息的监听
+        EMMessageListener msgListener = new EMMessageListener() {
+
+            @Override
+            public void onMessageReceived(List<EMMessage> messages) {
+                //收到消息
+                mConversations.clear();
+                mConversations.addAll(loadConversation());
+//                Log.d("MsgMsgFragment", "mConversations:" + mConversations);
+                mAdapter.setEMConversations(mConversations);
+                long [] pattern = {100,400,100,400};
+//                vibrator.vibrate(pattern,-1);
+            }
+
+            @Override
+            public void onCmdMessageReceived(List<EMMessage> messages) {
+                //收到透传消息
+            }
+
+            @Override
+            public void onMessageReadAckReceived(List<EMMessage> messages) {
+                //收到已读回执
+            }
+
+            @Override
+            public void onMessageDeliveryAckReceived(List<EMMessage> message) {
+                //收到已送达回执
+            }
+
+            @Override
+            public void onMessageChanged(EMMessage message, Object change) {
+                //消息状态变动
+            }
+        };
+
+        EMClient.getInstance().chatManager().addMessageListener(msgListener);
     }
 
 
@@ -108,5 +157,11 @@ public class MsgMsgFragment extends AbsBaseFragment {
         super.onResume();
 //        mConversations.addAll(loadConversation());
         mAdapter.setEMConversations(mConversations);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+//        vibrator.cancel();
     }
 }

@@ -1,6 +1,5 @@
 package com.zrj.dllo.meetyou;
 
-import com.litesuits.orm.db.annotation.Column;
 import com.litesuits.orm.db.annotation.PrimaryKey;
 import com.litesuits.orm.db.annotation.Table;
 import com.litesuits.orm.db.enums.AssignType;
@@ -32,10 +31,8 @@ public class Person extends BmobObject {
     private String lontitude;//经度
     private String adress;//地址
     private String radius;//半径
+
     public Person() {
-
-
-
     }
 
     public Person(String uName, String uPassword, String userImgUrl, String likeCount, String locationDate, String latitude, String lontitude, String adress, String radius) {
@@ -48,7 +45,6 @@ public class Person extends BmobObject {
         this.lontitude = lontitude;
         this.adress = adress;
         this.radius = radius;
-
         this.searchR = searchR;
         this.day = day;
         this.moon = moon;

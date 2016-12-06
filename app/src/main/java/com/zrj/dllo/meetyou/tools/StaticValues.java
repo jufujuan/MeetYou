@@ -40,6 +40,10 @@ public class StaticValues {
      */
     public final static String SP_USEING_ID= "id";
 
+
+
+
+
     /**************liteorm*****************/
     /**
      * LiteOrm数据库的名字

@@ -65,7 +65,10 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
     private TextView mTextViewSave;
     private TextView mTextViewEsc;
     private RadioButton mRb;
-    private String mName;
+    private String mId;
+    private RadioGroup mGroup;
+    private int mRadioButtonId;
+    private SharedPreferences mPreferences;
 
     @Override
     protected int getLayout() {
@@ -74,10 +77,8 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
 
     @Override
     protected void initView() {
-
         showDate = bindView(R.id.editor_date_et);
         pickDate = bindView(R.id.editor_date_btn);
-
         pickDate.setOnClickListener(this);
         TextView textViewAlbum = bindView(R.id.editor_album_tv);
         textViewAlbum.setOnClickListener(this);
@@ -85,12 +86,12 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
         textViewCamera.setOnClickListener(this);
         mImageViewHead = bindView(R.id.editor_head_image);
         mSp = getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME, MODE_PRIVATE);
-        RadioGroup group = (RadioGroup) findViewById(R.id.editor_sex_gr);
-        group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        mGroup = (RadioGroup) findViewById(R.id.editor_sex_gr);
+        mGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                int radioButtonId = group.getCheckedRadioButtonId();
-                mRb = (RadioButton) findViewById(radioButtonId);
+                mRadioButtonId = group.getCheckedRadioButtonId();
+                mRb = (RadioButton) findViewById(mRadioButtonId);
                 Log.d("EditorActivity", "rb.getText():" + mRb.getText());
             }
         });
@@ -100,16 +101,17 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
         mEditTextSignature = bindView(R.id.editor_signature_et);
         mTextViewSave = bindView(R.id.editor_save_tv);
         mTextViewEsc = bindView(R.id.editor_esc_tv);
-
         mTextViewEsc.setOnClickListener(this);
         mTextViewSave.setOnClickListener(this);
     }
 
     @Override
     protected void initDatas() {
-        SharedPreferences preferences = getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME, MODE_PRIVATE);
-        mName = preferences.getString(StaticValues.SP_USEING_NAME_COLUMN, "");
 
+        mRadioButtonId = mGroup.getCheckedRadioButtonId();
+        mRb = (RadioButton) findViewById(mRadioButtonId);
+        mPreferences = getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME, MODE_PRIVATE);
+        mId = mPreferences.getString(StaticValues.SP_USEING_ID, "");
 
         final java.util.Calendar c = java.util.Calendar.getInstance();
         mYear = c.get(Calendar.YEAR);
@@ -139,33 +141,37 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
                 if (pickDate.equals((Button) v)) {
                     msg.what = EditorActivity.SHOW_DATAPICK;
                 }
-                EditorActivity.this.dateandtimeHandler.sendMessage(msg);
+                EditorActivity.this.dataHandler.sendMessage(msg);
                 break;
             case R.id.editor_esc_tv:
                 finish();
                 break;
             case R.id.editor_save_tv:
-              final   Person person = new Person();
+                final Person person = new Person();
                 person.setRealName(mEditTextName.getText().toString());
                 person.setSex(mRb.getText().toString());
                 person.setSignature(mEditTextSignature.getText().toString());
                 person.setYear(mYear);
                 person.setMoon(mMonth);
                 person.setDay(mDay);
-//              person.setSearchR(mEditTextR.getText().toString());
 
-                person.update(mNameId, new UpdateListener() {
-                    @Override
-                    public void done(BmobException e) {
-                        if (e == null) {
-                            Toast.makeText(EditorActivity.this, "更新成功:" + person.getUpdatedAt(), Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(EditorActivity.this, "更新失败：" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                // TODO: 16/12/5 将搜索范围存储到sp 
+
+                //将查询到的信息存储到sp中
+                if (!mId.isEmpty()) {
+                    person.update(mId, new UpdateListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            if (e == null) {
+                                Toast.makeText(EditorActivity.this, "更新成功:" + person.getUpdatedAt(), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(EditorActivity.this, "更新失败：" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Log.d("EditorActivity", e.getMessage());
+                                Log.d("EditorActivity", "e.getErrorCode():" + e.getErrorCode());
+                            }
                         }
-                    }
-                });
-
-
+                    });
+                }
                 Toast.makeText(this, "数据已保存", Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -374,7 +380,6 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
         }
     };
 
-
     @Override
     protected Dialog onCreateDialog(int id) {
         switch (id) {
@@ -395,9 +400,9 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
     }
 
     /**
-     * 处理日期和时间控件的Handler
+     * 处理日期控件的Handler
      */
-    Handler dateandtimeHandler = new Handler() {
+    Handler dataHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -407,5 +412,4 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
             }
         }
     };
-
 }

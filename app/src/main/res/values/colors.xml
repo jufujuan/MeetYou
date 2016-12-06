@@ -21,5 +21,10 @@
     <color name="tabbar_main">#43f43c</color>
     <color name="tabbar_secondly">#43dde2</color>
 
+    <!--沉浸式状态栏-->
+    <color name="primary">#FD4633</color>
+    <color name="primary_dark">#bc3426</color>
+    <color name="status_bar_color">@color/primary_dark</color>
+
 
 </resources>

@@ -1,5 +1,6 @@
 package com.zrj.dllo.meetyou.find.listfind;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 
@@ -29,6 +30,17 @@ public class ListFindFragment extends AbsBaseFragment implements ListFindContrac
         fragment.setArguments(args);
         return fragment;
     }
+//    /**
+//     * 沉浸式状态栏
+//     */
+//    private void initState() {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            //透明状态栏
+//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            //透明导航栏
+//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//        }
+//    }
 
     @Override
     protected int getLayout() {

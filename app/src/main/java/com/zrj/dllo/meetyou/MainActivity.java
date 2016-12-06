@@ -10,9 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
-import com.zrj.dllo.meetyou.find.listfind.ListFindFragment;
-import com.zrj.dllo.meetyou.find.listfind.ListFindModel;
-import com.zrj.dllo.meetyou.find.listfind.ListFindPresenter;
+import com.zrj.dllo.meetyou.find.listfind.chen.ListFindFragment;
 import com.zrj.dllo.meetyou.msg.MsgFragment;
 import com.zrj.dllo.meetyou.base.AbsBaseActivity;
 
@@ -117,15 +115,16 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
     private void Change2Meet() {
 //        FindFragment findFragment=FindFragment.newInstance();
 //        FindPresenter findPresenter=new FindPresenter();
-//        FindModel findModel=new FindModel();
+//        ListFindModel findModel=new ListFindModel();
 //
 //        findFragment.setPersenter(findPresenter);
 //        findModel.setPresenter(findPresenter);
+        //TODO aaa
         ListFindFragment mView=ListFindFragment.newInstance();
-        ListFindModel mModel=new ListFindModel();
-        ListFindPresenter mPresenter=new ListFindPresenter(mView,mModel);
+//        ListFindModel mModel=new ListFindModel();
+        com.zrj.dllo.meetyou.find.listfind.chen.FindPresenter mPresenter=new com.zrj.dllo.meetyou.find.listfind.chen.FindPresenter(mView);
         mView.setPresenter(mPresenter);
-        mModel.setPresenter(mPresenter);
+//        mModel.setPresenter(mPresenter);
 
 
         FragmentTransaction transaction =  mFragmentManager.beginTransaction();

@@ -34,6 +34,13 @@ public class ListFindRecyclerAdapter extends RecyclerView.Adapter<CommonViewHold
         mContext = context;
     }
 
+    public ListFindRecyclerAdapter() {
+    }
+
+    public void deleteFromPos(int pos){
+        datas.remove(pos);
+        heights.remove(pos);
+    }
 
     public void setLikeClickListener(RecyclerViewItemLikeClickListener likeClickListener) {
         mLikeClickListener = likeClickListener;
@@ -67,7 +74,7 @@ public class ListFindRecyclerAdapter extends RecyclerView.Adapter<CommonViewHold
             ViewGroup.LayoutParams params = holder.getItemView().getLayoutParams();//得到item的LayoutParams布局参数
             params.height = heights.get(position);//把随机的高度赋予itemView布局
             holder.getItemView().setLayoutParams(params);//把params设置给itemView布局
-            holder.setImage(R.id.item_list_find_img, datas.get(position).getUserImgUrl(), mContext, mImgClickListener, position, datas.get(position));
+            holder.setImage(R.id.item_list_find_img, datas.get(position).getUserImgUrl(),  mImgClickListener, position, datas.get(position));
             holder.setImage(R.id.item_list_find_dislike, mDislikeClickListener, position, datas.get(position));
             holder.setImage(R.id.item_list_find_like, mLikeClickListener, position, datas.get(position));
     }

@@ -148,6 +148,25 @@ public class CommonViewHolder extends RecyclerView.ViewHolder {
         });
         return this;
     }
+
+    /**
+     * 设置recyclerview行布局的背景网络图片
+     *
+     * @param id     ImageView的资源id
+     * @param imgUrl 图片的网址
+     * @return this
+     */
+    public CommonViewHolder setImage(int id, String imgUrl, final RecyclerViewItemImgClickListener imgClickListener, final int position, final Person person) {
+        final ImageView imageView = getView(id);
+        Glide.with(imageView.getContext()).load(imgUrl).into(imageView);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imgClickListener.onItemImg(imageView,position,person);
+            }
+        });
+        return this;
+    }
     /**
      * 设置RecyclerView行布局的喜欢的本地图片
      */

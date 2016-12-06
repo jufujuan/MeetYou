@@ -78,7 +78,7 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
             mMessages = conversation.getAllMessages();
             //SDK初始化加载的聊天记录为20条，到顶时需要去DB里获取更多
             //获取startMsgId之前的pagesize条消息，此方法获取的messages SDK会自动存入到此会话中，APP中无需再次把获取到的messages添加到会话中
-//        List<EMMessage> messageList = conversation.loadMoreMsgFromDB(startMsgId, pagesize);
+            mMessages = conversation.loadMoreMsgFromDB(mMessages.get(mMessages.size() - 1).getMsgId(), 10);
 
             mAdapter.setEMMessages(mMessages);
             LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -102,6 +102,7 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
                         msgChatRv.smoothScrollToPosition(mMessages.size());
                     }
                 }
+                msgChatRv.smoothScrollToPosition(mMessages.size());
 
             }
 

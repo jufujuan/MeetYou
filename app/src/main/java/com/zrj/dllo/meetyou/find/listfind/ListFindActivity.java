@@ -8,6 +8,7 @@ import android.view.MenuItem;
 
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.AbsBaseActivity;
+import com.zrj.dllo.meetyou.find.listfind.chen.*;
 
 /**
  * 这是 鞠福娟 创建的哟~
@@ -19,9 +20,11 @@ public class ListFindActivity extends AbsBaseActivity{
     private FragmentManager mFragmentManager;
     private Toolbar mToolbar;
 
-    private ListFindFragment mView;
-    private ListFindPresenter mPresenter;
-    private ListFindModel mModel;
+//    private ListFindFragment mView;
+//    private ListFindPresenter mPresenter;
+//    private ListFindModel mModel;
+    private com.zrj.dllo.meetyou.find.listfind.chen.ListFindFragment
+    mView;
 
     @Override
     protected int getLayout() {
@@ -36,11 +39,12 @@ public class ListFindActivity extends AbsBaseActivity{
     @Override
     protected void initDatas() {
 
-        mView=ListFindFragment.newInstance();
-        mModel=new ListFindModel();
-        mPresenter=new ListFindPresenter(mView,mModel);
-        mView.setPresenter(mPresenter);
-        mModel.setPresenter(mPresenter);
+        mView=com.zrj.dllo.meetyou.find.listfind.chen.ListFindFragment.newInstance();
+//        mModel=new ListFindModel();
+//        mPresenter=new ListFindPresenter(mView,mModel);
+        FindPresenter findPresenter = new FindPresenter(mView);
+        mView.setPresenter(findPresenter);
+//        mModel.setPresenter(mPresenter);
 
         mFragmentManager=getSupportFragmentManager();
         FragmentTransaction mTransaction=mFragmentManager.beginTransaction();

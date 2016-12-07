@@ -6,9 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.AbsBaseFragment;
 
-
-
-
 /**
  * 这是 鞠福娟 创建的哟~
  * on 16/11/26.
@@ -20,6 +17,8 @@ public class ListFindFragment extends AbsBaseFragment implements ListFindContrac
     protected ListFindRecyclerAdapter mRecyclerAdapter;
     private final static int DISTANCE = 2000;//单位米
     private ListFindPresenter mPresenter;
+
+
 
     public static ListFindFragment newInstance() {
 
@@ -39,8 +38,9 @@ public class ListFindFragment extends AbsBaseFragment implements ListFindContrac
     protected void initView() {
         mRecyclerView = bindView(R.id.fra_list_find_recyclerview);
         mRecyclerAdapter = new ListFindRecyclerAdapter(context);
+
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.space);
-        //mRecyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
+        mRecyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
     }
 
     @Override
@@ -55,6 +55,7 @@ public class ListFindFragment extends AbsBaseFragment implements ListFindContrac
      */
     @Override
     public void setPresenter(ListFindPresenter presenter) {
-        mPresenter = presenter;
+        mPresenter=presenter;
     }
 }
+

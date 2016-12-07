@@ -27,6 +27,8 @@ public class MsgContactFragment extends AbsBaseFragment {
     private SideBar contactSidebar;
     private ContactRecyclerAdapter mContactRecyclerAdapter;
     private Handler mHandler;
+    private List<String> mUserNames;
+    private List<ContactBean> mData;
 
 
     @Override
@@ -45,20 +47,21 @@ public class MsgContactFragment extends AbsBaseFragment {
     @Override
     protected void initDatas() {
         contactSidebar.setTextView(contactCenterTv);
-        mContactRecyclerAdapter = new ContactRecyclerAdapter();
+        mContactRecyclerAdapter = new ContactRecyclerAdapter(context);
+
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    final List<String> userNames = EMClient.getInstance().contactManager().getAllContactsFromServer();
+                    mUserNames = EMClient.getInstance().contactManager().getAllContactsFromServer();
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            ArrayList<ContactBean> data = getData(userNames.toArray(new String[userNames.size()]));
-                            Collections.sort(data, new PinyinComparator());
-
+                            mData = getData(mUserNames.toArray(new String[mUserNames.size()]));
+                            Collections.sort(mData, new PinyinComparator());
                             LinearLayoutManager manager = new LinearLayoutManager(getActivity());
-                            mContactRecyclerAdapter.setContactBeen(data);
+
+                            mContactRecyclerAdapter.setContactBeen(mData);
                             msgContactRv.setAdapter(mContactRecyclerAdapter);
                             msgContactRv.setLayoutManager(manager);
                         }
@@ -78,14 +81,16 @@ public class MsgContactFragment extends AbsBaseFragment {
                 if (position != -1) {
                     // 将选中字母对应的item滑到最上,不知道是不是这个方法
                     msgContactRv.scrollToPosition(position);
+//                    msgContactRv.setVerticalScrollbarPosition(position);
+
                 }
             }
         });
     }
 
 
-    private ArrayList<ContactBean> getData(String[] data) {
-        ArrayList<ContactBean> arrayList = new ArrayList<ContactBean>();
+    private List<ContactBean> getData(String[] data) {
+        List<ContactBean> arrayList = new ArrayList<ContactBean>();
         for (int i = 0; i < data.length; i++) {
             String pinyin = PinYinUtils.getPingYin(data[i]);
             String Fpinyin = pinyin.substring(0, 1).toUpperCase();
@@ -104,5 +109,31 @@ public class MsgContactFragment extends AbsBaseFragment {
         }
         return arrayList;
 
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    mUserNames = EMClient.getInstance().contactManager().getAllContactsFromServer();
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mData = getData(mUserNames.toArray(new String[mUserNames.size()]));
+                            Collections.sort(mData, new PinyinComparator());
+
+                            mContactRecyclerAdapter.setContactBeen(mData);
+//                            msgContactRv.setAdapter(mContactRecyclerAdapter);
+                        }
+                    });
+                } catch (HyphenateException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 }

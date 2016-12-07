@@ -11,7 +11,7 @@ import java.util.List;
  * on 16/12/1.
  */
 
-public class ListFindContract {
+public interface ListFindContract {
     interface MyView{
         /**
          * 把p层放到层中

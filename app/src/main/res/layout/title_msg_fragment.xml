@@ -4,13 +4,13 @@
                 android:layout_height="50dp"
                 android:background="@color/colorMain">
 
-    <com.zrj.dllo.meetyou.tools.CircularImageViewUtils
+    <ImageView
         android:id="@+id/fra_msg_title_avatar"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_centerVertical="true"
         android:layout_marginStart="15dp"
-        android:src="@mipmap/ic_launcher"/>
+        android:scaleType="centerCrop"/>
 
     <RadioGroup
         android:layout_width="100dp"

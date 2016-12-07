@@ -8,12 +8,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.zrj.dllo.meetyou.cons.ConsFragment;
-import com.zrj.dllo.meetyou.find.listfind.ListFindFragment;
-import com.zrj.dllo.meetyou.find.listfind.ListFindModel;
-import com.zrj.dllo.meetyou.find.listfind.ListFindPresenter;
+
+import com.hyphenate.EMContactListener;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.HyphenateException;
+
+import com.zrj.dllo.meetyou.find.listfind.chen.ListFindFragment;
 import com.zrj.dllo.meetyou.msg.MsgFragment;
 import com.zrj.dllo.meetyou.base.AbsBaseActivity;
 
@@ -22,6 +26,9 @@ import com.zrj.dllo.meetyou.find.mainfind.FindFragment;
 import com.zrj.dllo.meetyou.find.mainfind.FindModel;
 import com.zrj.dllo.meetyou.find.mainfind.FindPresenter;
 import com.zrj.dllo.meetyou.personal.PersonalFragment;
+import com.zrj.dllo.meetyou.tools.LiteOrmInstance;
+
+import java.util.List;
 
 import cn.bmob.v3.Bmob;
 
@@ -81,7 +88,10 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
             btnChange(mainAtyMyBtn, mainAtyMyTv);
         }
 
+        acceptRequest();
+
     }
+
 
     @Override
     public void onClick(View v) {
@@ -113,12 +123,10 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
      * 切换到觅友界面
      */
     private void Change2Meet() {
-
         ListFindFragment mView=ListFindFragment.newInstance();
-        ListFindModel mModel=new ListFindModel();
-        ListFindPresenter mPresenter=new ListFindPresenter(mView,mModel);
+        com.zrj.dllo.meetyou.find.listfind.chen.FindPresenter mPresenter=new com.zrj.dllo.meetyou.find.listfind.chen.FindPresenter(mView);
         mView.setPresenter(mPresenter);
-        mModel.setPresenter(mPresenter);
+
         FragmentTransaction transaction =  mFragmentManager.beginTransaction();
         transaction.replace(R.id.main_fl, mView);
         transaction.commit();
@@ -156,5 +164,52 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
                 mainAtyMyBtn.setBackgroundResource(R.drawable.btn_my_select);
                 break;
         }
+    }
+
+    // 接收好友请求的监听
+    public void acceptRequest() {
+        EMClient.getInstance().contactManager().setContactListener(new EMContactListener() {
+
+            @Override
+            public void onContactAgreed(String username) {
+                //好友请求被同意
+            }
+
+            @Override
+            public void onContactRefused(String username) {
+                //好友请求被拒绝
+            }
+
+            @Override
+            public void onContactInvited(final String username, String reason) {
+                //收到好友邀请
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (LiteOrmInstance.getInstance().getQueryByWhere(Person.class, "uName", new String[]{username}) != null) {
+                            try {
+                                EMClient.getInstance().contactManager().acceptInvitation(username);
+                            } catch (HyphenateException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }).start();
+
+
+            }
+
+            @Override
+            public void onContactDeleted(String username) {
+                //被删除时回调此方法
+            }
+
+
+            @Override
+            public void onContactAdded(String username) {
+                //增加了联系人时回调此方法
+                Toast.makeText(MainActivity.this, "有新朋友啦", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

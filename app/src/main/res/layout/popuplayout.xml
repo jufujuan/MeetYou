@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="200dp"
     android:layout_height="200dp"
-    android:background="#b9b9b9"
+    android:background="#a1a1a1"
     android:orientation="vertical">
 
     <LinearLayout
@@ -14,37 +14,37 @@
         android:orientation="horizontal">
 
         <TextView
-            android:background="#ffffff"
-            android:textSize="20dp"
-            android:layout_margin="10dp"
             android:id="@+id/pop_aquarius"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="水瓶"/>
+            android:background="#ffffff"
+            android:text="水瓶"
+            android:textSize="20dp"/>
 
         <TextView
-            android:background="#ffffff"
-            android:textSize="20dp"
-            android:layout_margin="10dp"
             android:id="@+id/pop_pisces"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="双鱼"/>
+            android:background="#ffffff"
+            android:text="双鱼"
+            android:textSize="20dp"/>
 
         <TextView
-            android:background="#ffffff"
-            android:textSize="20dp"
-            android:layout_margin="10dp"
             android:id="@+id/pop_aries"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="白羊"/>
+            android:background="#ffffff"
+            android:text="白羊"
+            android:textSize="20dp"/>
 
     </LinearLayout>
 
@@ -56,38 +56,38 @@
         android:orientation="horizontal">
 
         <TextView
-            android:background="#ffffff"
-            android:textSize="20dp"
-            android:layout_margin="10dp"
             android:id="@+id/pop_taurus"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="金牛"/>
+            android:background="#ffffff"
+            android:text="金牛"
+            android:textSize="20dp"/>
 
 
         <TextView
-            android:background="#ffffff"
-            android:textSize="20dp"
-            android:layout_margin="10dp"
             android:id="@+id/pop_gemini"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="双子"/>
+            android:background="#ffffff"
+            android:text="双子"
+            android:textSize="20dp"/>
 
         <TextView
-            android:background="#ffffff"
-            android:textSize="20dp"
-            android:layout_margin="10dp"
             android:id="@+id/pop_cancer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="巨蟹"/>
+            android:background="#ffffff"
+            android:text="巨蟹"
+            android:textSize="20dp"/>
 
     </LinearLayout>
 
@@ -98,34 +98,34 @@
         android:orientation="horizontal">
 
         <TextView
-            android:background="#ffffff"
-            android:textSize="20dp"
-            android:layout_margin="10dp"
             android:id="@+id/pop_leo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="狮子"/>
+            android:background="#ffffff"
+            android:text="狮子"
+            android:textSize="20dp"/>
 
         <TextView
-            android:background="#ffffff"
-            android:textSize="20dp"
-            android:layout_margin="10dp"
             android:id="@+id/pop_virgo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="处女"/>
+            android:background="#ffffff"
+            android:text="处女"
+            android:textSize="20dp"/>
 
         <TextView
-            android:background="#ffffff"
-            android:textSize="20dp"
-            android:layout_margin="10dp"
             android:id="@+id/pop_libra"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="天秤"/>
+            android:background="#ffffff"
+            android:text="天秤"
+            android:textSize="20dp"/>
     </LinearLayout>
 
 
@@ -136,48 +136,45 @@
         android:orientation="horizontal">
 
         <TextView
-            android:background="#ffffff"
-            android:textSize="20dp"
-            android:layout_margin="10dp"
             android:id="@+id/pop_scorpio"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="天蝎"/>
+            android:background="#ffffff"
+            android:text="天蝎"
+            android:textSize="20dp"/>
 
         <TextView
-            android:background="#ffffff"
-            android:textSize="20dp"
-            android:layout_margin="10dp"
             android:id="@+id/pop_sagittarius"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="射手"/>
+            android:background="#ffffff"
+            android:text="射手"
+            android:textSize="20dp"/>
 
         <TextView
-            android:background="#ffffff"
-            android:textSize="20dp"
-            android:layout_margin="10dp"
             android:id="@+id/pop_capricorn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="摩羯"/>
+            android:background="#ffffff"
+            android:text="摩羯"
+            android:textSize="20dp"/>
     </LinearLayout>
 
     <TextView
         android:id="@+id/pop_esc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="取消"
         android:layout_gravity="right"
         android:layout_marginRight="20dp"
+        android:text="取消"
         />
-
-
-
 </LinearLayout>

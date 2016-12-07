@@ -216,10 +216,8 @@ public abstract class AbsBaseActivity extends AppCompatActivity {
         }
     }
 
-
     /**
      * view设置点击事件
-     *
      * @param clickListener 点击事件监听
      * @param views         要设置监听的view
      */

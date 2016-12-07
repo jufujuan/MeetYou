@@ -11,6 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.zrj.dllo.meetyou.cons.ConsFragment;
+
 import com.hyphenate.EMContactListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
@@ -43,11 +45,9 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
     private FragmentManager mFragmentManager;
     private PersonalFragment mFragment;
 
-
     @Override
     protected int getLayout() {
         return R.layout.activity_main;
-
     }
 
 
@@ -55,13 +55,10 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
     protected void onDestroy() {
         Log.d("MainActivity", "destory");
         super.onDestroy();
-
     }
 
     @Override
     protected void initView() {
-
-
 
         Log.d("MainActivity", "initView");
         mainAtyMeetBtn = bindView(R.id.aty_main_meet_btn);
@@ -111,6 +108,8 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
                 break;
             case R.id.aty_main_weather_btn:
                 btnChange(mainAtyWeatherBtn, mainAtyWeatherTv);
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_fl, new ConsFragment()).commit();
+
                 break;
             case R.id.aty_main_my_btn:
                 mFragment = new PersonalFragment();
@@ -124,19 +123,9 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
      * 切换到觅友界面
      */
     private void Change2Meet() {
-//        FindFragment findFragment=FindFragment.newInstance();
-//        FindPresenter findPresenter=new FindPresenter();
-//        ListFindModel findModel=new ListFindModel();
-//
-//        findFragment.setPersenter(findPresenter);
-//        findModel.setPresenter(findPresenter);
-        //TODO aaa
         ListFindFragment mView=ListFindFragment.newInstance();
-//        ListFindModel mModel=new ListFindModel();
         com.zrj.dllo.meetyou.find.listfind.chen.FindPresenter mPresenter=new com.zrj.dllo.meetyou.find.listfind.chen.FindPresenter(mView);
         mView.setPresenter(mPresenter);
-//        mModel.setPresenter(mPresenter);
-
 
         FragmentTransaction transaction =  mFragmentManager.beginTransaction();
         transaction.replace(R.id.main_fl, mView);

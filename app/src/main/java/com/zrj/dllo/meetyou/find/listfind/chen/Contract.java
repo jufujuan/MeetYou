@@ -46,6 +46,14 @@ public interface Contract {
          */
         void onGetDataError(Throwable throwable);
 
+        /**
+         * 将喜欢的人数据存储在数据库中
+         */
+        void setLikePersonInLocalP(Person personvb);
+        /**
+         * 发送好友请求
+         */
+        void sendGoodFriendsRequestP(Person person);
 
     }
 

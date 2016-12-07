@@ -49,5 +49,6 @@ public class ListFindAdapter extends MyHeaderAndFooterWrapper {
         ListFindRecyclerAdapter innerAdapter = (ListFindRecyclerAdapter) getInnerAdapter();
         innerAdapter.deleteFromPos(pos);
         notifyItemRemoved(pos + getHeadersCount());
+        //notifyDataSetChanged();
     }
 }

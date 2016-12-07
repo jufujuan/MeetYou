@@ -36,4 +36,14 @@ public class FindPresenter implements Contract.Presenter {
     public void onGetDataError(Throwable throwable) {
 
     }
+
+    @Override
+    public void setLikePersonInLocalP(Person personvb) {
+        mModel.setLikePersonInLocal(personvb);
+    }
+
+    @Override
+    public void sendGoodFriendsRequestP(Person person) {
+        mModel.sendGoodFriendsRequest(person);
+    }
 }

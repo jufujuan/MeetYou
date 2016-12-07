@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Toast;
 
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -16,6 +17,8 @@ import com.zrj.dllo.meetyou.base.AbsBaseFragment;
 import com.zrj.dllo.meetyou.find.listfind.ListFindBean;
 import com.zrj.dllo.meetyou.find.listfind.ListFindPresenter;
 import com.zrj.dllo.meetyou.find.listfind.SpaceItemDecoration;
+import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemDislikeClickListener;
+import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemLikeClickListener;
 import com.zrj.dllo.meetyou.widget.GlideImageLoader;
 
 import java.util.ArrayList;
@@ -63,6 +66,25 @@ public class ListFindFragment extends AbsBaseFragment implements Contract.View {
         //初始化完成,开始请求网络数据
         mPresenter.getListFindData(getActivity(),DISTANCE);
         initHead();
+
+        mListFindAdapter.setLikeClickListener(new RecyclerViewItemLikeClickListener() {
+            @Override
+            public void onItemLike(View view, int position, Person person) {
+                Toast.makeText(context, "fff点击了喜欢", Toast.LENGTH_SHORT).show();
+                //1.向本地数据库中数据存储(存储自己的喜欢列表)
+                mPresenter.setLikePersonInLocalP(person);
+                //2.向对方这个人发送好友申请
+                mPresenter.sendGoodFriendsRequestP(person);
+                mListFindAdapter.delectFromPos(position);
+            }
+        });
+        mListFindAdapter.setDislikeClickListener(new RecyclerViewItemDislikeClickListener() {
+            @Override
+            public void onItemDislike(View view, int position, Person person) {
+                Toast.makeText(context, "点击了不喜欢", Toast.LENGTH_SHORT).show();
+                mListFindAdapter.delectFromPos(position);
+            }
+        });
     }
 
     private void initHead(){

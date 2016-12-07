@@ -113,6 +113,11 @@ public class MyHeaderAndFooterWrapper<T> extends RecyclerView.Adapter<RecyclerVi
 
     public void addHeaderView(View view) {
         mHeaderViews.put(mHeaderViews.size() + BASE_ITEM_TYPE_HEADER, view);
+        RecyclerView.Adapter innerAdapter = getInnerAdapter();
+        if(innerAdapter instanceof InnerAdapterAddHead){
+            InnerAdapterAddHead innerAdapterAddHead = (InnerAdapterAddHead) innerAdapter;
+            innerAdapterAddHead.setHeadCount(mHeaderViews.size());
+        }
     }
 
     public void addFootView(View view) {

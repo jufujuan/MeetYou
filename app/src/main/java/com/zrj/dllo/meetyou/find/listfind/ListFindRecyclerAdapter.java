@@ -10,6 +10,7 @@ import com.youth.banner.BannerConfig;
 import com.zrj.dllo.meetyou.Person;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.CommonViewHolder;
+import com.zrj.dllo.meetyou.find.listfind.chen.InnerAdapterAddHead;
 import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemDislikeClickListener;
 import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemImgClickListener;
 import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemLikeClickListener;
@@ -22,13 +23,18 @@ import java.util.List;
  * on 16/11/26.
  */
 
-public class ListFindRecyclerAdapter extends RecyclerView.Adapter<CommonViewHolder>{
+public class ListFindRecyclerAdapter extends RecyclerView.Adapter<CommonViewHolder> implements InnerAdapterAddHead{
     private List<Person> datas;
     private Context mContext;
     private List<Integer> heights;
     private RecyclerViewItemLikeClickListener mLikeClickListener;
     private RecyclerViewItemDislikeClickListener mDislikeClickListener;
     private RecyclerViewItemImgClickListener mImgClickListener;
+    private int headCount;
+
+    public void setHeadCount(int headCount) {
+        this.headCount = headCount;
+    }
 
     public ListFindRecyclerAdapter(Context context) {
         mContext = context;
@@ -75,8 +81,8 @@ public class ListFindRecyclerAdapter extends RecyclerView.Adapter<CommonViewHold
             params.height = heights.get(position);//把随机的高度赋予itemView布局
             holder.getItemView().setLayoutParams(params);//把params设置给itemView布局
             holder.setImage(R.id.item_list_find_img, datas.get(position).getUserImgUrl(),  mImgClickListener, position, datas.get(position));
-            holder.setImage(R.id.item_list_find_dislike, mDislikeClickListener, position, datas.get(position));
-            holder.setImage(R.id.item_list_find_like, mLikeClickListener, position, datas.get(position));
+            holder.setImage(R.id.item_list_find_dislike, mDislikeClickListener, headCount, datas.get(position));
+            holder.setImage(R.id.item_list_find_like, mLikeClickListener, headCount, datas.get(position));
     }
 
     @Override

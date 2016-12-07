@@ -1,6 +1,8 @@
 package com.zrj.dllo.meetyou.find.listfind.chen;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
@@ -17,7 +19,9 @@ import com.zrj.dllo.meetyou.base.AbsBaseFragment;
 import com.zrj.dllo.meetyou.find.listfind.ListFindBean;
 import com.zrj.dllo.meetyou.find.listfind.ListFindPresenter;
 import com.zrj.dllo.meetyou.find.listfind.SpaceItemDecoration;
+import com.zrj.dllo.meetyou.find.ttfind.ListTTActivity;
 import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemDislikeClickListener;
+import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemImgClickListener;
 import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemLikeClickListener;
 import com.zrj.dllo.meetyou.widget.GlideImageLoader;
 
@@ -83,6 +87,16 @@ public class ListFindFragment extends AbsBaseFragment implements Contract.View {
             public void onItemDislike(View view, int position, Person person) {
                 Toast.makeText(context, "点击了不喜欢", Toast.LENGTH_SHORT).show();
                 mListFindAdapter.delectFromPos(position);
+            }
+        });
+        mListFindAdapter.setImgClickListener(new RecyclerViewItemImgClickListener() {
+            @Override
+            public void onItemImg(View view, int position, Person person) {
+                Intent intent=new Intent(context, ListTTActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("person",person);
+                intent.putExtra("bundle",bundle);
+                startActivity(intent);
             }
         });
     }

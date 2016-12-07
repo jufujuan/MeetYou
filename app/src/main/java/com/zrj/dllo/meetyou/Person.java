@@ -1,10 +1,14 @@
 package com.zrj.dllo.meetyou;
 
+import android.os.Parcelable;
+
 import com.litesuits.orm.db.annotation.Column;
 import com.litesuits.orm.db.annotation.PrimaryKey;
 import com.litesuits.orm.db.annotation.Table;
 import com.litesuits.orm.db.enums.AssignType;
 import com.zrj.dllo.meetyou.tools.StaticValues;
+
+import java.io.Serializable;
 
 import cn.bmob.v3.BmobObject;
 
@@ -13,7 +17,7 @@ import cn.bmob.v3.BmobObject;
  * on 16/11/29.
  */
 @Table(StaticValues.LO_TABLE_LIKE_NAME)
-public class Person extends BmobObject{
+public class Person extends BmobObject implements Serializable {
     @PrimaryKey(AssignType.BY_MYSELF)
     private String uName;//用户名
     private String uPassword;//密码

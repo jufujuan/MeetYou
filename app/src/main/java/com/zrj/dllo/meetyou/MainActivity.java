@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.hyphenate.EMContactListener;
@@ -91,13 +92,10 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
             btnChange(mainAtyMyBtn, mainAtyMyTv);
         }
 
+        acceptRequest();
+
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        acceptRequest();
-    }
 
     @Override
     public void onClick(View v) {
@@ -179,6 +177,7 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
         }
     }
 
+    // 接收好友请求的监听
     public void acceptRequest() {
         EMClient.getInstance().contactManager().setContactListener(new EMContactListener() {
 
@@ -193,15 +192,21 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
             }
 
             @Override
-            public void onContactInvited(String username, String reason) {
+            public void onContactInvited(final String username, String reason) {
                 //收到好友邀请
-                if (LiteOrmInstance.getInstance().getQueryByWhere(Person.class, "uName", new String[]{username}) != null) {
-                    try {
-                        EMClient.getInstance().contactManager().acceptInvitation(username);
-                    } catch (HyphenateException e) {
-                        e.printStackTrace();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (LiteOrmInstance.getInstance().getQueryByWhere(Person.class, "uName", new String[]{username}) != null) {
+                            try {
+                                EMClient.getInstance().contactManager().acceptInvitation(username);
+                            } catch (HyphenateException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
-                }
+                }).start();
+
 
             }
 
@@ -214,6 +219,7 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
             @Override
             public void onContactAdded(String username) {
                 //增加了联系人时回调此方法
+                Toast.makeText(MainActivity.this, "有新朋友啦", Toast.LENGTH_SHORT).show();
             }
         });
     }

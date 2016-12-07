@@ -69,7 +69,8 @@ public class MsgMsgFragment extends AbsBaseFragment {
                 mConversations.addAll(loadConversation());
 //                Log.d("MsgMsgFragment", "mConversations:" + mConversations);
                 mAdapter.setEMConversations(mConversations);
-                long [] pattern = {100,400,100,400};
+                mAdapter.notifyDataSetChanged();
+//                long [] pattern = {100,400,100,400};
 //                vibrator.vibrate(pattern,-1);
             }
 

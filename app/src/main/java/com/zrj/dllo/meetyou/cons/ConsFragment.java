@@ -10,20 +10,15 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.AbsBaseFragment;
 import com.zrj.dllo.meetyou.editor.EditorActivity;
 import com.zrj.dllo.meetyou.eventbus.EventBusBean;
 import com.zrj.dllo.meetyou.tools.StaticValues;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -48,7 +43,7 @@ public class ConsFragment extends AbsBaseFragment implements View.OnClickListene
     private TextView mBtnStart;
     private TextView mTextViewCons;
     private String mCons;
-    private String mHeCons = "双鱼";
+    private String mHeCons = "巨蟹";
     private int mMonth;
     private int mDay;
     private SharedPreferences mPreferences;
@@ -65,8 +60,6 @@ public class ConsFragment extends AbsBaseFragment implements View.OnClickListene
         mTextViewGrage2 = bindView(R.id.cons_grade2_tv);
         mTextViewGrage3 = bindView(R.id.cons_grade3_tv);
         mTextViewGrage4 = bindView(R.id.cons_grade4_tv);
-
-
         mTextViewContent = bindView(R.id.cons_content_tv);
         mTextView = bindView(R.id.cons_tv);
         mImageViewMe = bindView(R.id.cons_me_img);
@@ -91,7 +84,6 @@ public class ConsFragment extends AbsBaseFragment implements View.OnClickListene
         mCons = getConstellation(mMonth, mDay);
 //       mCons = "射手";
         mTextViewCons.setText(mCons + ":" + mHeCons);
-
         EventBus.getDefault().post(new EventBusBean());
 
     }
@@ -291,11 +283,11 @@ public class ConsFragment extends AbsBaseFragment implements View.OnClickListene
     class ConsAsync extends AsyncTask<String, String, String> {
         @Override
         protected String doInBackground(String... params) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                Thread.sleep(500);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
 
             return null;
         }

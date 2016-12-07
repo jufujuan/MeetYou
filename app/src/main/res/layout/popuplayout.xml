@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="200dp"
     android:layout_height="200dp"
-    android:background="#a1a1a1"
+    android:background="#60000000"
     android:orientation="vertical">
 
     <LinearLayout
@@ -20,7 +20,7 @@
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:background="#ffffff"
+            android:textColor="#ffffff"
             android:text="水瓶"
             android:textSize="20dp"/>
 
@@ -31,7 +31,7 @@
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:background="#ffffff"
+            android:textColor="#ffffff"
             android:text="双鱼"
             android:textSize="20dp"/>
 
@@ -42,7 +42,7 @@
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:background="#ffffff"
+            android:textColor="#ffffff"
             android:text="白羊"
             android:textSize="20dp"/>
 
@@ -62,7 +62,7 @@
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:background="#ffffff"
+            android:textColor="#ffffff"
             android:text="金牛"
             android:textSize="20dp"/>
 
@@ -74,7 +74,7 @@
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:background="#ffffff"
+       android:textColor="#ffffff"
             android:text="双子"
             android:textSize="20dp"/>
 
@@ -85,7 +85,7 @@
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:background="#ffffff"
+            android:textColor="#ffffff"
             android:text="巨蟹"
             android:textSize="20dp"/>
 
@@ -103,7 +103,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:background="#ffffff"
+            android:textColor="#ffffff"
             android:text="狮子"
             android:textSize="20dp"/>
 
@@ -113,7 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:background="#ffffff"
+            android:textColor="#ffffff"
             android:text="处女"
             android:textSize="20dp"/>
 
@@ -123,7 +123,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:background="#ffffff"
+            android:textColor="#ffffff"
             android:text="天秤"
             android:textSize="20dp"/>
     </LinearLayout>
@@ -142,7 +142,7 @@
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:background="#ffffff"
+            android:textColor="#ffffff"
             android:text="天蝎"
             android:textSize="20dp"/>
 
@@ -153,7 +153,7 @@
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:background="#ffffff"
+            android:textColor="#ffffff"
             android:text="射手"
             android:textSize="20dp"/>
 
@@ -164,7 +164,7 @@
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:background="#ffffff"
+            android:textColor="#ffffff"
             android:text="摩羯"
             android:textSize="20dp"/>
     </LinearLayout>
@@ -176,5 +176,6 @@
         android:layout_gravity="right"
         android:layout_marginRight="20dp"
         android:text="取消"
+        android:textColor="#ffffff"
         />
 </LinearLayout>

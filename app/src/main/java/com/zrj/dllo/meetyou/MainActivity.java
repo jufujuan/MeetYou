@@ -1,38 +1,23 @@
 package com.zrj.dllo.meetyou;
 
-import android.content.SharedPreferences;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
 import com.zrj.dllo.meetyou.cons.ConsFragment;
-
 import com.hyphenate.EMContactListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
-
 import com.zrj.dllo.meetyou.find.listfind.chen.ListFindFragment;
 import com.zrj.dllo.meetyou.msg.MsgFragment;
 import com.zrj.dllo.meetyou.base.AbsBaseActivity;
-
-import com.zrj.dllo.meetyou.find.mainfind.FindFragment;
-
-import com.zrj.dllo.meetyou.find.mainfind.FindModel;
-import com.zrj.dllo.meetyou.find.mainfind.FindPresenter;
 import com.zrj.dllo.meetyou.personal.PersonalFragment;
 import com.zrj.dllo.meetyou.tools.LiteOrmInstance;
-
-import java.util.List;
-
-import cn.bmob.v3.Bmob;
-
-
 /**
  * 绑定布局
  *
@@ -42,7 +27,7 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
 
     private Button mainAtyMeetBtn, mainAtyMsgBtn, mainAtyWeatherBtn, mainAtyMyBtn;
     private TextView mainAtyMeetTv, mainAtyMsgTv, mainAtyWeatherTv, mainAtyMyTv;
-    private FragmentManager mFragmentManager;
+    private android.support.v4.app.FragmentManager mFragmentManager;
     private PersonalFragment mFragment;
 
     @Override
@@ -127,7 +112,7 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
         com.zrj.dllo.meetyou.find.listfind.chen.FindPresenter mPresenter=new com.zrj.dllo.meetyou.find.listfind.chen.FindPresenter(mView);
         mView.setPresenter(mPresenter);
 
-        FragmentTransaction transaction =  mFragmentManager.beginTransaction();
+        android.support.v4.app.FragmentTransaction transaction =  mFragmentManager.beginTransaction();
         transaction.replace(R.id.main_fl, mView);
         transaction.commit();
     }

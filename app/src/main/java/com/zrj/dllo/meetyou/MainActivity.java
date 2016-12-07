@@ -1,6 +1,8 @@
 package com.zrj.dllo.meetyou;
 
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
@@ -42,6 +44,7 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
     private TextView mainAtyMeetTv, mainAtyMsgTv, mainAtyWeatherTv, mainAtyMyTv;
     private FragmentManager mFragmentManager;
     private PersonalFragment mFragment;
+    private Handler mHandler;
 
 
     @Override
@@ -78,6 +81,7 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
 
     @Override
     protected void initDatas() {
+        mHandler = new Handler(Looper.getMainLooper());
         mFragmentManager = getSupportFragmentManager();
         SharedPreferences sharedPreferences = getSharedPreferences("night", 0);
         boolean is = sharedPreferences.getBoolean("isFragment",true);
@@ -197,12 +201,19 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        if (LiteOrmInstance.getInstance().getQueryByWhere(Person.class, "uName", new String[]{username}) != null) {
-                            try {
-                                EMClient.getInstance().contactManager().acceptInvitation(username);
-                            } catch (HyphenateException e) {
-                                e.printStackTrace();
-                            }
+                        List<Person> uName = LiteOrmInstance.getInstance().getQueryByWhere(Person.class, "uName", new String[]{username});
+                        if (uName != null) {
+                            mHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        EMClient.getInstance().contactManager().acceptInvitation(username);
+                                    } catch (HyphenateException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+
                         }
                     }
                 }).start();

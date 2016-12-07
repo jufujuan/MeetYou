@@ -3,7 +3,7 @@
     <!--主页面底部button点击后显示的文字-->
     <string name="aty_main_meet_tv_text">觅友</string>
     <string name="aty_main_msg_tv_text">消息</string>
-    <string name="aty_main_weather_tv_text">天气</string>
+    <string name="aty_main_weather_tv_text">星座</string>
     <string name="aty_main_my_tv_text">我的</string>
     <!--觅友界面-->
     <string name="fra_find_seek_text">正在寻找附近的人...</string>

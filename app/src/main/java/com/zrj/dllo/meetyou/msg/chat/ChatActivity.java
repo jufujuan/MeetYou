@@ -81,14 +81,14 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
             mMessages = mConversation.getAllMessages();
             //SDK初始化加载的聊天记录为20条，到顶时需要去DB里获取更多
             //获取startMsgId之前的pagesize条消息，此方法获取的messages SDK会自动存入到此会话中，APP中无需再次把获取到的messages添加到会话中
-            mMessageList = mConversation.loadMoreMsgFromDB(mMessages.get(mMessages.size() - 1).getMsgId(), 10);
-            mMessageList.addAll(mMessages);
+//            mMessageList = mConversation.loadMoreMsgFromDB(mMessages.get(mMessages.size() - 1).getMsgId(), 10);
+//            mMessageList.addAll(mMessages);
 
-            mAdapter.setEMMessages(mMessageList);
+            mAdapter.setEMMessages(mMessages);
             LinearLayoutManager manager = new LinearLayoutManager(this);
             msgChatRv.setAdapter(mAdapter);
             msgChatRv.setLayoutManager(manager);
-            msgChatRv.smoothScrollToPosition(mMessageList.size());
+            msgChatRv.smoothScrollToPosition(mMessages.size());
         }
 
 
@@ -99,13 +99,16 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
             @Override
             public void onMessageReceived(List<EMMessage> messages) {
                 //收到消息
-                for (EMMessage message : messages) {
-                    if (mUserName.equals(message.getFrom())) {
-                        mMessageList.add(message);
-                        mAdapter.setEMMessages(mMessageList);
-                        msgChatRv.smoothScrollToPosition(mMessageList.size());
-                    }
-                }
+                mMessages.addAll(messages);
+                mAdapter.setEMMessages(mMessages);
+                msgChatRv.smoothScrollToPosition(mMessages.size());
+//                for (EMMessage message : messages) {
+//                    if (mUserName.equals(message.getFrom())) {
+//                        mMessages.add(message);
+//                        mAdapter.setEMMessages(mMessages);
+//                        msgChatRv.smoothScrollToPosition(mMessages.size());
+//                    }
+//                }
 //                msgChatRv.smoothScrollToPosition(mMessageList.size());
                 mConversation.markAllMessagesAsRead();
             }

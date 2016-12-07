@@ -6,6 +6,8 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
@@ -26,9 +28,14 @@ import com.bumptech.glide.Glide;
 import com.zrj.dllo.meetyou.Person;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.AbsBaseActivity;
+import com.zrj.dllo.meetyou.eventbus.EventBusBean;
 import com.zrj.dllo.meetyou.login.LoginUserBean;
+import com.zrj.dllo.meetyou.tools.BitmapBlurUtils;
 import com.zrj.dllo.meetyou.tools.LogUtils;
 import com.zrj.dllo.meetyou.tools.StaticValues;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -112,11 +119,11 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
         mRb = (RadioButton) findViewById(mRadioButtonId);
         mPreferences = getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME, MODE_PRIVATE);
         mId = mPreferences.getString(StaticValues.SP_USEING_ID, "");
-
         final java.util.Calendar c = java.util.Calendar.getInstance();
-        mYear = c.get(Calendar.YEAR);
-        mMonth = c.get(Calendar.MONTH);
-        mDay = c.get(Calendar.DAY_OF_MONTH);
+
+        mYear = mSp.getInt(StaticValues.SP_USEING_YEAR_COLUMN, 2000);
+        mMonth = mSp.getInt(StaticValues.SP_USEING_MOUTH_COLUMN, 5);
+        mDay = mSp.getInt(StaticValues.SP_USEING_DAY_COLUMN, 5);
 
         setDateTime();
 
@@ -155,6 +162,13 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
                 person.setMoon(mMonth);
                 person.setDay(mDay);
 
+                mSp.edit().putInt(StaticValues.SP_USEING_YEAR_COLUMN, mYear).commit();
+                mSp.edit().putInt(StaticValues.SP_USEING_MOUTH_COLUMN, mMonth).commit();
+                mSp.edit().putInt(StaticValues.SP_USEING_DAY_COLUMN, mDay).commit();
+
+                EventBus.getDefault().post(new EventBusBean());
+
+                finish();
                 // TODO: 16/12/5 将搜索范围存储到sp 
 
                 //将查询到的信息存储到sp中
@@ -351,9 +365,9 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
      */
     private void setDateTime() {
         final Calendar c = Calendar.getInstance();
-        mYear = c.get(Calendar.YEAR);
-        mMonth = c.get(Calendar.MONTH);
-        mDay = c.get(Calendar.DAY_OF_MONTH);
+        mYear = 2000;
+        mMonth = 5;
+        mDay = 5;
 
         updateDateDisplay();
     }

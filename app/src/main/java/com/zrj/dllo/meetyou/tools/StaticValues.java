@@ -19,39 +19,49 @@ public class StaticValues {
      */
     public final static String SP_USEING_NAME_COLUMN = "userName";
     /**
-     *  正在登录的用户头像
+     * 正在登录的用户头像
      */
-    public final static String SP_USEING_IMG_URL_COLUMN= "userImgUrl";
+    public final static String SP_USEING_IMG_URL_COLUMN = "userImgUrl";
 
     /**
-     *  正在登录的用户纬度
+     * 正在登录的用户纬度
      */
-    public final static String SP_USEING_LATITUDE_COLUMN= "latitude";
+    public final static String SP_USEING_LATITUDE_COLUMN = "latitude";
     /**
-     *  正在登录的用户经度
+     * 正在登录的用户经度
      */
-    public final static String SP_USEING_LONTITUDE_COLUMN= "lontitude";
+    public final static String SP_USEING_LONTITUDE_COLUMN = "lontitude";
     /**
-     *  正在登录的用户地址
+     * 正在登录的用户地址
      */
-    public final static String SP_USEING_ADRESS_COLUMN= "adress";
+    public final static String SP_USEING_ADRESS_COLUMN = "adress";
     /**
-     *  正在登录的用户地址
+     * 正在登录的用户地址
      */
-    public final static String SP_USEING_ID= "id";
-
-
-
-
+    public final static String SP_USEING_ID = "id";
 
     /**************liteorm*****************/
     /**
      * LiteOrm数据库的名字
      */
-    public static  final String LO_DB_NAME="meetyoulo";
+    public static final String LO_DB_NAME = "meetyoulo";
     /**
      * LiteOrm喜欢的人的列表的名字
      */
-    public static final String LO_TABLE_LIKE_NAME="like";
+    public static final String LO_TABLE_LIKE_NAME = "like";
+
+    /**
+     * 正在登录的用户出生年份
+     */
+    public final static String SP_USEING_YEAR_COLUMN = "userYear";
+    /**
+     * 正在登录的用户出生月份
+     */
+    public final static String SP_USEING_MOUTH_COLUMN = "userMouth";
+    /**
+     * 正在登录的用户日期
+     */
+    public final static String SP_USEING_DAY_COLUMN = "userDay";
+
 
 }

@@ -3,7 +3,8 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@mipmap/xingxing_meitu_1"
-              android:orientation="vertical">
+              android:orientation="vertical"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,14 +16,14 @@
             android:layout_width="0dp"
             android:layout_height="75dp"
             android:layout_weight="1"
-            android:src="@mipmap/shuangyu"
+            android:src="@mipmap/sheshou1"
             />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="1"
+            android:layout_weight="0.7"
             android:orientation="vertical">
 
             <TextView
@@ -32,8 +33,8 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:text="开始匹配"
-                android:textColor="#ffffff"
                 android:textSize="20dp"
+
                 />
 
             <TextView
@@ -42,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:textColor="#ffffff"
+                android:textSize="20dp"
                 />
 
         </LinearLayout>
@@ -52,7 +53,7 @@
             android:layout_width="0dp"
             android:layout_height="75dp"
             android:layout_weight="1"
-            android:src="@mipmap/shuangyu"
+            android:src="@mipmap/sheshou1"
             />
     </LinearLayout>
 
@@ -62,6 +63,7 @@
         android:layout_marginTop="5dp">
 
         <TextView
+            android:id="@+id/cons_me_cons_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
@@ -69,14 +71,13 @@
             android:layout_marginTop="5dp"
             android:layout_weight="1.5"
             android:gravity="center"
-            android:text="我的星座"
-            android:textColor="#ffffff"
+            android:text="设置我的星座"
             />
 
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.3"
             />
 
         <TextView
@@ -88,20 +89,50 @@
             android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="点击选择星座"
-            android:textColor="#ffffff"
+            android:text="选择他的星座"
+
             />
     </LinearLayout>
 
+
     <TextView
-        android:id="@+id/cons_grade_tv"
-        android:layout_width="270dp"
+
+        android:id="@+id/cons_grade1_tv"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:textColor="#ffffff"
+        android:textColor="#db34f1"
         android:textSize="20dp"
         />
+
+    <TextView
+        android:id="@+id/cons_grade2_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="#db34f1"
+        android:textSize="20dp"
+        />
+
+    <TextView
+        android:id="@+id/cons_grade3_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="#db34f1"
+        android:textSize="20dp"
+        />
+
+    <TextView
+        android:id="@+id/cons_grade4_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+
+        android:textColor="#db34f1"
+        android:textSize="20dp"
+        />
+
     <!--android:text="友情：★★★爱情：★★★★婚姻：★★★★亲情：★★★★"-->
     <!--android:text="因为金牛和巨蟹都是内向型的星座，
     而且都是以家庭为人生最终目标，所以两个人一旦擦出火花是颇理想的一对，
@@ -113,8 +144,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
-        android:textColor="#ffffff"
-        android:textSize="20dp"/>
-
+        android:layout_marginTop="15dp"
+        android:textColor="#322fe1"
+        />
 </LinearLayout>

@@ -10,18 +10,18 @@ public class HttpUtil {
     /**
      * 请求测评页面的数据
      *
-     * @param page     页数
      * @param callBack
      */
-    public static void getTest(int page, ResponseCallBack<ConsBean> callBack) {
+    public static void getTest(String meCons, String heCons, ResponseCallBack<ConsBean> callBack) {
         //获得一个真正的网络请求url
-//        String url = NetApi.TEST_URL_BASE + "&page=" + page;
-        String url = "http://apis.baidu.com/txapi/xingzuo/xingzuo" + "?" + "me=%E9%87%91%E7%89%9B&he=%E5%B7%A8%E8%9F%B9&all=1";
+
+        EncodeUtil.encode(meCons);
+        EncodeUtil.encode(heCons);
+
+        String url = "http://apis.baidu.com/txapi/xingzuo/xingzuo" + "?" +
+                "me=" + EncodeUtil.encode(meCons) + "&he=" + EncodeUtil.encode(heCons) + "&all=1";
 
         //使用Manager来发起网络请求
-        OkHttpManager.getInstance()
-                .get(url, ConsBean.class, callBack);
+        OkHttpManager.getInstance().get(url, ConsBean.class, callBack);
     }
-
-
 }

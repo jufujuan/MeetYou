@@ -18,6 +18,8 @@ public class ListFindFragment extends AbsBaseFragment implements ListFindContrac
     private final static int DISTANCE = 2000;//单位米
     private ListFindPresenter mPresenter;
 
+
+
     public static ListFindFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -36,8 +38,9 @@ public class ListFindFragment extends AbsBaseFragment implements ListFindContrac
     protected void initView() {
         mRecyclerView = bindView(R.id.fra_list_find_recyclerview);
         mRecyclerAdapter = new ListFindRecyclerAdapter(context);
+
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.space);
-        //mRecyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
+        mRecyclerView.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
     }
 
     @Override

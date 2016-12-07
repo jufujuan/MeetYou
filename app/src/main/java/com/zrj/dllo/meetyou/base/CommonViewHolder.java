@@ -2,6 +2,7 @@ package com.zrj.dllo.meetyou.base;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -148,28 +149,57 @@ public class CommonViewHolder extends RecyclerView.ViewHolder {
         });
         return this;
     }
+
     /**
-     * 设置RecyclerView行布局的喜欢的本地图片
+     * 设置recyclerview行布局的背景网络图片
+     *
+     * @param id     ImageView的资源id
+     * @param imgUrl 图片的网址
+     * @return this
      */
-    public CommonViewHolder setImage(int id, final RecyclerViewItemLikeClickListener likeClickListener, final int position, final Person person) {
+    public CommonViewHolder setImage(int id, String imgUrl, final RecyclerViewItemImgClickListener imgClickListener, final int position, final Person person) {
         final ImageView imageView = getView(id);
+        Glide.with(imageView.getContext()).load(imgUrl).into(imageView);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                likeClickListener.onItemLike(imageView,position,person);
+                imgClickListener.onItemImg(imageView,position,person);
             }
         });
         return this;
     }
     /**
-     * 设置RecylerView行布局的不喜欢网络图片
+     * 设置RecyclerView行布局的喜欢的本地图片
      */
-    public CommonViewHolder setImage(int id, final RecyclerViewItemDislikeClickListener dislikeClickListener, final int position, final Person person) {
+    public CommonViewHolder setImage(int id, final RecyclerViewItemLikeClickListener likeClickListener, int headCounts, final Person person) {
         final ImageView imageView = getView(id);
-        imageView.setOnClickListener(new View.OnClickListener() {
+        imageView.setOnClickListener(new ClickListener(headCounts) {
             @Override
             public void onClick(View view) {
-                dislikeClickListener.onItemDislike(imageView,position,person);
+                Log.d("CommonViewHolder", "pos:" + (getLayoutPosition() - pos));
+                likeClickListener.onItemLike(imageView,getLayoutPosition() - pos,person);
+            }
+        });
+        return this;
+    }
+
+    abstract class ClickListener implements View.OnClickListener{
+        public int pos;
+
+        public ClickListener(int pos) {
+            this.pos = pos;
+        }
+    }
+
+    /**
+     * 设置RecylerView行布局的不喜欢网络图片
+     */
+    public CommonViewHolder setImage(int id, final RecyclerViewItemDislikeClickListener dislikeClickListener, int headCounts, final Person person) {
+        final ImageView imageView = getView(id);
+        imageView.setOnClickListener(new ClickListener(headCounts) {
+            @Override
+            public void onClick(View view) {
+                dislikeClickListener.onItemDislike(imageView,getLayoutPosition()-pos,person);
             }
         });
         return this;
@@ -208,16 +238,5 @@ public class CommonViewHolder extends RecyclerView.ViewHolder {
         getView(id).setOnClickListener(listener);
         return this;
     }
-    public CommonViewHolder setBanner(int id, int bannerStyle, List<String> urls){
-        Banner banner=getView(id);
-        banner.setImages(urls);
-        banner.setBannerStyle(bannerStyle);
-        banner.setImageLoader(new GlideImageLoader());
-        banner.setBannerAnimation(Transformer.DepthPage);
-        banner.setDelayTime(1500);
-        banner.isAutoPlay(true);
-        //banner.setIndicatorGravity(BannerConfig.CENTER);
-        banner.start();
-        return this;
-    }
+
 }

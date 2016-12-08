@@ -42,5 +42,7 @@
     <string name="tt_nav_setting">设置</string>
     <string name="tt_nav_cons">星座</string>
 
+    <string name="fra_list_find_name">昵称</string>
+
 
 </resources>

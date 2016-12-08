@@ -43,6 +43,13 @@ public class ListFindRecyclerAdapter extends RecyclerView.Adapter<CommonViewHold
     public ListFindRecyclerAdapter() {
     }
 
+    public void insetData(List<Person> data){
+        datas.addAll(data);
+        for (int i = 0; i < data.size(); i++) {
+            heights.add((int)(500+Math.random()*300));
+        }
+    }
+
     public void deleteFromPos(int pos){
         datas.remove(pos);
         heights.remove(pos);
@@ -83,6 +90,7 @@ public class ListFindRecyclerAdapter extends RecyclerView.Adapter<CommonViewHold
             holder.setImage(R.id.item_list_find_img, datas.get(position).getUserImgUrl(),  mImgClickListener, position, datas.get(position));
             holder.setImage(R.id.item_list_find_dislike, mDislikeClickListener, headCount, datas.get(position));
             holder.setImage(R.id.item_list_find_like, mLikeClickListener, headCount, datas.get(position));
+            holder.setText(R.id.item_list_find_name,datas.get(position).getuName());
     }
 
     @Override

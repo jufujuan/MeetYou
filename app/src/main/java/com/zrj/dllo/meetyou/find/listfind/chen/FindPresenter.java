@@ -46,4 +46,11 @@ public class FindPresenter implements Contract.Presenter {
     public void sendGoodFriendsRequestP(Person person) {
         mModel.sendGoodFriendsRequest(person);
     }
+
+    @Override
+    public List<Person> loadMoreData(Context context, int distance) {
+        return mModel.loadMoreData(context,distance);
+    }
+
+
 }

@@ -40,15 +40,6 @@ public class StaticValues {
      */
     public final static String SP_USEING_ID = "id";
 
-    /**************liteorm*****************/
-    /**
-     * LiteOrm数据库的名字
-     */
-    public static final String LO_DB_NAME = "meetyoulo";
-    /**
-     * LiteOrm喜欢的人的列表的名字
-     */
-    public static final String LO_TABLE_LIKE_NAME = "like";
 
     /**
      * 正在登录的用户出生年份
@@ -68,5 +59,17 @@ public class StaticValues {
      * 正在登录的用户签名
      */
     public final static String SP_USEING_SIGNATURE_COLUMN = "signature";
+
+    /**************liteorm*****************/
+    /**
+     * LiteOrm数据库的名字
+     */
+    public static final String LO_DB_NAME = "meetyoulo";
+    /**
+     * LiteOrm喜欢的人的列表的名字
+     */
+    public static final String LO_TABLE_LIKE_NAME = "like";
+
+
 
 }

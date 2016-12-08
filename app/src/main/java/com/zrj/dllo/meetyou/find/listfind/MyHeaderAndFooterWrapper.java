@@ -1,4 +1,4 @@
-package com.zrj.dllo.meetyou.find.listfind.chen;
+package com.zrj.dllo.meetyou.find.listfind;
 
 import android.support.v4.util.SparseArrayCompat;
 import android.support.v7.widget.GridLayoutManager;
@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 import com.zhy.adapter.recyclerview.utils.WrapperUtils;
+import com.zrj.dllo.meetyou.find.listfind.InnerAdapterAddHead;
 
 /**
  * If there is no bug, then it is created by ChenFengYao on 2016/12/6,

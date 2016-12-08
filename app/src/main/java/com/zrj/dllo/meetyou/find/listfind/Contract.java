@@ -1,10 +1,8 @@
-package com.zrj.dllo.meetyou.find.listfind.chen;
+package com.zrj.dllo.meetyou.find.listfind;
 
 import android.content.Context;
 
 import com.zrj.dllo.meetyou.Person;
-import com.zrj.dllo.meetyou.find.listfind.ListFindBean;
-import com.zrj.dllo.meetyou.find.listfind.ListFindPresenter;
 
 import java.util.List;
 

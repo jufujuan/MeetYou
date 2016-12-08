@@ -2,15 +2,11 @@ package com.zrj.dllo.meetyou.find.listfind;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.View;
 import android.view.ViewGroup;
 
-import com.youth.banner.BannerConfig;
 import com.zrj.dllo.meetyou.Person;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.CommonViewHolder;
-import com.zrj.dllo.meetyou.find.listfind.chen.InnerAdapterAddHead;
 import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemDislikeClickListener;
 import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemImgClickListener;
 import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemLikeClickListener;

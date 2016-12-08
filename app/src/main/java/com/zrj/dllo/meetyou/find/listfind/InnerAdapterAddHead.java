@@ -1,4 +1,4 @@
-package com.zrj.dllo.meetyou.find.listfind.chen;
+package com.zrj.dllo.meetyou.find.listfind;
 
 /**
  * 这是 鞠福娟 创建的哟~

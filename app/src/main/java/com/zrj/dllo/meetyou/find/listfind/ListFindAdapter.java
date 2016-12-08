@@ -1,11 +1,6 @@
-package com.zrj.dllo.meetyou.find.listfind.chen;
+package com.zrj.dllo.meetyou.find.listfind;
 
-import android.support.v7.widget.RecyclerView;
-
-import com.zhy.adapter.recyclerview.wrapper.HeaderAndFooterWrapper;
 import com.zrj.dllo.meetyou.Person;
-import com.zrj.dllo.meetyou.find.listfind.ListFindBean;
-import com.zrj.dllo.meetyou.find.listfind.ListFindRecyclerAdapter;
 import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemDislikeClickListener;
 import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemImgClickListener;
 import com.zrj.dllo.meetyou.myinterface.RecyclerViewItemLikeClickListener;

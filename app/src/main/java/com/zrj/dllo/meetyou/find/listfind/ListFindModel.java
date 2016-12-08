@@ -2,18 +2,13 @@ package com.zrj.dllo.meetyou.find.listfind;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
-import com.litesuits.orm.LiteOrm;
 import com.zrj.dllo.meetyou.Person;
-import com.zrj.dllo.meetyou.R;
-import com.zrj.dllo.meetyou.find.ttfind.ListTTActivity;
+import com.zrj.dllo.meetyou.find.listfind.Contract;
 import com.zrj.dllo.meetyou.tools.DistanceUtils;
 import com.zrj.dllo.meetyou.tools.LiteOrmInstance;
 import com.zrj.dllo.meetyou.tools.LogUtils;
@@ -28,23 +23,21 @@ import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
 
 /**
- * 这是 鞠福娟 创建的哟~
- * on 16/12/1.
+ * If there is no bug, then it is created by ChenFengYao on 2016/12/6,
+ * otherwise, I do not know who create it either.
  */
 
-public class ListFindModel implements ListFindContract.Model {
+public class ListFindModel implements Contract.Model {
+    private List<Person> allDatas = new ArrayList<>();
 
-    private ListFindPresenter mPresenter;
+    private Contract.Presenter mPresenter;
+    private List<Person> mPersons;
+    private int positionLoadMore;
 
-    /**
-     * 把p层放到M层中
-     *
-     * @param presenter
-     */
-    @Override
-    public void setPresenter(ListFindPresenter presenter) {
+    public ListFindModel(Contract.Presenter presenter) {
         mPresenter = presenter;
     }
+
 
     /**
      * 查询bmob数据库的所有数据
@@ -97,7 +90,7 @@ public class ListFindModel implements ListFindContract.Model {
                         String lo = person.getLontitude();
                         String la = person.getLatitude();
 
-                        List<Person> mPersons = new ArrayList<>();
+                        mPersons = new ArrayList<>();
                         for (int i = 0; i < allDatas.size(); i++) {
                             Double loOne = Double.parseDouble(lo);
                             Double laOne = Double.parseDouble(la);
@@ -117,13 +110,19 @@ public class ListFindModel implements ListFindContract.Model {
 
                                 LogUtils.d("距离" + DistanceUtils.getDistance(loOne, laOne, loTwo, laTwo));
                                 if (DistanceUtils.getDistance(loOne, laOne, loTwo, laTwo) < distance) {
-                                    mPersons.add(allDatas.get(i));
+                                    if (mPersons.size()>=10){
+                                        positionLoadMore=i;
+                                        break;
+                                    }else {
+                                        mPersons.add(allDatas.get(i));
+                                    }
                                 }
 
                             }
                         }
                         LogUtils.d("得到的:" + mPersons.size());
-                        mPresenter.sendDatasToView(mPersons, context);
+
+                        mPresenter.onGetDataSuccess(mPersons);
                     }else{
                         Toast.makeText(context, "bmob数据库查询失败"+e.getErrorCode()+e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
@@ -158,6 +157,27 @@ public class ListFindModel implements ListFindContract.Model {
         }
     }
 
+    @Override
+    public List<Person> loadMoreData(Context context,int distance) {
+        List<Person> loadMoreDatas=new ArrayList<>();
+        SharedPreferences sp=context.getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME,Context.MODE_PRIVATE);
+        Double mLa=Double.parseDouble(sp.getString(StaticValues.SP_USEING_LATITUDE_COLUMN,"0"));
+        Double mLo=Double.parseDouble(sp.getString(StaticValues.SP_USEING_LONTITUDE_COLUMN,"0"));
+        for (int i = positionLoadMore+1; i < allDatas.size(); i++) {
+            Double la=Double.parseDouble(allDatas.get(i).getLatitude());
+            Double lo=Double.parseDouble(allDatas.get(i).getLontitude());
+            if (DistanceUtils.getDistance(mLo, mLa, lo, la) <= distance){
+                if (loadMoreDatas.size()>=10){
+                    break;
+                }else {
+                    loadMoreDatas.add(allDatas.get(i));
+                }
+            }
+            positionLoadMore=i;
+        }
+        return loadMoreDatas;
+    }
+
     /**
      * 将喜欢的人数据存储在数据库中的线程
      */
@@ -179,7 +199,6 @@ public class ListFindModel implements ListFindContract.Model {
      * 得到所有的数据集合
      */
     private class QueryAll extends FindListener<Person> {
-        private List<Person> allDatas = new ArrayList<>();
         private String name;
         private Context mContext;
         private int distance;
@@ -210,9 +229,6 @@ public class ListFindModel implements ListFindContract.Model {
             } else {
                 LogUtils.d("查询失败!服务器的问题");
             }
-            //LogUtils.d(e.getMessage() + "," + e.getErrorCode());
-            //setPersons();
-            // mPresenter.setAdpterDatas(mContext);
             /*************在这里得到了所有的数据**************/
             /**
              *  得到的数据进行各种操作放在这里

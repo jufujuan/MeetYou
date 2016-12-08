@@ -4,8 +4,6 @@ package com.zrj.dllo.meetyou;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.View;
@@ -16,7 +14,8 @@ import com.zrj.dllo.meetyou.cons.ConsFragment;
 import com.hyphenate.EMContactListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
-import com.zrj.dllo.meetyou.find.listfind.chen.ListFindFragment;
+import com.zrj.dllo.meetyou.find.listfind.FindPresenter;
+import com.zrj.dllo.meetyou.find.listfind.ListFindFragment;
 import com.zrj.dllo.meetyou.msg.MsgFragment;
 import com.zrj.dllo.meetyou.base.AbsBaseActivity;
 import com.zrj.dllo.meetyou.personal.PersonalFragment;
@@ -117,7 +116,7 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
      */
     private void Change2Meet() {
         ListFindFragment mView=ListFindFragment.newInstance();
-        com.zrj.dllo.meetyou.find.listfind.chen.FindPresenter mPresenter=new com.zrj.dllo.meetyou.find.listfind.chen.FindPresenter(mView);
+        FindPresenter mPresenter=new FindPresenter(mView);
         mView.setPresenter(mPresenter);
 
         android.support.v4.app.FragmentTransaction transaction =  mFragmentManager.beginTransaction();

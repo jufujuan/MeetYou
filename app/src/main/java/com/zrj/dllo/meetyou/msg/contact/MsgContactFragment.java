@@ -100,18 +100,18 @@ public class MsgContactFragment extends AbsBaseFragment {
 
 
                     //
-//                    mHandler.post(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            mData = getData(mUserNames.toArray(new String[mUserNames.size()]));
-//                            Collections.sort(mData, new PinyinComparator());
-//                            LinearLayoutManager manager = new LinearLayoutManager(getActivity());
-//
-//                            mContactRecyclerAdapter.setContactBeen(mData);
-//                            msgContactRv.setAdapter(mContactRecyclerAdapter);
-//                            msgContactRv.setLayoutManager(manager);
-//                        }
-//                    });
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mData = getData(mUserNames.toArray(new String[mUserNames.size()]));
+                            Collections.sort(mData, new PinyinComparator());
+                            LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+
+                            mContactRecyclerAdapter.setContactBeen(mData);
+                            msgContactRv.setAdapter(mContactRecyclerAdapter);
+                            msgContactRv.setLayoutManager(manager);
+                        }
+                    });
                 } catch (HyphenateException e) {
                     e.printStackTrace();
                 }
@@ -141,7 +141,7 @@ public class MsgContactFragment extends AbsBaseFragment {
             String Fpinyin = pinyin.substring(0, 1).toUpperCase();
 
             ContactBean contactBean = new ContactBean();
-            contactBean.setRealName(data[i]);
+            contactBean.setName(data[i]);
             contactBean.setPinYin(pinyin);
             // 正则表达式，判断首字母是否是英文字母
             if (Fpinyin.matches("[A-Z]")) {

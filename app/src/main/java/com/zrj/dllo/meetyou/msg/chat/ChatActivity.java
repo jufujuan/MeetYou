@@ -1,9 +1,7 @@
 package com.zrj.dllo.meetyou.msg.chat;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.location.OnNmeaMessageListener;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Vibrator;
@@ -19,17 +17,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hyphenate.EMCallBack;
-import com.hyphenate.EMContactListener;
 import com.hyphenate.EMMessageListener;
-import com.hyphenate.chat.EMChatManager;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
-import com.hyphenate.exceptions.HyphenateException;
-import com.zrj.dllo.meetyou.Person;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.AbsBaseActivity;
-import com.zrj.dllo.meetyou.tools.LiteOrmInstance;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +30,7 @@ import java.util.List;
 /**
  * Created by REN - the most cool programmer all over the world
  * on 16/12/1.
+ * 聊天页面
  */
 public class ChatActivity extends AbsBaseActivity implements View.OnClickListener {
 
@@ -72,12 +66,13 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
 
     @Override
     protected void initDatas() {
+        // 获取传过来的用户名
         Intent intent = getIntent();
         mUserName = intent.getStringExtra("userName");
         msgChatNameTv.setText(mUserName);
 
         mAdapter = new MsgChatAdapter(this);
-
+        // 根据用户名获取聊天记录
         mConversation = EMClient.getInstance().chatManager().getConversation(mUserName);
         mMessages = new ArrayList<>();
 
@@ -98,7 +93,7 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
 
 
         // 震动初始化
-        vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
 
         // 注册消息监听
@@ -120,8 +115,8 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
 
                     }
                 }
-                long [] pattern = {100,400,100,400};
-                vibrator.vibrate(pattern,-1);
+                long[] pattern = {100, 400, 100, 400};
+                vibrator.vibrate(pattern, -1);
 
             }
 
@@ -149,43 +144,6 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
         EMClient.getInstance().chatManager().addMessageListener(mMsgListener);
 
 
-//        EMClient.getInstance().contactManager().setContactListener(new EMContactListener() {
-//
-//            @Override
-//            public void onContactAgreed(String username) {
-//                //好友请求被同意
-//            }
-//
-//            @Override
-//            public void onContactRefused(String username) {
-//                //好友请求被拒绝
-//            }
-//
-//            @Override
-//            public void onContactInvited(String username, String reason) {
-//                //收到好友邀请
-//                if (LiteOrmInstance.getInstance().getQueryByWhere(Person.class, "uName", new String[]{username}) != null) {
-//                    try {
-//                        EMClient.getInstance().contactManager().acceptInvitation(username);
-//                    } catch (HyphenateException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onContactDeleted(String username) {
-//                //被删除时回调此方法
-//            }
-//
-//
-//            @Override
-//            public void onContactAdded(String username) {
-//                //增加了联系人时回调此方法
-//                Toast.makeText(ChatActivity.this, "有新朋友啦", Toast.LENGTH_SHORT).show();
-//            }
-//        });
     }
 
     @Override
@@ -198,11 +156,12 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
                 String content = msgChatEt.getText().toString().trim();
                 if (!TextUtils.isEmpty(content)) {
                     msgChatEt.setText("");
+                    // 创建一个消息
                     EMMessage message = EMMessage.createTxtSendMessage(content, mUserName);
-                    mMessages.add(message);
-                    
-                    mAdapter.setEMMessages(mMessages);
 
+                    mMessages.add(message);
+
+                    mAdapter.setEMMessages(mMessages);
                     msgChatRv.smoothScrollToPosition(mMessages.size());
                     // 调用发送消息的方法
                     EMClient.getInstance().chatManager().sendMessage(message);
@@ -210,14 +169,13 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
                     message.setMessageStatusCallback(new EMCallBack() {
                         @Override
                         public void onSuccess() {
-                            // 消息发送成功，打印下日志，正常操作应该去刷新ui
-                            Log.i("lzan13", "send message on success");
+                            // 消息发送成功
                         }
 
                         @Override
                         public void onError(int i, String s) {
-                            // 消息发送失败，打印下失败的信息，正常操作应该去刷新ui
-                            Log.i("lzan13", "send message on error " + i + " - " + s);
+                            // 消息发送失败
+                            Toast.makeText(ChatActivity.this, "发送失败, 请重新发送", Toast.LENGTH_SHORT).show();
                         }
 
                         @Override

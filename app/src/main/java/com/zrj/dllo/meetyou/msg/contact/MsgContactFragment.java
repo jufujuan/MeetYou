@@ -5,24 +5,20 @@ import android.os.Looper;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
-import com.zrj.dllo.meetyou.Person;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.AbsBaseFragment;
+import com.zrj.dllo.meetyou.entity.ContactBean;
+import com.zrj.dllo.meetyou.tools.PinYinUtils;
+import com.zrj.dllo.meetyou.tools.PinyinComparator;
+import com.zrj.dllo.meetyou.widget.SideBar;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FindListener;
 
 /**
  * Created by REN - the most cool programmer all over the world
@@ -37,8 +33,6 @@ public class MsgContactFragment extends AbsBaseFragment {
     private Handler mHandler;
     private List<String> mUserNames;
     private List<ContactBean> mData;
-    private List<String> mRealNames;
-    private ContactBean mContactBean;
 
 
     @Override
@@ -65,41 +59,6 @@ public class MsgContactFragment extends AbsBaseFragment {
                 try {
                     mUserNames = EMClient.getInstance().contactManager().getAllContactsFromServer();
 
-
-
-
-                    //
-//                    final String[] names = mUserNames.toArray(new String[mUserNames.size()]);
-//                    BmobQuery<Person> bmobQuery = new BmobQuery<Person>();
-//                    bmobQuery.addWhereContainedIn("uName", Arrays.asList(names));
-//                    bmobQuery.findObjects(new FindListener<Person>() {
-//                        @Override
-//                        public void done(List<Person> list, BmobException e) {
-//                            for (int i = 0; i < list.size(); i++) {
-//                                names[i] = list.get(i).getRealName();
-//                            }
-//                            mHandler.post(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    Log.d("MsgContactFragment", "names:" + names);
-//
-//                                    mData = getData(names);
-//                                    Collections.sort(mData, new PinyinComparator());
-//                                    LinearLayoutManager manager = new LinearLayoutManager(getActivity());
-//
-//                                    mContactRecyclerAdapter.setContactBeen(mData);
-//                                    msgContactRv.setAdapter(mContactRecyclerAdapter);
-//                                    msgContactRv.setLayoutManager(manager);
-//                                }
-//                            });
-//                        }
-//                    });
-
-
-
-
-
-                    //
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -125,7 +84,7 @@ public class MsgContactFragment extends AbsBaseFragment {
                 Log.d("MsgContactFragment", "mContactRecyclerAdapter:" + mContactRecyclerAdapter);
                 int position = mContactRecyclerAdapter.getPositionForSelection(s.charAt(0));
                 if (position != -1) {
-                    // 将选中字母对应的item滑到最上,不知道是不是这个方法
+                    // 将选中字母对应的item滑到最上
                     msgContactRv.scrollToPosition(position);
 
                 }
@@ -172,7 +131,6 @@ public class MsgContactFragment extends AbsBaseFragment {
                             Collections.sort(mData, new PinyinComparator());
 
                             mContactRecyclerAdapter.setContactBeen(mData);
-//                            msgContactRv.setAdapter(mContactRecyclerAdapter);
                         }
                     });
                 } catch (HyphenateException e) {

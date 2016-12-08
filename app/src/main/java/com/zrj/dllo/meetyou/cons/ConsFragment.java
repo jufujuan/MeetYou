@@ -14,11 +14,13 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.AbsBaseFragment;
 import com.zrj.dllo.meetyou.editor.EditorActivity;
 import com.zrj.dllo.meetyou.eventbus.EventBusBean;
 import com.zrj.dllo.meetyou.tools.StaticValues;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -274,85 +276,63 @@ public class ConsFragment extends AbsBaseFragment implements View.OnClickListene
     @Subscribe
     public void getLoginEvent(EventBusBean eventBusBean) {
 
-        ConsAsync consAsync = new ConsAsync();
-        consAsync.execute();
+        mMonth = mPreferences.getInt(StaticValues.SP_USEING_MOUTH_COLUMN, 12);
+        mDay = mPreferences.getInt(StaticValues.SP_USEING_DAY_COLUMN, 15);
+        mCons = getConstellation(mMonth, mDay);
+        mTextViewCons.setText(mCons + ":" + mHeCons);
+        Log.d("ConsFragment", "GAIBIAN");
+        Toast.makeText(context, "更新我的星座成功", Toast.LENGTH_SHORT).show();
 
-    }
+        switch (mCons) {
+            case "水瓶":
+                Bitmap bitmapAquarius = BitmapFactory.decodeResource(getResources(), R.mipmap.shuiping1);
+                mImageViewMe.setImageBitmap(bitmapAquarius);
+                break;
+            case "双鱼":
+                Bitmap bitmapPisces = BitmapFactory.decodeResource(getResources(), R.mipmap.shuangyu1);
+                mImageViewMe.setImageBitmap(bitmapPisces);
+                break;
+            case "白羊":
+                Bitmap bitmapAries = BitmapFactory.decodeResource(getResources(), R.mipmap.baiyang1);
+                mImageViewMe.setImageBitmap(bitmapAries);
+                break;
+            case "金牛":
+                Bitmap bitmapTaurus = BitmapFactory.decodeResource(getResources(), R.mipmap.jinniu1);
+                mImageViewMe.setImageBitmap(bitmapTaurus);
+                break;
+            case "双子":
+                Bitmap bitmapGemini = BitmapFactory.decodeResource(getResources(), R.mipmap.shuangzi1);
+                mImageViewMe.setImageBitmap(bitmapGemini);
+                break;
+            case "巨蟹":
+                Bitmap bitmapCancer = BitmapFactory.decodeResource(getResources(), R.mipmap.juxie1);
+                mImageViewMe.setImageBitmap(bitmapCancer);
+                break;
+            case "狮子":
+                Bitmap bitmapLeo = BitmapFactory.decodeResource(getResources(), R.mipmap.shizi1);
+                mImageViewMe.setImageBitmap(bitmapLeo);
+                break;
+            case "处女":
+                Bitmap bitmapVirgo = BitmapFactory.decodeResource(getResources(), R.mipmap.chunv1);
+                mImageViewMe.setImageBitmap(bitmapVirgo);
+                break;
+            case "天秤":
+                Bitmap bitmapLibra = BitmapFactory.decodeResource(getResources(), R.mipmap.tiancheng1);
+                mImageViewMe.setImageBitmap(bitmapLibra);
+                break;
+            case "天蝎":
+                Bitmap bitmapScorpio = BitmapFactory.decodeResource(getResources(), R.mipmap.tianxie1);
+                mImageViewMe.setImageBitmap(bitmapScorpio);
+                break;
+            case "射手":
+                Bitmap bitmapSagittarius = BitmapFactory.decodeResource(getResources(), R.mipmap.sheshou1);
+                mImageViewMe.setImageBitmap(bitmapSagittarius);
+                break;
+            case "摩羯":
+                Bitmap bitmapCapricorn = BitmapFactory.decodeResource(getResources(), R.mipmap.mojie1);
+                mImageViewMe.setImageBitmap(bitmapCapricorn);
+                break;
 
-
-    class ConsAsync extends AsyncTask<String, String, String> {
-        @Override
-        protected String doInBackground(String... params) {
-//            try {
-//                Thread.sleep(500);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-            mMonth = mPreferences.getInt(StaticValues.SP_USEING_MOUTH_COLUMN, 12);
-            mDay = mPreferences.getInt(StaticValues.SP_USEING_DAY_COLUMN, 15);
-            mCons = getConstellation(mMonth, mDay);
-            mTextViewCons.setText(mCons + ":" + mHeCons);
-            Log.d("ConsFragment", "GAIBIAN");
-            Toast.makeText(context, "更新我的星座成功", Toast.LENGTH_SHORT).show();
-
-            switch (mCons) {
-                case "水瓶":
-                    Bitmap bitmapAquarius = BitmapFactory.decodeResource(getResources(), R.mipmap.shuiping1);
-                    mImageViewMe.setImageBitmap(bitmapAquarius);
-                    break;
-                case "双鱼":
-                    Bitmap bitmapPisces = BitmapFactory.decodeResource(getResources(), R.mipmap.shuangyu1);
-                    mImageViewMe.setImageBitmap(bitmapPisces);
-                    break;
-                case "白羊":
-                    Bitmap bitmapAries = BitmapFactory.decodeResource(getResources(), R.mipmap.baiyang1);
-                    mImageViewMe.setImageBitmap(bitmapAries);
-                    break;
-                case "金牛":
-                    Bitmap bitmapTaurus = BitmapFactory.decodeResource(getResources(), R.mipmap.jinniu1);
-                    mImageViewMe.setImageBitmap(bitmapTaurus);
-                    break;
-                case "双子":
-                    Bitmap bitmapGemini = BitmapFactory.decodeResource(getResources(), R.mipmap.shuangzi1);
-                    mImageViewMe.setImageBitmap(bitmapGemini);
-                    break;
-                case "巨蟹":
-                    Bitmap bitmapCancer = BitmapFactory.decodeResource(getResources(), R.mipmap.juxie1);
-                    mImageViewMe.setImageBitmap(bitmapCancer);
-                    break;
-                case "狮子":
-                    Bitmap bitmapLeo = BitmapFactory.decodeResource(getResources(), R.mipmap.shizi1);
-                    mImageViewMe.setImageBitmap(bitmapLeo);
-                    break;
-                case "处女":
-                    Bitmap bitmapVirgo = BitmapFactory.decodeResource(getResources(), R.mipmap.chunv1);
-                    mImageViewMe.setImageBitmap(bitmapVirgo);
-                    break;
-                case "天秤":
-                    Bitmap bitmapLibra = BitmapFactory.decodeResource(getResources(), R.mipmap.tiancheng1);
-                    mImageViewMe.setImageBitmap(bitmapLibra);
-                    break;
-                case "天蝎":
-                    Bitmap bitmapScorpio = BitmapFactory.decodeResource(getResources(), R.mipmap.tianxie1);
-                    mImageViewMe.setImageBitmap(bitmapScorpio);
-                    break;
-                case "射手":
-                    Bitmap bitmapSagittarius = BitmapFactory.decodeResource(getResources(), R.mipmap.sheshou1);
-                    mImageViewMe.setImageBitmap(bitmapSagittarius);
-                    break;
-                case "摩羯":
-                    Bitmap bitmapCapricorn = BitmapFactory.decodeResource(getResources(), R.mipmap.mojie1);
-                    mImageViewMe.setImageBitmap(bitmapCapricorn);
-                    break;
-            }
         }
     }
 }

@@ -4,6 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.location.OnNmeaMessageListener;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Vibrator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -47,7 +50,9 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
     private MsgChatAdapter mAdapter;
     private EMConversation mConversation;
     private List<EMMessage> mMessageList;
-    //    private NewMessageBroadcastReceiver msgReceiver;
+    private Vibrator vibrator;
+    private EMMessageListener mMsgListener;
+    private Handler mHandler = new Handler(Looper.getMainLooper());
 
     @Override
     protected int getLayout() {
@@ -92,23 +97,31 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
         }
 
 
+        // 震动初始化
+        vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
 
 
-        EMMessageListener msgListener = new EMMessageListener() {
+        // 注册消息监听
+        mMsgListener = new EMMessageListener() {
 
             @Override
             public void onMessageReceived(List<EMMessage> messages) {
                 //收到消息
-//                mMessages.addAll(messages);
-//                mAdapter.setEMMessages(mMessages);
-                for (EMMessage message : messages) {
+                for (final EMMessage message : messages) {
                     if (mUserName.equals(message.getFrom()) || mUserName.equals(message.getTo())) {
-                        mMessages.add(message);
-                        mAdapter.setEMMessages(mMessages);
-                        msgChatRv.smoothScrollToPosition(mMessages.size());
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                mMessages.add(message);
+                                mAdapter.setEMMessages(mMessages);
+                                msgChatRv.smoothScrollToPosition(mMessages.size());
+                            }
+                        });
+
                     }
                 }
-                msgChatRv.smoothScrollToPosition(mMessageList.size());
+                long [] pattern = {100,400,100,400};
+                vibrator.vibrate(pattern,-1);
 
             }
 
@@ -133,7 +146,7 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
             }
         };
 
-        EMClient.getInstance().chatManager().addMessageListener(msgListener);
+        EMClient.getInstance().chatManager().addMessageListener(mMsgListener);
 
 
 //        EMClient.getInstance().contactManager().setContactListener(new EMContactListener() {
@@ -187,7 +200,7 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
                     msgChatEt.setText("");
                     EMMessage message = EMMessage.createTxtSendMessage(content, mUserName);
                     mMessages.add(message);
-                    Log.d("ChatActivity", "mMessages:" + mMessages);
+                    
                     mAdapter.setEMMessages(mMessages);
 
                     msgChatRv.smoothScrollToPosition(mMessages.size());
@@ -221,5 +234,12 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
     public void onBackPressed() {
         super.onBackPressed();
         mConversation.markAllMessagesAsRead();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EMClient.getInstance().chatManager().removeMessageListener(mMsgListener);
+        vibrator.cancel();
     }
 }

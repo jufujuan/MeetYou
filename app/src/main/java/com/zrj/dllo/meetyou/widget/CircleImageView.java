@@ -87,9 +87,14 @@ public class CircleImageView extends ImageView {
     private void drawCircleImg(Canvas canvas, float r, Bitmap bitmap) {
         Paint mPaint = new Paint();
         mPaint.setAntiAlias(true);
+        BitmapShader shader;
         mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        BitmapShader shader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
-        mPaint.setShader(shader);
+        if (bitmap==null){
+
+        }else {
+            shader =  new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+            mPaint.setShader(shader);
+        }
         canvas.drawCircle(mWidth / 2, mHeight / 2, r, mPaint);
     }
 

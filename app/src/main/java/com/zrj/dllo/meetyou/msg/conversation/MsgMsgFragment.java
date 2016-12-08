@@ -25,13 +25,14 @@ import java.util.Map;
 /**
  * Created by REN - the most cool programmer all over the world
  * on 16/11/26.
+ * 会话页面
  */
 public class MsgMsgFragment extends AbsBaseFragment {
 
     private RecyclerView msgMsgRv;
     private List<EMConversation> mConversations;
     private MsgMsgAdapter mAdapter;
-    private Vibrator vibrator;
+    private Vibrator vibrator; // 震动
     private Handler mHandler = new Handler(Looper.getMainLooper());
     private EMMessageListener mMsgListener;
 
@@ -74,8 +75,8 @@ public class MsgMsgFragment extends AbsBaseFragment {
                         mAdapter.setEMConversations(mConversations);
                     }
                 });
-                long [] pattern = {100,400,100,400};
-                vibrator.vibrate(pattern,-1);
+                long [] pattern = {100,400,100,400}; // 震动的持续时间和间隔
+                vibrator.vibrate(pattern,-1); // 震动次数-1 = 一次
             }
 
             @Override

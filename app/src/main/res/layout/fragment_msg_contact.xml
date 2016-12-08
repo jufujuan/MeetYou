@@ -21,7 +21,7 @@
         android:textSize="30sp"
         android:visibility="invisible" />
 
-    <com.zrj.dllo.meetyou.msg.contact.SideBar
+    <com.zrj.dllo.meetyou.widget.SideBar
         android:id="@+id/contact_sidebar"
         android:layout_width="20dp"
         android:layout_height="wrap_content"

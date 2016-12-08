@@ -23,6 +23,7 @@ import org.greenrobot.eventbus.EventBus;
 /**
  * Created by REN - the most cool programmer all over the world
  * on 16/11/26.
+ * 消息页面
  */
 
 public class MsgFragment extends AbsBaseFragment implements View.OnClickListener {
@@ -64,7 +65,6 @@ public class MsgFragment extends AbsBaseFragment implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-//        mFragmentManager = getFragmentManager();
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         switch (v.getId()) {
             case R.id.msg_msg_btn:

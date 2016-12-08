@@ -1,10 +1,13 @@
-package com.zrj.dllo.meetyou.msg.contact;
+package com.zrj.dllo.meetyou.tools;
+
+import com.zrj.dllo.meetyou.entity.ContactBean;
 
 import java.util.Comparator;
 
 /**
  * Created by REN - the most cool programmer all over the world
  * on 16/11/26.
+ * 根据拼音排序
  */
 
 public class PinyinComparator implements Comparator<ContactBean> {

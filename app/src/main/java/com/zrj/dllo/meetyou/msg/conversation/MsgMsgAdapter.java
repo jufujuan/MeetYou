@@ -30,6 +30,7 @@ import cn.bmob.v3.listener.QueryListener;
 /**
  * Created by REN - the most cool programmer all over the world
  * on 16/11/28.
+ * 会话页面的适配器
  */
 
 public class MsgMsgAdapter extends RecyclerView.Adapter<CommonViewHolder> {
@@ -66,9 +67,8 @@ public class MsgMsgAdapter extends RecyclerView.Adapter<CommonViewHolder> {
                     String realName = list.get(0).getRealName();
                     if (realName == null) {
                         realName = userName;
-//                        holder.setText(R.id.conversation_name_tv, realName);
                     }
-                        holder.setText(R.id.conversation_name_tv, realName);
+                    holder.setText(R.id.conversation_name_tv, realName);
 
                     // 设置头像
                     Glide.with(mContext).load(list.get(0).getUserImgUrl()).into((ImageView) holder.getView(R.id.conversation_avatar));
@@ -98,16 +98,6 @@ public class MsgMsgAdapter extends RecyclerView.Adapter<CommonViewHolder> {
                 holder.setText(R.id.conversation_count_tv, String.valueOf(mEMConversations.get(position).getUnreadMsgCount()));
             }
         }
-        // bmob查询头像
-//        bmobQuery.addWhereEqualTo("uName", userName);
-//        bmobQuery.findObjects(new FindListener<Person>() {
-//            @Override
-//            public void done(List<Person> list, BmobException e) {
-//                if (e == null) {
-//                    Glide.with(mContext).load(list.get(0).getUserImgUrl()).into((ImageView) holder.getView(R.id.conversation_avatar));
-//                }
-//            }
-//        });
 
         // 点击item进入聊天页面
         holder.setItemClick(new View.OnClickListener() {
@@ -127,20 +117,25 @@ public class MsgMsgAdapter extends RecyclerView.Adapter<CommonViewHolder> {
         return mEMConversations == null ? 0 : mEMConversations.size();
     }
 
-    private String getMessage(EMMessage message){
+    /**
+     * 根据消息种类解析消息
+     * @param message 发送或收到的消息
+     * @return
+     */
+    private String getMessage(EMMessage message) {
 
         String str = "";
 
-        switch(message.getType()){
+        switch (message.getType()) {
 
             //图片消息
-            case IMAGE:{
+            case IMAGE: {
                 EMImageMessageBody imageBody = (EMImageMessageBody) message.getBody();
                 str = "[picture]" + imageBody.getFileName();
                 break;
             }
 
-            case TXT:{
+            case TXT: {
                 EMTextMessageBody txtBody = (EMTextMessageBody) message.getBody();
                 str = txtBody.getMessage();
 

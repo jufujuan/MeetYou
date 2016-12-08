@@ -230,7 +230,7 @@ public class ConsFragment extends AbsBaseFragment implements View.OnClickListene
         //设置contentView
         View contentView = LayoutInflater.from(context).inflate(R.layout.popuplayout, null);
         mMPopWindow = new PopupWindow(contentView,
-                500, 450, true);
+                1300, 900, true);
         mMPopWindow.setContentView(contentView);
         //设置各个控件的点击响应
         TextView aquariusTv = (TextView) contentView.findViewById(R.id.pop_aquarius);
@@ -263,7 +263,7 @@ public class ConsFragment extends AbsBaseFragment implements View.OnClickListene
 
         //显示PopupWindow
         View rootview = LayoutInflater.from(context).inflate(R.layout.fragment_cons, null);
-        mMPopWindow.showAtLocation(rootview, Gravity.CENTER_HORIZONTAL, 150, -80);
+        mMPopWindow.showAtLocation(rootview, Gravity.START, 150, -230);
     }
 
     public static String getConstellation(int month, int day) {

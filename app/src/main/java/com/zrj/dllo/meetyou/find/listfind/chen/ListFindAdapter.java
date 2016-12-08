@@ -51,4 +51,12 @@ public class ListFindAdapter extends MyHeaderAndFooterWrapper {
         notifyItemRemoved(pos + getHeadersCount());
         //notifyDataSetChanged();
     }
+    /**
+     * 插入一条数据
+     */
+    public void insertData(List<Person> data,int insertPosition){
+        ListFindRecyclerAdapter innerAdapter = (ListFindRecyclerAdapter) getInnerAdapter();
+        innerAdapter.insetData(data);
+        notifyItemInserted(insertPosition);
+    }
 }

@@ -55,6 +55,11 @@ public interface Contract {
          */
         void sendGoodFriendsRequestP(Person person);
 
+        /**
+         * 加载更多
+         */
+        List<Person> loadMoreData(Context context,int distance);
+
     }
 
     interface Model{
@@ -79,6 +84,10 @@ public interface Contract {
          * 发送好友请求
          */
         void sendGoodFriendsRequest(Person person);
+        /**
+         * 加载更多
+         */
+        List<Person> loadMoreData(Context context,int distance);
 
     }
 }

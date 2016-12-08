@@ -13,6 +13,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.zrj.dllo.meetyou.MainActivity;
 import com.zrj.dllo.meetyou.Person;
 import com.zrj.dllo.meetyou.R;
@@ -105,9 +108,28 @@ public class FindFragment extends AbsBaseFragment implements FindContract.View, 
     @Override
     public void showSweepView() {
         Bitmap bgBitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.find_bg_img);
-        Bitmap userBimap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.find_user_img2);
+        final Bitmap userBimap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.find_user_img2);
         mSweepImageView.setImageBitmap(bgBitmap);
-        mCircleImageView.setImageBitmap(userBimap);
+        SharedPreferences sharedPreferences=context.getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME,Context.MODE_PRIVATE);
+        String url=sharedPreferences.getString(StaticValues.SP_USEING_IMG_URL_COLUMN,"--失败--");
+        if ("--失败--".equals(url)){
+            LogUtils.d("头像获取失败!");
+            mCircleImageView.setImageBitmap(userBimap);
+        }else {
+            LogUtils.d("头像获取成功!");
+            Glide.with(context).load(url).asBitmap().into(new SimpleTarget<Bitmap>() {
+                @Override
+                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                    if (resource==null){
+                        LogUtils.d("头像获取失败");
+                        mCircleImageView.setImageBitmap(userBimap);
+                    }else {
+                        LogUtils.d("头像获取成功!");
+                        mCircleImageView.setImageBitmap(resource);
+                    }
+                }
+            });
+        }
     }
 
     /**

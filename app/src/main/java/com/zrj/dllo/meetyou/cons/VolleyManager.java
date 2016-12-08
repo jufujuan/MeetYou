@@ -5,10 +5,11 @@ package com.zrj.dllo.meetyou.cons;
  * otherwise, I do not know who create it either.
  */
 
-public class VolleyManager extends NetManager{
-    public static VolleyManager getInstance(){
+public class VolleyManager extends NetManager {
+    public static VolleyManager getInstance() {
         return new VolleyManager();
     }
+
     @Override
     protected <Bean> void get(String url, Class<Bean> clazz, ResponseCallBack<Bean> responseCallBack) {
 

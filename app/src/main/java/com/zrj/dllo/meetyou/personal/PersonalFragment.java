@@ -52,25 +52,8 @@ public class PersonalFragment extends AbsBaseFragment implements View.OnClickLis
     private TextView mTextViewEdtor;
     private String mImgUrl;
     private String mUserName;
+    private SharedPreferences mPreferences;
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        SharedPreferences preferences = context.getSharedPreferences("userMessage", Activity.MODE_PRIVATE);
-        mUserName = preferences.getString("userName", "");
-        mImgUrl = preferences.getString(StaticValues.SP_USEING_IMG_URL_COLUMN, "4869");
-
-        EventBus.getDefault().register(this);
-
-        mRes = getResources();
-        mBmp = BitmapFactory.decodeResource(mRes, R.mipmap.default_head);
-
-        if (!mImgUrl.equals("4869")) {
-            ImgAsync imgAsync = new ImgAsync();
-            imgAsync.execute();
-            Glide.with(this).load(mImgUrl).into(mImageViewLogin);
-        }
-    }
 
     /**
      * 绑定布局
@@ -104,6 +87,24 @@ public class PersonalFragment extends AbsBaseFragment implements View.OnClickLis
      */
     @Override
     protected void initDatas() {
+        SharedPreferences preferences = context.getSharedPreferences("userMessage", Activity.MODE_PRIVATE);
+        mUserName = preferences.getString("userName", "");
+        mImgUrl = preferences.getString(StaticValues.SP_USEING_IMG_URL_COLUMN, "4869");
+        mTextViewUsername.setText(mUserName);
+        Log.d("5566", mImgUrl);
+
+        EventBus.getDefault().register(this);
+
+        mRes = getResources();
+        mBmp = BitmapFactory.decodeResource(mRes, R.mipmap.default_head);
+
+        Log.d("hjhjhj", "NIHAO");
+
+        if (!mImgUrl.equals("4869")) {
+            ImgAsync imgAsync = new ImgAsync();
+            imgAsync.execute();
+            Glide.with(this).load(mImgUrl).into(mImageViewLogin);
+        }
     }
 
     /**
@@ -124,8 +125,8 @@ public class PersonalFragment extends AbsBaseFragment implements View.OnClickLis
                 break;
             case R.id.personal_esc_login_rl:
                 logOut();
-                SharedPreferences preferences = context.getSharedPreferences("userMessage", Activity.MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
+                mPreferences = context.getSharedPreferences("userMessage", Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor = mPreferences.edit();
                 editor.clear();
                 Intent intent3 = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent3);
@@ -137,6 +138,7 @@ public class PersonalFragment extends AbsBaseFragment implements View.OnClickLis
             case R.id.personal_editor_tv:
                 Intent intent2 = new Intent(getActivity(), EditorActivity.class);
                 startActivity(intent2);
+                getActivity().finish();
                 break;
         }
     }
@@ -145,19 +147,33 @@ public class PersonalFragment extends AbsBaseFragment implements View.OnClickLis
     @Subscribe
     public void getLoginEvent(EventBusBean eventBusBean) {
 
-        mBmp = BitmapFactory.decodeResource(mRes, R.mipmap.default_head);
-        //TODO Handler目前这种写法 可能会导致短期的内存泄露
-        //后期需要修改
-        BitmapBlurUtils.addTask(mBmp, new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                Drawable drawable = (Drawable) msg.obj;
-                pullImg.setImageDrawable(drawable);
-            }
-        });
-        mImageViewLogin.setImageBitmap(mBmp);
-        mTextViewUsername.setText(eventBusBean.getUsername());
+        Log.d("nihaoma", "hehe");
+
+        mImgUrl = mPreferences.getString(StaticValues.SP_USEING_IMG_URL_COLUMN, "888888");
+        Log.d("nihaoma", mImgUrl);
+        if (!mImgUrl.equals("888888")) {
+            Glide.with(this).load(mImgUrl).into(mImageViewLogin);
+            ImgAsync imgAsync = new ImgAsync();
+            imgAsync.execute();
+        } else {
+            mBmp = BitmapFactory.decodeResource(mRes, R.mipmap.default_head);
+            //TODO Handler目前这种写法 可能会导致短期的内存泄露
+            //后期需要修改
+            BitmapBlurUtils.addTask(mBmp, new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    super.handleMessage(msg);
+                    Drawable drawable = (Drawable) msg.obj;
+                    pullImg.setImageDrawable(drawable);
+                }
+            });
+            mImageViewLogin.setImageBitmap(mBmp);
+        }
+
+
+//       mPreferences.edit().putString(StaticValues.SP_USEING_NAME_COLUMN,eventBusBean.getUsername()).commit();
+        mTextViewUsername.setText(mPreferences.getString(StaticValues.SP_USEING_NAME_COLUMN, "NI"));
+
     }
 
     /**
@@ -187,7 +203,6 @@ public class PersonalFragment extends AbsBaseFragment implements View.OnClickLis
         });
     }
 
-
     class ImgAsync extends AsyncTask<String, String, Bitmap> {
         @Override
         protected Bitmap doInBackground(String... params) {
@@ -210,7 +225,6 @@ public class PersonalFragment extends AbsBaseFragment implements View.OnClickLis
                         }
                     });
             mImageViewLogin.setImageBitmap(mBmp);
-            mTextViewUsername.setText(mUserName);
         }
     }
 }

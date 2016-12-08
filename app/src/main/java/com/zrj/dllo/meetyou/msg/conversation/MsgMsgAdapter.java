@@ -64,11 +64,12 @@ public class MsgMsgAdapter extends RecyclerView.Adapter<CommonViewHolder> {
             public void done(List<Person> list, BmobException e) {
                 if (e == null) {
                     String realName = list.get(0).getRealName();
-                    if (realName != null) {
-                        holder.setText(R.id.conversation_name_tv, realName);
-                    } else {
-                        holder.setText(R.id.conversation_name_tv, userName);
+                    if (realName == null) {
+                        realName = userName;
+//                        holder.setText(R.id.conversation_name_tv, realName);
                     }
+                        holder.setText(R.id.conversation_name_tv, realName);
+
                     // 设置头像
                     Glide.with(mContext).load(list.get(0).getUserImgUrl()).into((ImageView) holder.getView(R.id.conversation_avatar));
                 }

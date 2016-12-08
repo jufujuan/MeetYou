@@ -1,4 +1,4 @@
-package com.zrj.dllo.meetyou.eventbus;
+package com.zrj.dllo.meetyou.entity;
 
 /**
  * Created by ${ZhaoXuancheng} on 16/11/26.

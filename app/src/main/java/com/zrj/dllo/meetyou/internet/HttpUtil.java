@@ -1,6 +1,6 @@
 package com.zrj.dllo.meetyou.internet;
 
-import com.zrj.dllo.meetyou.cons.ConsBean;
+import com.zrj.dllo.meetyou.entity.ConsBean;
 
 /**
  * Created by ${ZhaoXuancheng} on 16/12/6.

@@ -1,4 +1,4 @@
-package com.zrj.dllo.meetyou.cons;
+package com.zrj.dllo.meetyou.entity;
 
 import java.util.List;
 

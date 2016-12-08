@@ -138,7 +138,7 @@ public class PersonalFragment extends AbsBaseFragment implements View.OnClickLis
             case R.id.personal_editor_tv:
                 Intent intent2 = new Intent(getActivity(), EditorActivity.class);
                 startActivity(intent2);
-                getActivity().finish();
+
                 break;
         }
     }
@@ -170,10 +170,8 @@ public class PersonalFragment extends AbsBaseFragment implements View.OnClickLis
             mImageViewLogin.setImageBitmap(mBmp);
         }
 
-
 //       mPreferences.edit().putString(StaticValues.SP_USEING_NAME_COLUMN,eventBusBean.getUsername()).commit();
         mTextViewUsername.setText(mPreferences.getString(StaticValues.SP_USEING_NAME_COLUMN, "NI"));
-
     }
 
     /**

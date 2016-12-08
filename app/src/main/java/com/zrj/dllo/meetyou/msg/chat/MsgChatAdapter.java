@@ -22,6 +22,7 @@ import cn.bmob.v3.listener.FindListener;
 /**
  * Created by REN - the most cool programmer all over the world
  * on 16/12/1.
+ * 聊天页面的适配器
  */
 
 public class MsgChatAdapter extends RecyclerView.Adapter<CommonViewHolder> {
@@ -29,9 +30,8 @@ public class MsgChatAdapter extends RecyclerView.Adapter<CommonViewHolder> {
     private List<EMMessage> mEMMessages;
     private Context mContext;
 
-    private static final int CHAT_TYPE_RECEIVE = 0;
-    private static final int CHAT_TYPE_SEND = 1;
-    private static final int CHAT_TYPE_TIME = 2;
+    private static final int CHAT_TYPE_RECEIVE = 0; // 接收消息的布局
+    private static final int CHAT_TYPE_SEND = 1; // 发送消息的布局
 
     public MsgChatAdapter(Context context) {
         mContext = context;
@@ -49,8 +49,6 @@ public class MsgChatAdapter extends RecyclerView.Adapter<CommonViewHolder> {
                 return CommonViewHolder.getViewHolder(parent, R.layout.item_chat_receive);
             case CHAT_TYPE_SEND:
                 return CommonViewHolder.getViewHolder(parent, R.layout.item_chat_send);
-            case CHAT_TYPE_TIME:
-                return CommonViewHolder.getViewHolder(parent, R.layout.item_chat_time);
             default:
                 return null;
         }
@@ -64,7 +62,7 @@ public class MsgChatAdapter extends RecyclerView.Adapter<CommonViewHolder> {
             case SEND:
                 return CHAT_TYPE_SEND;
             default:
-                return CHAT_TYPE_TIME;
+                return 2;
         }
     }
 
@@ -74,7 +72,7 @@ public class MsgChatAdapter extends RecyclerView.Adapter<CommonViewHolder> {
         BmobQuery<Person> bmobQuery = new BmobQuery<Person>();
         switch (getItemViewType(position)) {
             case CHAT_TYPE_RECEIVE:
-                holder.setText(R.id.msg_chat_receive_tv,body.getMessage());
+                holder.setText(R.id.msg_chat_receive_tv, body.getMessage());
                 // bmob查询头像
                 bmobQuery.addWhereEqualTo("uName", mEMMessages.get(position).getFrom());
                 bmobQuery.findObjects(new FindListener<Person>() {
@@ -99,13 +97,11 @@ public class MsgChatAdapter extends RecyclerView.Adapter<CommonViewHolder> {
                     }
                 });
                 break;
-            case CHAT_TYPE_TIME:
-                break;
         }
     }
 
     @Override
     public int getItemCount() {
-        return mEMMessages== null ? 0 : mEMMessages.size();
+        return mEMMessages == null ? 0 : mEMMessages.size();
     }
 }

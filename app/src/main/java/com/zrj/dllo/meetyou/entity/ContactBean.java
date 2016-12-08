@@ -1,8 +1,9 @@
-package com.zrj.dllo.meetyou.msg.contact;
+package com.zrj.dllo.meetyou.entity;
 
 /**
  * Created by REN - the most cool programmer all over the world
  * on 16/11/26.
+ * 联系人的数据类
  */
 
 public class ContactBean {
@@ -53,9 +54,5 @@ public class ContactBean {
         FirstPinYin = firstPinYin;
     }
 
-//    public String toString() {
-//        return "姓名:" + getName() + "   拼音:" + getPinYin() + "    首字母:"
-//                + getFirstPinYin();
-//
-//    }
+
 }

@@ -1,4 +1,4 @@
-package com.zrj.dllo.meetyou.msg.contact;
+package com.zrj.dllo.meetyou.tools;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
@@ -10,6 +10,7 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
 /**
  * Created by REN - the most cool programmer all over the world
  * on 16/11/26.
+ * 将文字转化成拼音
  */
 
 public class PinYinUtils {

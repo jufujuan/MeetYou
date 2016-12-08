@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide;
 import com.zrj.dllo.meetyou.Person;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.CommonViewHolder;
+import com.zrj.dllo.meetyou.entity.ContactBean;
 import com.zrj.dllo.meetyou.msg.chat.ChatActivity;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ import cn.bmob.v3.listener.FindListener;
 /**
  * Created by REN - the most cool programmer all over the world
  * on 16/11/26.
+ * 联系人页面的适配器
  */
 
 public class ContactRecyclerAdapter extends RecyclerView.Adapter<CommonViewHolder> {

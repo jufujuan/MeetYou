@@ -161,7 +161,7 @@ public class MsgMsgFragment extends AbsBaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        mAdapter.setEMConversations(mConversations);
+        EMClient.getInstance().chatManager().addMessageListener(mMsgListener);
     }
 
     @Override

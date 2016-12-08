@@ -162,13 +162,12 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
                 person.setYear(mYear);
                 person.setMoon(mMonth);
                 person.setDay(mDay);
+                EventBus.getDefault().post(new EventBusBean());
 
                 mPreferences.edit().putInt(StaticValues.SP_USEING_YEAR_COLUMN, mYear).commit();
                 mPreferences.edit().putInt(StaticValues.SP_USEING_MOUTH_COLUMN, mMonth).commit();
                 mPreferences.edit().putInt(StaticValues.SP_USEING_DAY_COLUMN, mDay).commit();
                 mPreferences.edit().putString(StaticValues.SP_USEING_SIGNATURE_COLUMN, mEditTextSignature.getText().toString()).commit();
-
-
 
                 //将查询到的信息存储到sp中
                 if (!mId.isEmpty()) {
@@ -189,6 +188,7 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
 
                 Intent intent = new Intent(EditorActivity.this, MainActivity.class);
                 startActivity(intent);
+
                 break;
         }
     }

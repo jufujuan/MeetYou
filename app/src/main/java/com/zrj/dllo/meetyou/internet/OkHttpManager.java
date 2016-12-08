@@ -1,4 +1,4 @@
-package com.zrj.dllo.meetyou.cons;
+package com.zrj.dllo.meetyou.internet;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -17,13 +17,13 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * If there is no bug, then it is created by ChenFengYao on 2016/11/21,
- * otherwise, I do not know who create it either.
+ * Created by ${ZhaoXuancheng} on 16/12/6.
  */
+
 public class OkHttpManager extends NetManager {
     private static OkHttpManager ourInstance;
     private OkHttpClient mClient;
-    private Handler mHandler;//用来做线程的切换
+    private Handler mHandler;
     private Gson mGson;
 
     public static OkHttpManager getInstance() {
@@ -54,21 +54,18 @@ public class OkHttpManager extends NetManager {
         for (String s : body.keySet()) {
             formBuilder.add(s, body.get(s));
         }
-        //处理完了 post请求的 body部分
+
         FormBody formBody = formBuilder.build();
 
         Request postRequest
                 = new Request.Builder()
                 .url(url)
-                .post(formBody)//把body放到request里
+                .post(formBody)
                 .build();
 
         sendHttpRequest(postRequest, clazz, responseCallBack);
-
-
     }
 
-    //专门用来发起请求
     private <Bean> void sendHttpRequest(Request request
             , final Class<Bean> clazz
             , final ResponseCallBack<Bean> responseCallBack) {
@@ -103,7 +100,6 @@ public class OkHttpManager extends NetManager {
     public <Bean> void get(String url,
                            Class<Bean> clazz,
                            ResponseCallBack<Bean> responseCallBack) {
-        //构建Request对象
         Request request =
                 new Request.Builder().addHeader("apikey", "bbdf7a8139affb63107b852410af613e")
                         .url(url)
@@ -112,7 +108,7 @@ public class OkHttpManager extends NetManager {
         sendHttpRequest(request, clazz, responseCallBack);
     }
 
-    //请求成功Runnable和请求失败Runnable的父类
+
     abstract class HTTPRunnable<Bean> implements Runnable {
         protected ResponseCallBack<Bean> mResponseCallBack;
 

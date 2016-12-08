@@ -87,17 +87,12 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
 
                 EventBusBean eventBusBean = new EventBusBean();
                 eventBusBean.setUsername(mUserName);
-
                 Log.d("zxc111", mUserName);
                 EventBus.getDefault().post(eventBusBean);
                 editor.putString(StaticValues.SP_USEING_NAME_COLUMN, mUserName);
-//                editor.putString(StaticValues.SP_USEING_IMG_URL_COLUMN)
                 editor.commit();
-
                 Log.d("MainActivity", "登录成功");
-//                finish();
             } else {
-                Toast.makeText(LoginActivity.this, "用户名或密码不正确", Toast.LENGTH_SHORT).show();
                 Log.d("MainActivity", e.getMessage());
                 Log.d("MainActivity", "登录失败");
             }
@@ -255,14 +250,11 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
             public void onSuccess() {
                 EMClient.getInstance().groupManager().loadAllGroups();
                 EMClient.getInstance().chatManager().loadAllConversations();
-//                startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 Log.d("main", "登录聊天服务器成功！");
-//                Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onProgress(int progress, String status) {
-
             }
 
             @Override
@@ -271,7 +263,4 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
             }
         });
     }
-
-
-
 }

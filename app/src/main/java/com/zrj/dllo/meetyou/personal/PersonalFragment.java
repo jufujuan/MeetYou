@@ -59,7 +59,9 @@ public class PersonalFragment extends AbsBaseFragment implements View.OnClickLis
         SharedPreferences preferences = context.getSharedPreferences("userMessage", Activity.MODE_PRIVATE);
         mUserName = preferences.getString("userName", "");
         mImgUrl = preferences.getString(StaticValues.SP_USEING_IMG_URL_COLUMN, "4869");
+
         EventBus.getDefault().register(this);
+
         mRes = getResources();
         mBmp = BitmapFactory.decodeResource(mRes, R.mipmap.default_head);
 

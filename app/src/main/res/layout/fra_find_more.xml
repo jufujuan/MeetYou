@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/fra_find_more_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimaryDark"/>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/fra_list_find_card_margin"
+            android:layout_marginRight="@dimen/fra_list_find_card_margin"
+            android:layout_marginTop="@dimen/fra_list_find_card_margin"
+            android:layout_weight="1"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="@dimen/fra_list_find_card_black_distion"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/fra_find_more_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:scaleType="centerCrop"/>
+                <LinearLayout
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:background="?attr/colorPrimary"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textColor="@color/colorWhite"
+                        android:id="@+id/fra_list_find_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/fra_list_find_card_text_padding"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:background="?attr/colorPrimary"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textColor="@color/colorWhite"
+                        android:id="@+id/fra_list_find_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/fra_list_find_card_text_padding"/>
+                </LinearLayout>
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <include layout="@layout/buttons"/>
+    </LinearLayout>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/fra_find_more_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="?attr/colorPrimary"
+        app:headerLayout="@layout/item_drawer_header"
+        app:menu="@menu/tt_more"
+        />
+
+</android.support.v4.widget.DrawerLayout>

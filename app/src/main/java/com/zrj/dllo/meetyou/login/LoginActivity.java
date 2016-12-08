@@ -2,6 +2,8 @@ package com.zrj.dllo.meetyou.login;
 
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -15,6 +17,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +37,8 @@ import com.zrj.dllo.meetyou.eventbus.EventBusBean;
 
 import com.zrj.dllo.meetyou.tools.BitmapBlurUtils;
 import com.zrj.dllo.meetyou.tools.StaticValues;
+
+import java.util.Calendar;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
@@ -105,6 +112,7 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
      */
     @Override
     protected void initView() {
+
         registerFragment = new RegisterFragment();
         mImageViewBackground = bindView(R.id.login_background_img1);
 
@@ -127,6 +135,8 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
      */
     @Override
     protected void initDatas() {
+
+
 
         SharedPreferences sharedPreferences = getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME, Activity.MODE_PRIVATE);
         String usingName = sharedPreferences.getString(StaticValues.SP_USEING_NAME_COLUMN, "10086");
@@ -203,6 +213,7 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
             case R.id.login_esc_tv:
                 finish();
                 break;
+
         }
     }
 
@@ -256,6 +267,7 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
             }
         });
     }
+
 
 
 }

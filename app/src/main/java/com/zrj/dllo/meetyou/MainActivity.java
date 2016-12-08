@@ -1,5 +1,6 @@
 package com.zrj.dllo.meetyou;
 
+
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
@@ -11,27 +12,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
+import com.zrj.dllo.meetyou.cons.ConsFragment;
 import com.hyphenate.EMContactListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
-
 import com.zrj.dllo.meetyou.find.listfind.chen.ListFindFragment;
 import com.zrj.dllo.meetyou.msg.MsgFragment;
 import com.zrj.dllo.meetyou.base.AbsBaseActivity;
-
-import com.zrj.dllo.meetyou.find.mainfind.FindFragment;
-
-import com.zrj.dllo.meetyou.find.mainfind.FindModel;
-import com.zrj.dllo.meetyou.find.mainfind.FindPresenter;
 import com.zrj.dllo.meetyou.personal.PersonalFragment;
 import com.zrj.dllo.meetyou.tools.LiteOrmInstance;
 
 import java.util.List;
-
-import cn.bmob.v3.Bmob;
-
 
 /**
  * 绑定布局
@@ -42,15 +33,13 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
 
     private Button mainAtyMeetBtn, mainAtyMsgBtn, mainAtyWeatherBtn, mainAtyMyBtn;
     private TextView mainAtyMeetTv, mainAtyMsgTv, mainAtyWeatherTv, mainAtyMyTv;
-    private FragmentManager mFragmentManager;
+    private android.support.v4.app.FragmentManager mFragmentManager;
     private PersonalFragment mFragment;
     private Handler mHandler;
-
 
     @Override
     protected int getLayout() {
         return R.layout.activity_main;
-
     }
 
 
@@ -58,13 +47,10 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
     protected void onDestroy() {
         Log.d("MainActivity", "destory");
         super.onDestroy();
-
     }
 
     @Override
     protected void initView() {
-
-
 
         Log.d("MainActivity", "initView");
         mainAtyMeetBtn = bindView(R.id.aty_main_meet_btn);
@@ -115,6 +101,8 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
                 break;
             case R.id.aty_main_weather_btn:
                 btnChange(mainAtyWeatherBtn, mainAtyWeatherTv);
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_fl, new ConsFragment()).commit();
+
                 break;
             case R.id.aty_main_my_btn:
                 mFragment = new PersonalFragment();
@@ -128,21 +116,11 @@ public class MainActivity extends AbsBaseActivity implements View.OnClickListene
      * 切换到觅友界面
      */
     private void Change2Meet() {
-//        FindFragment findFragment=FindFragment.newInstance();
-//        FindPresenter findPresenter=new FindPresenter();
-//        ListFindModel findModel=new ListFindModel();
-//
-//        findFragment.setPersenter(findPresenter);
-//        findModel.setPresenter(findPresenter);
-        //TODO aaa
         ListFindFragment mView=ListFindFragment.newInstance();
-//        ListFindModel mModel=new ListFindModel();
         com.zrj.dllo.meetyou.find.listfind.chen.FindPresenter mPresenter=new com.zrj.dllo.meetyou.find.listfind.chen.FindPresenter(mView);
         mView.setPresenter(mPresenter);
-//        mModel.setPresenter(mPresenter);
 
-
-        FragmentTransaction transaction =  mFragmentManager.beginTransaction();
+        android.support.v4.app.FragmentTransaction transaction =  mFragmentManager.beginTransaction();
         transaction.replace(R.id.main_fl, mView);
         transaction.commit();
     }

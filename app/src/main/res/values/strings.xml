@@ -35,5 +35,12 @@
     <color name="card_background">#ffffff</color>
     <color name="card_shadow">#10000000</color>
 
+    <!--觅友点击详情界面-->
+    <string name="tt_name">用户名</string>
+    <string name="tt_nav_find">觅友</string>
+    <string name="tt_nav_chat">聊天</string>
+    <string name="tt_nav_setting">设置</string>
+    <string name="tt_nav_cons">星座</string>
+
 
 </resources>

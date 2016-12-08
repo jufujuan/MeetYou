@@ -23,6 +23,11 @@ import com.zrj.dllo.meetyou.widget.GlideImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 
 /**
  * If there is no bug, then it is created by ChenFengYao on 2016/12/6,
@@ -110,16 +115,17 @@ public class ListFindFragment extends AbsBaseFragment implements Contract.View {
      * 实现加载更多数据
      */
     private void simulateLoadMoreData(final int endPosition) {
-//        Observable.timer(500, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
-//                .map(new Func1<Long, Object>() {
-//                    @Override
-//                    public Object call(Long aLong) {
+
+        Observable.timer(2, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
+                .map(new Func1<Long, Object>() {
+                    @Override
+                    public Object call(Long aLong) {
                         List<Person> data = mPresenter.loadMoreData(context, DISTANCE);
                         mListFindAdapter.insertData(data, endPosition);
                         Toast.makeText(context, "Load Finished!", Toast.LENGTH_SHORT).show();
-//                        return null;
-//                    }
-//                }).subscribe();
+                        return null;
+                    }
+                }).subscribe();
     }
 
 

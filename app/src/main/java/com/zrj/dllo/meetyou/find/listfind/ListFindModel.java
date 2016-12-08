@@ -163,8 +163,6 @@ public class ListFindModel implements Contract.Model {
         SharedPreferences sp=context.getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME,Context.MODE_PRIVATE);
         Double mLa=Double.parseDouble(sp.getString(StaticValues.SP_USEING_LATITUDE_COLUMN,"0"));
         Double mLo=Double.parseDouble(sp.getString(StaticValues.SP_USEING_LONTITUDE_COLUMN,"0"));
-        LogUtils.d("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-        LogUtils.d("加载更多中当前用户经纬度"+mLa);
         for (int i = positionLoadMore+1; i < allDatas.size(); i++) {
             Double la=Double.parseDouble(allDatas.get(i).getLatitude());
             Double lo=Double.parseDouble(allDatas.get(i).getLontitude());
@@ -172,7 +170,6 @@ public class ListFindModel implements Contract.Model {
                 if (loadMoreDatas.size()>=10){
                     break;
                 }else {
-                    LogUtils.d("加载一条......");
                     loadMoreDatas.add(allDatas.get(i));
                 }
             }

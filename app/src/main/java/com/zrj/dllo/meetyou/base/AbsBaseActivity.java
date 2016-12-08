@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,7 +14,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.zrj.dllo.meetyou.R;
-import com.zrj.dllo.meetyou.personal.PersonalFragment;
 
 /**
  * 这是鞠福娟创建的哟~on 16/11/21.
@@ -31,8 +29,6 @@ public abstract class AbsBaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
 
         //夜间模式广播接收器
         mBroadCast = new NightOrderBroadCast();
@@ -176,13 +172,6 @@ public abstract class AbsBaseActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.ac_zoom_enter, R.anim.ac_zoom_exit);
     }
 
-    /**
-     * 设置通用状态栏
-     */
-    protected void setStateBar() {
-
-    }
-
 
     @Override
     public void finish() {
@@ -200,7 +189,6 @@ public abstract class AbsBaseActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.d("Sysout", "theme:-saveInstance" + theme);
         outState.putInt("theme", theme);
     }
 
@@ -222,8 +210,7 @@ public abstract class AbsBaseActivity extends AppCompatActivity {
      * @param views         要设置监听的view
      */
     protected void setClickListener(View.OnClickListener clickListener, View... views) {
-        for (View view :
-                views) {
+        for (View view : views) {
             view.setOnClickListener(clickListener);
         }
     }

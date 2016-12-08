@@ -1,17 +1,13 @@
 package com.zrj.dllo.meetyou.base;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 /**
  * 这是鞠福娟创建的哟~on 16/11/21.
@@ -20,14 +16,11 @@ import android.widget.Toast;
 public abstract class AbsBaseFragment extends Fragment {
 
     protected Context context;
-    private Toast mToast;
-
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
-        mToast = new Toast(context);
     }
 
     @Nullable
@@ -93,14 +86,6 @@ public abstract class AbsBaseFragment extends Fragment {
     }
 
     /**
-     * Activity跳转(不带返回值)
-     */
-    protected void goTo(Context from, Class<?> to) {
-        Intent intent = new Intent(from, to);
-        startActivity(intent);
-        //跳转动画
-    }
-    /**
      * Activity跳转(带着flags的)
      */
     protected void goTo(Context from, Class<?> to,int flags) {
@@ -110,76 +95,6 @@ public abstract class AbsBaseFragment extends Fragment {
         //跳转动画
     }
 
-    /**
-     * Activity跳转(带返回值)
-     */
-    protected void goTo(Context from, Class<?> to, Bundle bundle) {
-        Intent intent = new Intent(from, to);
-        intent.putExtras(bundle);
-        startActivity(intent);
-        //跳转动画
-    }
-
-    /**
-     * 显示长时间的Toast提示
-     *
-     * @param text
-     */
-    protected void showToastLong(final CharSequence text) {
-        mToast.setDuration(Toast.LENGTH_LONG);
-        ((Activity) context).runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mToast.setText(text);
-                mToast.show();
-            }
-        });
-
-
-//        Message message=handler.obtainMessage();
-//        message.what= Toast.LENGTH_LONG;
-//        message.obj=text;
-//        handler.sendMessage(message);
-    }
-
-    /**
-     * 显示短时间的Toast提示
-     *
-     * @param text
-     */
-    protected void showToastShort(CharSequence text) {
-        Message message = handler.obtainMessage();
-        message.what = Toast.LENGTH_SHORT;
-        message.obj = text;
-        handler.sendMessage(message);
-    }
-
-    /**
-     * 用来在主界面显示toast
-     */
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case Toast.LENGTH_LONG:
-                    Toast.makeText(context, (String) msg.obj, Toast.LENGTH_LONG).show();
-                    break;
-                case Toast.LENGTH_SHORT:
-                    Toast.makeText(context, (String) msg.obj, Toast.LENGTH_SHORT).show();
-                    break;
-                default:
-                    break;
-            }
-            super.handleMessage(msg);
-        }
-    };
-
-    /**
-     * 添加动画效果
-     */
-    protected void addAnimator() {
-
-    }
 
     /**
      * view添加点击事件

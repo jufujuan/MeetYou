@@ -32,7 +32,7 @@ public class MsgMsgFragment extends AbsBaseFragment {
     private RecyclerView msgMsgRv;
     private List<EMConversation> mConversations;
     private MsgMsgAdapter mAdapter;
-//    private Vibrator vibrator;
+    private Vibrator vibrator;
 
     @Override
     protected int getLayout() {
@@ -57,7 +57,7 @@ public class MsgMsgFragment extends AbsBaseFragment {
         msgMsgRv.setLayoutManager(manager);
 
         // 震动初始化
-//        vibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
 
         // 接收消息的监听
         EMMessageListener msgListener = new EMMessageListener() {
@@ -70,8 +70,8 @@ public class MsgMsgFragment extends AbsBaseFragment {
 //                Log.d("MsgMsgFragment", "mConversations:" + mConversations);
                 mAdapter.setEMConversations(mConversations);
 //                mAdapter.notifyDataSetChanged();
-//                long [] pattern = {100,400,100,400};
-//                vibrator.vibrate(pattern,-1);
+                long [] pattern = {100,400,100,400};
+                vibrator.vibrate(pattern,-1);
             }
 
             @Override
@@ -163,6 +163,6 @@ public class MsgMsgFragment extends AbsBaseFragment {
     @Override
     public void onStop() {
         super.onStop();
-//        vibrator.cancel();
+        vibrator.cancel();
     }
 }

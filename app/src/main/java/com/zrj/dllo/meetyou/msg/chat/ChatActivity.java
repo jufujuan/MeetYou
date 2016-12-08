@@ -99,18 +99,17 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
             @Override
             public void onMessageReceived(List<EMMessage> messages) {
                 //收到消息
-                mMessages.addAll(messages);
-                mAdapter.setEMMessages(mMessages);
-                msgChatRv.smoothScrollToPosition(mMessages.size());
-//                for (EMMessage message : messages) {
-//                    if (mUserName.equals(message.getFrom())) {
-//                        mMessages.add(message);
-//                        mAdapter.setEMMessages(mMessages);
-//                        msgChatRv.smoothScrollToPosition(mMessages.size());
-//                    }
-//                }
-//                msgChatRv.smoothScrollToPosition(mMessageList.size());
-                mConversation.markAllMessagesAsRead();
+//                mMessages.addAll(messages);
+//                mAdapter.setEMMessages(mMessages);
+                for (EMMessage message : messages) {
+                    if (mUserName.equals(message.getFrom()) || mUserName.equals(message.getTo())) {
+                        mMessages.add(message);
+                        mAdapter.setEMMessages(mMessages);
+                        msgChatRv.smoothScrollToPosition(mMessages.size());
+                    }
+                }
+                msgChatRv.smoothScrollToPosition(mMessageList.size());
+
             }
 
             @Override
@@ -218,5 +217,9 @@ public class ChatActivity extends AbsBaseActivity implements View.OnClickListene
         }
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        mConversation.markAllMessagesAsRead();
+    }
 }

@@ -1,11 +1,12 @@
 package com.zrj.dllo.meetyou.msg.conversation;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.Vibrator;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
@@ -14,10 +15,8 @@ import com.hyphenate.chat.EMMessage;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.AbsBaseFragment;
 
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -32,7 +31,9 @@ public class MsgMsgFragment extends AbsBaseFragment {
     private RecyclerView msgMsgRv;
     private List<EMConversation> mConversations;
     private MsgMsgAdapter mAdapter;
-//    private Vibrator vibrator;
+    private Vibrator vibrator;
+    private Handler mHandler = new Handler(Looper.getMainLooper());
+    private EMMessageListener mMsgListener;
 
     @Override
     protected int getLayout() {
@@ -52,26 +53,29 @@ public class MsgMsgFragment extends AbsBaseFragment {
 
         mAdapter = new MsgMsgAdapter(context);
         mAdapter.setEMConversations(mConversations);
-        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+        final LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         msgMsgRv.setAdapter(mAdapter);
         msgMsgRv.setLayoutManager(manager);
 
         // 震动初始化
-//        vibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
 
         // 接收消息的监听
-        EMMessageListener msgListener = new EMMessageListener() {
+        mMsgListener = new EMMessageListener() {
 
             @Override
             public void onMessageReceived(List<EMMessage> messages) {
                 //收到消息
                 mConversations.clear();
                 mConversations.addAll(loadConversation());
-//                Log.d("MsgMsgFragment", "mConversations:" + mConversations);
-                mAdapter.setEMConversations(mConversations);
-                mAdapter.notifyDataSetChanged();
-//                long [] pattern = {100,400,100,400};
-//                vibrator.vibrate(pattern,-1);
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAdapter.setEMConversations(mConversations);
+                    }
+                });
+                long [] pattern = {100,400,100,400};
+                vibrator.vibrate(pattern,-1);
             }
 
             @Override
@@ -95,7 +99,7 @@ public class MsgMsgFragment extends AbsBaseFragment {
             }
         };
 
-        EMClient.getInstance().chatManager().addMessageListener(msgListener);
+        EMClient.getInstance().chatManager().addMessageListener(mMsgListener);
     }
 
 
@@ -103,7 +107,7 @@ public class MsgMsgFragment extends AbsBaseFragment {
      * 加载所有的会话
      * @return
      */
-    private Collection<? extends EMConversation> loadConversation () {
+    private List<EMConversation> loadConversation () {
         Map<String, EMConversation> conversations = EMClient.getInstance().chatManager().getAllConversations();
 
         List<Pair<Long, EMConversation>> sortList = new ArrayList<Pair<Long, EMConversation>>();
@@ -156,13 +160,13 @@ public class MsgMsgFragment extends AbsBaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-//        mConversations.addAll(loadConversation());
         mAdapter.setEMConversations(mConversations);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-//        vibrator.cancel();
+        EMClient.getInstance().chatManager().removeMessageListener(mMsgListener);
+        vibrator.cancel();
     }
 }

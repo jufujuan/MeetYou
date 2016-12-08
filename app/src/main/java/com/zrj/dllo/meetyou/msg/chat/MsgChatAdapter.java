@@ -39,7 +39,6 @@ public class MsgChatAdapter extends RecyclerView.Adapter<CommonViewHolder> {
 
     public void setEMMessages(List<EMMessage> EMMessages) {
         mEMMessages = EMMessages;
-        Log.d("MsgChatAdapter", "mEMMessages:" + mEMMessages);
         notifyDataSetChanged();
     }
 

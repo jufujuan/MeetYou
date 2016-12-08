@@ -11,6 +11,15 @@ public class ContactBean {
     private String Name;
     private String PinYin;
     private String FirstPinYin;
+    private String realName;
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
 
     public String getAvatarUrl() {
         return avatarUrl;
@@ -44,9 +53,9 @@ public class ContactBean {
         FirstPinYin = firstPinYin;
     }
 
-    public String toString() {
-        return "姓名:" + getName() + "   拼音:" + getPinYin() + "    首字母:"
-                + getFirstPinYin();
-
-    }
+//    public String toString() {
+//        return "姓名:" + getName() + "   拼音:" + getPinYin() + "    首字母:"
+//                + getFirstPinYin();
+//
+//    }
 }

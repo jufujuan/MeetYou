@@ -56,7 +56,26 @@ public class MsgMsgAdapter extends RecyclerView.Adapter<CommonViewHolder> {
         final String userName = mEMConversations.get(position).getUserName();
         final TextView countTv = holder.getView(R.id.conversation_count_tv);
         // 设置用户名
-        holder.setText(R.id.conversation_name_tv, userName);
+        // 先在bomb上查询是否设置昵称
+        BmobQuery<Person> bmobQuery = new BmobQuery<Person>();
+        bmobQuery.addWhereEqualTo("uName", userName);
+        bmobQuery.findObjects(new FindListener<Person>() {
+            @Override
+            public void done(List<Person> list, BmobException e) {
+                if (e == null) {
+                    String realName = list.get(0).getRealName();
+                    if (realName != null) {
+                        holder.setText(R.id.conversation_name_tv, realName);
+                    } else {
+                        holder.setText(R.id.conversation_name_tv, userName);
+                    }
+                    // 设置头像
+                    Glide.with(mContext).load(list.get(0).getUserImgUrl()).into((ImageView) holder.getView(R.id.conversation_avatar));
+                }
+            }
+        });
+
+
         // 设置会话信息
         if (getMessage(mEMConversations.get(position).getLastMessage()).length() > 15) {
             holder.setText(R.id.conversation_body_tv, new StringBuffer(getMessage(mEMConversations.get(position).getLastMessage())).substring(0, 15) + "...");
@@ -79,16 +98,15 @@ public class MsgMsgAdapter extends RecyclerView.Adapter<CommonViewHolder> {
             }
         }
         // bmob查询头像
-        BmobQuery<Person> bmobQuery = new BmobQuery<Person>();
-        bmobQuery.addWhereEqualTo("uName", userName);
-        bmobQuery.findObjects(new FindListener<Person>() {
-            @Override
-            public void done(List<Person> list, BmobException e) {
-                if (e == null) {
-                    Glide.with(mContext).load(list.get(0).getUserImgUrl()).into((ImageView) holder.getView(R.id.conversation_avatar));
-                }
-            }
-        });
+//        bmobQuery.addWhereEqualTo("uName", userName);
+//        bmobQuery.findObjects(new FindListener<Person>() {
+//            @Override
+//            public void done(List<Person> list, BmobException e) {
+//                if (e == null) {
+//                    Glide.with(mContext).load(list.get(0).getUserImgUrl()).into((ImageView) holder.getView(R.id.conversation_avatar));
+//                }
+//            }
+//        });
 
         // 点击item进入聊天页面
         holder.setItemClick(new View.OnClickListener() {

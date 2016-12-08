@@ -343,9 +343,5 @@ public class ConsFragment extends AbsBaseFragment implements View.OnClickListene
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
+ 
 }

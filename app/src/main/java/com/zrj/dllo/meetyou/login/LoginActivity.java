@@ -38,6 +38,8 @@ import com.zrj.dllo.meetyou.eventbus.EventBusBean;
 import com.zrj.dllo.meetyou.tools.BitmapBlurUtils;
 import com.zrj.dllo.meetyou.tools.StaticValues;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.Calendar;
 
 import cn.bmob.v3.BmobQuery;
@@ -83,7 +85,12 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
                 SharedPreferences preferences = getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME, Activity.MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
 
-                editor.putString(StaticValues.SP_USEING_NAME_COLUMN, mEventBusBean.getUsername());
+                EventBusBean eventBusBean = new EventBusBean();
+                eventBusBean.setUsername(mUserName);
+
+                Log.d("zxc111", mUserName);
+                EventBus.getDefault().post(eventBusBean);
+                editor.putString(StaticValues.SP_USEING_NAME_COLUMN, mUserName);
 //                editor.putString(StaticValues.SP_USEING_IMG_URL_COLUMN)
                 editor.commit();
 
@@ -135,8 +142,6 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
      */
     @Override
     protected void initDatas() {
-
-
 
         SharedPreferences sharedPreferences = getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME, Activity.MODE_PRIVATE);
         String usingName = sharedPreferences.getString(StaticValues.SP_USEING_NAME_COLUMN, "10086");
@@ -213,7 +218,6 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
             case R.id.login_esc_tv:
                 finish();
                 break;
-
         }
     }
 

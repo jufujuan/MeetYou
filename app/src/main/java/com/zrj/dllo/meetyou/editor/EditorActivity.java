@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.zrj.dllo.meetyou.MainActivity;
 import com.zrj.dllo.meetyou.Person;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.AbsBaseActivity;
@@ -65,7 +66,6 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
     private ImageView mImageViewHead;
     private FileOutputStream fileOutputStream;
     private String mNameId;
-    private SharedPreferences mSp;
     private EditText mEditTextName;
     private EditText mEditTextR;
     private EditText mEditTextSignature;
@@ -92,7 +92,7 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
         TextView textViewCamera = bindView(R.id.editor_camera_tv);
         textViewCamera.setOnClickListener(this);
         mImageViewHead = bindView(R.id.editor_head_image);
-        mSp = getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME, MODE_PRIVATE);
+        mPreferences = getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME, MODE_PRIVATE);
         mGroup = (RadioGroup) findViewById(R.id.editor_sex_gr);
         mGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -119,15 +119,16 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
         mRb = (RadioButton) findViewById(mRadioButtonId);
         mPreferences = getSharedPreferences(StaticValues.SP_USEING_TABLE_NAME, MODE_PRIVATE);
         mId = mPreferences.getString(StaticValues.SP_USEING_ID, "");
-        final java.util.Calendar c = java.util.Calendar.getInstance();
 
-        mYear = mSp.getInt(StaticValues.SP_USEING_YEAR_COLUMN, 2000);
-        mMonth = mSp.getInt(StaticValues.SP_USEING_MOUTH_COLUMN, 5);
-        mDay = mSp.getInt(StaticValues.SP_USEING_DAY_COLUMN, 5);
+        mYear = mPreferences.getInt(StaticValues.SP_USEING_YEAR_COLUMN, 2000);
+        mMonth = mPreferences.getInt(StaticValues.SP_USEING_MOUTH_COLUMN, 5);
+        mDay = mPreferences.getInt(StaticValues.SP_USEING_DAY_COLUMN, 5);
 
-        setDateTime();
+        Log.d("123", "mDay:" + mDay);
 
-        String imgUrl = mSp.getString(StaticValues.SP_USEING_IMG_URL_COLUMN, "4869");
+        updateDateDisplay();
+
+        String imgUrl = mPreferences.getString(StaticValues.SP_USEING_IMG_URL_COLUMN, "4869");
         Log.d("ninini", imgUrl);
         if (!imgUrl.equals("4869")) {
             Glide.with(this).load(imgUrl).into(mImageViewHead);
@@ -162,14 +163,12 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
                 person.setMoon(mMonth);
                 person.setDay(mDay);
 
-                mSp.edit().putInt(StaticValues.SP_USEING_YEAR_COLUMN, mYear).commit();
-                mSp.edit().putInt(StaticValues.SP_USEING_MOUTH_COLUMN, mMonth).commit();
-                mSp.edit().putInt(StaticValues.SP_USEING_DAY_COLUMN, mDay).commit();
+                mPreferences.edit().putInt(StaticValues.SP_USEING_YEAR_COLUMN, mYear).commit();
+                mPreferences.edit().putInt(StaticValues.SP_USEING_MOUTH_COLUMN, mMonth).commit();
+                mPreferences.edit().putInt(StaticValues.SP_USEING_DAY_COLUMN, mDay).commit();
+                mPreferences.edit().putString(StaticValues.SP_USEING_SIGNATURE_COLUMN, mEditTextSignature.getText().toString()).commit();
 
-                EventBus.getDefault().post(new EventBusBean());
 
-                finish();
-                // TODO: 16/12/5 将搜索范围存储到sp 
 
                 //将查询到的信息存储到sp中
                 if (!mId.isEmpty()) {
@@ -187,6 +186,9 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
                     });
                 }
                 Toast.makeText(this, "数据已保存", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(EditorActivity.this, MainActivity.class);
+                startActivity(intent);
                 break;
         }
     }
@@ -206,7 +208,6 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
             Toast.makeText(this, "请确认已插入SD卡", Toast.LENGTH_SHORT).show();
         }
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -293,8 +294,8 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
                         String fileUrl = bmobFile.getFileUrl();
                         /************************/
 
-                        String uName = mSp.getString(StaticValues.SP_USEING_NAME_COLUMN, "---未登录成功---");
-                        mSp.edit().putString(StaticValues.SP_USEING_IMG_URL_COLUMN, fileUrl).commit();
+                        String uName = mPreferences.getString(StaticValues.SP_USEING_NAME_COLUMN, "---未登录成功---");
+                        mPreferences.edit().putString(StaticValues.SP_USEING_IMG_URL_COLUMN, fileUrl).commit();
 
                         if (!uName.equals("---未登录成功---")) {
                             BmobQuery<Person> query = new BmobQuery<>("Person");
@@ -360,17 +361,6 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
         }
     }
 
-    /**
-     * 设置日期
-     */
-    private void setDateTime() {
-        final Calendar c = Calendar.getInstance();
-        mYear = 2000;
-        mMonth = 5;
-        mDay = 5;
-
-        updateDateDisplay();
-    }
 
     /**
      * 更新日期显示

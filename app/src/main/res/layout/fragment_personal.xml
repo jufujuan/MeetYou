@@ -30,7 +30,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="180dp"
                     android:scaleType="fitXY"
-                    android:src="@mipmap/sidebar_pic"/>
+                    android:src="@mipmap/default_head"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -59,6 +59,7 @@
                 />
 
             <ImageView
+                android:src="@mipmap/default_head"
                 android:scaleType="centerCrop"
                 android:id="@+id/personal_login_image"
                 android:layout_width="75dp"

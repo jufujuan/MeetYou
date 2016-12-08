@@ -64,4 +64,9 @@ public class StaticValues {
     public final static String SP_USEING_DAY_COLUMN = "userDay";
 
 
+    /**
+     * 正在登录的用户签名
+     */
+    public final static String SP_USEING_SIGNATURE_COLUMN = "signature";
+
 }

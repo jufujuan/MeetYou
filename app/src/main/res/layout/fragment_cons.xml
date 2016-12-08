@@ -98,56 +98,71 @@
             />
     </LinearLayout>
 
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    <TextView
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        android:id="@+id/cons_grade1_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textColor="#f185ff"
-        android:textSize="15dp"
-        />
+        <TextView
 
-    <TextView
-        android:id="@+id/cons_grade2_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textColor="#f185ff"
-        android:textSize="15dp"
-        />
+            android:id="@+id/cons_grade1_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="#f185ff"
+            android:textSize="15dp"
+            />
 
-    <TextView
-        android:id="@+id/cons_grade3_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textColor="#f185ff"
-        android:textSize="15dp"
-        />
+        <TextView
+            android:id="@+id/cons_grade2_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="#f185ff"
+            android:textSize="15dp"
+            />
 
-    <TextView
-        android:id="@+id/cons_grade4_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textColor="#f185ff"
-        android:textSize="15dp"
-        />
+        <TextView
+            android:id="@+id/cons_grade3_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="#f185ff"
+            android:textSize="15dp"
+            />
 
-    <!--android:text="友情：★★★爱情：★★★★婚姻：★★★★亲情：★★★★"-->
-    <!--android:text="因为金牛和巨蟹都是内向型的星座，
-    而且都是以家庭为人生最终目标，所以两个人一旦擦出火花是颇理想的一对，
-    互相爱得对方很深很深，唯一的问题是双方的嫉妒心都很重，只要有什么风吹草动，
-    马上变得敏感起来，不懂得控制自己的情绪，加上内敛的性格，往往变成冷战的局面。"-->
+        <TextView
+            android:id="@+id/cons_grade4_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="#f185ff"
+            android:textSize="15dp"
+            />
 
-    <TextView
-        android:id="@+id/cons_content_tv"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:textColor="#aaa9ff"
-        />
+        <!--android:text="友情：★★★爱情：★★★★婚姻：★★★★亲情：★★★★"-->
+        <!--android:text="因为金牛和巨蟹都是内向型的星座，
+        而且都是以家庭为人生最终目标，所以两个人一旦擦出火花是颇理想的一对，
+        互相爱得对方很深很深，唯一的问题是双方的嫉妒心都很重，只要有什么风吹草动，
+        马上变得敏感起来，不懂得控制自己的情绪，加上内敛的性格，往往变成冷战的局面。"-->
+
+        <TextView
+            android:id="@+id/cons_content_tv"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:textColor="#aaa9ff"
+            />
+
+    </LinearLayout>
+
+
+</ScrollView>
+
+
 </LinearLayout>

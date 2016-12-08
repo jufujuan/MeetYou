@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.AbsBaseFragment;
 import com.zrj.dllo.meetyou.editor.EditorActivity;
@@ -36,7 +34,6 @@ public class ConsFragment extends AbsBaseFragment implements View.OnClickListene
     private TextView mTextViewGrage2;
     private TextView mTextViewGrage3;
     private TextView mTextViewGrage4;
-
 
     private TextView mTextViewContent;
     private TextView mTextView;

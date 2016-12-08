@@ -2,8 +2,6 @@ package com.zrj.dllo.meetyou.login;
 
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -17,9 +15,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,22 +22,19 @@ import android.widget.Toast;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
-import com.zrj.dllo.meetyou.MainActivity;
 import com.zrj.dllo.meetyou.Person;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.SweepActivity;
 import com.zrj.dllo.meetyou.base.AbsBaseActivity;
 
-import com.zrj.dllo.meetyou.eventbus.EventBusBean;
+import com.zrj.dllo.meetyou.entity.EventBusBean;
 
+import com.zrj.dllo.meetyou.entity.LoginUserBean;
 import com.zrj.dllo.meetyou.tools.BitmapBlurUtils;
 import com.zrj.dllo.meetyou.tools.StaticValues;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.Calendar;
-
-import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
@@ -87,17 +79,12 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
 
                 EventBusBean eventBusBean = new EventBusBean();
                 eventBusBean.setUsername(mUserName);
-
                 Log.d("zxc111", mUserName);
                 EventBus.getDefault().post(eventBusBean);
                 editor.putString(StaticValues.SP_USEING_NAME_COLUMN, mUserName);
-//                editor.putString(StaticValues.SP_USEING_IMG_URL_COLUMN)
                 editor.commit();
-
                 Log.d("MainActivity", "登录成功");
-//                finish();
             } else {
-                Toast.makeText(LoginActivity.this, "用户名或密码不正确", Toast.LENGTH_SHORT).show();
                 Log.d("MainActivity", e.getMessage());
                 Log.d("MainActivity", "登录失败");
             }
@@ -255,14 +242,11 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
             public void onSuccess() {
                 EMClient.getInstance().groupManager().loadAllGroups();
                 EMClient.getInstance().chatManager().loadAllConversations();
-//                startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 Log.d("main", "登录聊天服务器成功！");
-//                Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onProgress(int progress, String status) {
-
             }
 
             @Override
@@ -271,7 +255,4 @@ public class LoginActivity extends AbsBaseActivity implements View.OnClickListen
             }
         });
     }
-
-
-
 }

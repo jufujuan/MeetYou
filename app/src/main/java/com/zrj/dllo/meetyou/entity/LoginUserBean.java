@@ -1,4 +1,4 @@
-package com.zrj.dllo.meetyou.login;
+package com.zrj.dllo.meetyou.entity;
 
 
 import cn.bmob.v3.BmobUser;

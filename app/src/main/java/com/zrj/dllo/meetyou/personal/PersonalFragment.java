@@ -8,10 +8,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,9 +24,8 @@ import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.tools.BitmapBlurUtils;
 import com.zrj.dllo.meetyou.base.AbsBaseFragment;
 import com.zrj.dllo.meetyou.editor.EditorActivity;
-import com.zrj.dllo.meetyou.eventbus.EventBusBean;
+import com.zrj.dllo.meetyou.entity.EventBusBean;
 import com.zrj.dllo.meetyou.login.LoginActivity;
-import com.zrj.dllo.meetyou.tools.CircleDrawable;
 import com.zrj.dllo.meetyou.tools.StaticValues;
 import com.zrj.dllo.meetyou.tools.UrlChangeBitmap;
 
@@ -138,7 +135,6 @@ public class PersonalFragment extends AbsBaseFragment implements View.OnClickLis
             case R.id.personal_editor_tv:
                 Intent intent2 = new Intent(getActivity(), EditorActivity.class);
                 startActivity(intent2);
-                getActivity().finish();
                 break;
         }
     }
@@ -170,10 +166,8 @@ public class PersonalFragment extends AbsBaseFragment implements View.OnClickLis
             mImageViewLogin.setImageBitmap(mBmp);
         }
 
-
 //       mPreferences.edit().putString(StaticValues.SP_USEING_NAME_COLUMN,eventBusBean.getUsername()).commit();
         mTextViewUsername.setText(mPreferences.getString(StaticValues.SP_USEING_NAME_COLUMN, "NI"));
-
     }
 
     /**
@@ -226,5 +220,11 @@ public class PersonalFragment extends AbsBaseFragment implements View.OnClickLis
                     });
             mImageViewLogin.setImageBitmap(mBmp);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

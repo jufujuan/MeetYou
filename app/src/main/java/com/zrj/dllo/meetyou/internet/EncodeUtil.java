@@ -1,11 +1,11 @@
-package com.zrj.dllo.meetyou.cons;
+package com.zrj.dllo.meetyou.internet;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 /**
- * Created by dllo on 16/10/10.
+ * Created by ${ZhaoXuancheng} on 16/12/6.
  */
 public class EncodeUtil {
 

@@ -6,8 +6,6 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
@@ -29,20 +27,17 @@ import com.zrj.dllo.meetyou.MainActivity;
 import com.zrj.dllo.meetyou.Person;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.AbsBaseActivity;
-import com.zrj.dllo.meetyou.eventbus.EventBusBean;
-import com.zrj.dllo.meetyou.login.LoginUserBean;
-import com.zrj.dllo.meetyou.tools.BitmapBlurUtils;
+import com.zrj.dllo.meetyou.entity.EventBusBean;
+import com.zrj.dllo.meetyou.entity.LoginUserBean;
 import com.zrj.dllo.meetyou.tools.LogUtils;
 import com.zrj.dllo.meetyou.tools.StaticValues;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
@@ -162,13 +157,12 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
                 person.setYear(mYear);
                 person.setMoon(mMonth);
                 person.setDay(mDay);
+                EventBus.getDefault().post(new EventBusBean());
 
                 mPreferences.edit().putInt(StaticValues.SP_USEING_YEAR_COLUMN, mYear).commit();
                 mPreferences.edit().putInt(StaticValues.SP_USEING_MOUTH_COLUMN, mMonth).commit();
                 mPreferences.edit().putInt(StaticValues.SP_USEING_DAY_COLUMN, mDay).commit();
                 mPreferences.edit().putString(StaticValues.SP_USEING_SIGNATURE_COLUMN, mEditTextSignature.getText().toString()).commit();
-
-
 
                 //将查询到的信息存储到sp中
                 if (!mId.isEmpty()) {
@@ -189,6 +183,7 @@ public class EditorActivity extends AbsBaseActivity implements View.OnClickListe
 
                 Intent intent = new Intent(EditorActivity.this, MainActivity.class);
                 startActivity(intent);
+
                 break;
         }
     }

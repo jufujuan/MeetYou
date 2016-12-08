@@ -16,7 +16,10 @@ import android.widget.Toast;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.base.AbsBaseFragment;
 import com.zrj.dllo.meetyou.editor.EditorActivity;
-import com.zrj.dllo.meetyou.eventbus.EventBusBean;
+import com.zrj.dllo.meetyou.entity.ConsBean;
+import com.zrj.dllo.meetyou.entity.EventBusBean;
+import com.zrj.dllo.meetyou.internet.HttpUtil;
+import com.zrj.dllo.meetyou.internet.ResponseCallBack;
 import com.zrj.dllo.meetyou.tools.StaticValues;
 
 import org.greenrobot.eventbus.EventBus;
@@ -81,8 +84,8 @@ public class ConsFragment extends AbsBaseFragment implements View.OnClickListene
         Log.d("tttttt", "day:" + mDay);
 
         mCons = getConstellation(mMonth, mDay);
-//       mCons = "射手";
         mTextViewCons.setText(mCons + ":" + mHeCons);
+
         EventBus.getDefault().post(new EventBusBean());
 
     }
@@ -224,6 +227,13 @@ public class ConsFragment extends AbsBaseFragment implements View.OnClickListene
                 startActivity(intent);
                 break;
         }
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     private void showPopupWindow() {

@@ -1,8 +1,7 @@
-package com.zrj.dllo.meetyou.cons;
+package com.zrj.dllo.meetyou.internet;
 
 /**
- * If there is no bug, then it is created by ChenFengYao on 2016/11/21,
- * otherwise, I do not know who create it either.
+ * Created by ${ZhaoXuancheng} on 16/12/6.
  */
 public abstract class NetManager {
 

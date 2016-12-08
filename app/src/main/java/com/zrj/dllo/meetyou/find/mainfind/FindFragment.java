@@ -20,7 +20,6 @@ import com.zrj.dllo.meetyou.MainActivity;
 import com.zrj.dllo.meetyou.Person;
 import com.zrj.dllo.meetyou.R;
 import com.zrj.dllo.meetyou.app.MeetYouApp;
-import com.zrj.dllo.meetyou.find.listfind.ListFindActivity;
 import com.zrj.dllo.meetyou.tools.DensityUtil;
 
 import com.zrj.dllo.meetyou.base.AbsBaseFragment;

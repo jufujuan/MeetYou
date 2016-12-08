@@ -5,7 +5,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.zrj.dllo.meetyou.base.AbsBaseActivity;
-import com.zrj.dllo.meetyou.find.listfind.ListFindFragment;
 import com.zrj.dllo.meetyou.find.mainfind.FindFragment;
 import com.zrj.dllo.meetyou.find.mainfind.FindModel;
 import com.zrj.dllo.meetyou.find.mainfind.FindPresenter;
